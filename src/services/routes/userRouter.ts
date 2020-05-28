@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { UserCrudController } from "../../controllers/User_CRUD_Controller";
 import { RouterController } from '../../interfaces/routerController';
-import {Router} from 'express';
+import { Router } from 'express';
+import { UserValidator } from '../../middlewares/userValidator';
 
 export class UserRouter implements RouterController {
     public router: Router;
@@ -15,7 +16,7 @@ export class UserRouter implements RouterController {
     }
 
     setupRoutes() {
-        this.router.post(`/${this.baseUrl}`, (req: Request, res: Response) => {
+        this.router.post(`/${this.baseUrl}`, UserValidator.checkFields, (req: Request, res: Response) => {
             this.crud.create(req, res);
         });
 

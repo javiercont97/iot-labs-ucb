@@ -1,5 +1,5 @@
 import express = require('express');
-import { PORT } from '../config/constants';
+import { PORT, appLogger } from '../config/constants';
 import { router } from '../services/routes/router';
 
 const app = express();
@@ -10,5 +10,5 @@ app.use(express.json());
 app.use(router);
 
 app.listen( PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-})
+    appLogger.debug('Server Status', '1', `Server listening on PORT ${PORT}`);
+});

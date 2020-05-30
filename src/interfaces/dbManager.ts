@@ -13,7 +13,7 @@ export class DB {
     private _models: IModels;
 
     private constructor() {
-        connect( MONGO_URI, {useNewUrlParser: true});
+        connect( MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true});
         this._db = connection;
         this._db.on('open', this.connected);
         this._db.on('error', this.error);
@@ -23,7 +23,7 @@ export class DB {
         }
     }
 
-    private static get Models() {
+    public static get Models() {
         if(!DB.instance) {
             DB.instance = new DB();
         }
@@ -38,3 +38,6 @@ export class DB {
         appLogger.error('Database', '0x01', error);
     }
 }
+
+
+DB.Models;

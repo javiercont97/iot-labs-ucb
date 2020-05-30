@@ -1,7 +1,7 @@
-import { Document, Types, Model, Schema } from "mongoose";
+import { Document, Types, Model, Schema, model } from "mongoose";
 
 
-export interface IUser extends Document {
+declare interface IUser extends Document {
     name: String,
     email: String,
     password: String,
@@ -9,7 +9,8 @@ export interface IUser extends Document {
     apps: Types.ObjectId[],
     openSessions: Types.ObjectId[],
     img: String,
-    status: Boolean
+    status: Boolean,
+    role: String
 }
 
 export interface UserModel extends Model<IUser> {};
@@ -22,11 +23,13 @@ export class User {
         const schema = new Schema({
             name:{
                 type: String,
-                required: [true, 'Name is required']
+                required: [true, 'Name is required'],
+                unique: true
             },
             email:{
                 type: String,
-                required: [true, 'email i required']
+                required: [true, 'email i required'],
+                unique: true
             },
             password: {
                 type: String,
@@ -49,8 +52,14 @@ export class User {
             status: {
                 type: Boolean,
                 default: true
+            },
+            role: {
+                type: String,
+                default: 'User'
             }
         });
+
+        this._model = model<IUser>('User', schema);
     }
 
     public get model(): Model<IUser> {

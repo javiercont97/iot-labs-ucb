@@ -16,7 +16,7 @@ export class UserRouter implements RouterController {
     }
 
     setupRoutes() {
-        this.router.post(`/${this.baseUrl}`, UserValidator.checkFields, (req: Request, res: Response) => {
+        this.router.post(`/${this.baseUrl}`, [UserValidator.checkFields, UserValidator.validateFirstAdminCreation], (req: Request, res: Response) => {
             this.crud.create(req, res);
         });
 

@@ -5,7 +5,7 @@ To wake up server it is first necessary to download dependencies using `npm`:
 ```
 npm install
 ```
-There are two excecuting methods. One for development and other for production each of them are available in NPM script form.
+### There are two excecuting methods. One for development and other for production each of them are available in NPM script form.
 - Develpment Initialization command
 ```
 npm run devel-env

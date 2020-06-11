@@ -1,13 +1,18 @@
 {
     "server": {
-        "PORT": 3000,
+        "PORT": 12321,
         "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
     },
     "security": {
         "SALT_SIZE": 25
     },
     "debugging": {
-        "DEBUG_LEVEL": "3",
+        "DEBUG_LEVEL": [
+            "verbose",
+            "info",
+            "warning",
+            "error"
+        ],
         "DEBUGGING_METHOD": "Console"
     }
 }

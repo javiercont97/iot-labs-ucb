@@ -5,29 +5,64 @@ import { createWriteStream, WriteStream } from 'fs';
 import { resolve } from 'path';
 
 export class FileLogger implements Logger {
+    private verboseLogFile: WriteStream;
     private infoLogFile: WriteStream;
+    private warningLogFile: WriteStream;
     private errorLogFile: WriteStream;
-    private debugLogFile: WriteStream;
 
     constructor () {
-        let infoPath = resolve(`log/${new Date().toLocaleString().split(' ')[0]}-Info.txt`);
-        let errorPath = resolve(`log/${new Date().toLocaleString().split(' ')[0]}-Error.txt`);
-        let debugPath = resolve(`log/${new Date().toLocaleString().split(' ')[0]}-Debug.txt`);
+        let verbosePath = resolve(`log/VerbosePath.txt`);
+        let infoPath = resolve(`log/Info.txt`);
+        let warningPath = resolve(`log/Warning.txt`);
+        let errorPath = resolve(`log/Error.txt`);
 
+        this.verboseLogFile = createWriteStream( verbosePath , { flags: 'a' });
         this.infoLogFile = createWriteStream( infoPath , { flags: 'a' });
+        this.warningLogFile = createWriteStream( warningPath , { flags: 'a' });
         this.errorLogFile = createWriteStream( errorPath , { flags: 'a' });
-        this.debugLogFile = createWriteStream( debugPath , { flags: 'a' });
     }
 
-    public info(topic: string, information: string): void {
-        this.infoLogFile.write(`${topic} [${new Date().toLocaleString()}]:\t${information}\n`);
+    /**
+     * Writes message to verbose file
+     * @param topic Topic
+     * @param message Verbose message
+     */
+    public verbose(topic: string, message: string): void {
+        if(DEBUG_LEVEL.includes('verbose')) {
+            this.verboseLogFile.write(`[${new Date().toLocaleString()}, ${topic}]: \"${message}\"\n`);
+        }
     }
-    public error(topic: string, errorCode: string, errorMessage: string): void {
-        this.errorLogFile.write(`${topic} [${new Date().toLocaleString()}] (Error Code:${errorCode}):\t${errorMessage}\n`);
+
+    /**
+     * Writes message to info file
+     * @param topic Topic
+     * @param message Info message
+     */
+    public info(topic: string, message: string): void {
+        if(DEBUG_LEVEL.includes('info')) {
+            this.infoLogFile.write(`[${new Date().toLocaleString()}, ${topic}]: \"${message}\"\n`);
+        }
     }
-    public debug(topic: string, debugLevel: string, debugInformation: string): void {
-        if(debugLevel <= DEBUG_LEVEL) {
-            this.debugLogFile.write(`${topic} [${new Date().toLocaleString()}] (Debug level ${debugLevel}):\t${debugInformation}\n`);
+    
+    /**
+     * Writes message to warning file
+     * @param topic Topic
+     * @param message Warning message
+     */
+    public warning(topic: string, message: string): void {
+        if(DEBUG_LEVEL.includes('warning')) {
+            this.warningLogFile.write(`[${new Date().toLocaleString()}, ${topic}]: \"${message}\"\n`);
+        }
+    }
+
+    /**
+     * Writes message to error file
+     * @param topic Topic
+     * @param message Error message
+     */
+    public error(topic: string, message: string): void {
+        if(DEBUG_LEVEL.includes('error')) {
+            this.errorLogFile.write(`[${new Date().toLocaleString()}, ${topic}]: \"${message}\"\n`);
         }
     }
 }

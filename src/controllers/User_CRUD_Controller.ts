@@ -4,18 +4,19 @@ import { PasswordHaher } from '../middlewares/passwordHashing';
 import { appLogger } from '../config/constants';
 import { DB } from '../interfaces/dbManager';
 
+import _ = require('underscore');
+
 export class UserCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
+        let data = _.pick(req.body, ['name', 'password', 'email', 'role']);
         // Hash password
-        req.body.password = PasswordHaher.saltHashPassword(req.body.password);
+        data.password = PasswordHaher.saltHashPassword(data.password);
 
-        let user = new DB.Models.User(req.body);
-
-        appLogger.debug('CRUD User (Create)', '3', JSON.stringify(req.body));
+        let user = new DB.Models.User(data);
 
         user.save((err, userDB) => {
             if (err) {
-                appLogger.debug('CRUD User (Create)', '2', 'Database error while creating a user');
+                appLogger.error('CRUD User (Create)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         errorCode: '0x0c',
@@ -23,7 +24,6 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
-                appLogger.debug('CRUD User (Create)', '2', 'A new user has been created');
                 return res.json({
                     message: `User created successfully (ID=${userDB.id})`
                 });
@@ -32,7 +32,6 @@ export class UserCrudController extends CRUD_Controller {
     }
 
     public read(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
-        appLogger.debug('CRUD User (Read)', '2', 'GET users/');
         res.status(501).json({
             err: {
                 errorCode: "0x07",
@@ -43,11 +42,10 @@ export class UserCrudController extends CRUD_Controller {
 
     public readOne(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
-        appLogger.debug('CRUD User (Read one)', '3', JSON.stringify({id, data: req.body}));
 
         DB.Models.User.findById(id, 'name email salutation apps img role', (err, userDB) => {
             if (err) {
-                appLogger.debug('CRUD User (Read one)', '2', 'Database error while reading a user');
+                appLogger.error('CRUD User (Read one)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
                         errorCode: "0x0d",
@@ -55,7 +53,6 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
-                appLogger.debug('CRUD User (Read one)', '2', 'A user has been retrieved');
                 return res.json({
                     user: userDB
                 });
@@ -64,12 +61,13 @@ export class UserCrudController extends CRUD_Controller {
     }
 
     public update(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
-        let id = req.params.id;
-        appLogger.debug('CRUD User (Read one)', '3', JSON.stringify({id, data: req.body}));
+        let data = _.pick(req.body, ['name', 'email', 'salutation', 'img', 'password']);
 
-        DB.Models.User.findByIdAndUpdate(id, req.body, (err, userDB) => {
+        let id = req.params.id;
+
+        DB.Models.User.findByIdAndUpdate(id, data, (err, userDB) => {
             if (err) {
-                appLogger.debug('CRUD User (Read one)', '2', 'Database error while updating a user');
+                appLogger.error('CRUD User (Update)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
                         errorCode: "0x0e",
@@ -77,7 +75,6 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
-                appLogger.debug('CRUD User (Read one)', '2', 'A user has been updated');
                 return res.json({
                     message: 'User updated successfully'
                 });
@@ -87,11 +84,10 @@ export class UserCrudController extends CRUD_Controller {
 
     public delete(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
-        appLogger.debug('CRUD User (Read one)', '3', JSON.stringify({id, data: req.body}));
 
         DB.Models.User.findByIdAndUpdate(id, {status: false}, (err, userDB) => {
             if (err) {
-                appLogger.debug('CRUD User (Read one)', '2', 'Database error while deleting a user');
+                appLogger.error('CRUD User (Delete)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
                         errorCode: "0x0f",
@@ -99,7 +95,6 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
-                appLogger.debug('CRUD User (Read one)', '2', 'A user has been deleted');
                 return res.json({
                     message: 'User deleted successfully'
                 });

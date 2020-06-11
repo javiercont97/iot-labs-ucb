@@ -7,7 +7,7 @@ declare interface IUser extends Document {
     password: String,
     salutation: String,
     apps: Types.ObjectId[],
-    openSessions: Types.ObjectId[],
+    openSessions: Object[],
     img: String,
     status: Boolean,
     role: String
@@ -43,7 +43,7 @@ export class User {
                 default: []
             },
             openSessions: {
-                type: [Types.ObjectId],
+                type: [Object],
                 default: []
             },
             img: {

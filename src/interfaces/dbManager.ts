@@ -13,7 +13,7 @@ export class DB {
     private _models: IModels;
 
     private constructor() {
-        connect( MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true});
+        connect( MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
         this._db = connection;
         this._db.on('open', this.connected);
         this._db.on('error', this.error);
@@ -31,11 +31,11 @@ export class DB {
     }
 
     private connected(){
-        appLogger.debug('Database', '1', 'Database ONLINE')
+        appLogger.info('Database', 'Database connected')
     }
 
     private error (error) {
-        appLogger.error('Database', '0x01', error);
+        appLogger.error('Database', JSON.stringify(error));
     }
 }
 

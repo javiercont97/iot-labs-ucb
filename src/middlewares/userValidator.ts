@@ -5,29 +5,27 @@ import { DB } from '../interfaces/dbManager';
 export class UserValidator {
     public static checkFields(req: Request, res: Response, next: Function): void {
         let data = req.body;
+        appLogger.verbose('Middleware(UserValidator)', 'Running middleware(checkFields)');
         if (data.name == undefined) {
-            appLogger.debug('CRUD User (Create)', '2', 'Name missing');
+            appLogger.warning('Check user\'s fields', `Name missing`);
             res.status(400).json({
                 err: {
-                    code: '0x0b',
                     message: 'Cannot create Entity due to data incompleteness'
                 }
             });
         } else {
             if (data.email == undefined) {
-                appLogger.debug('CRUD User (Create)', '2', 'e-mail missing');
+                appLogger.warning('Check user\'s fields', `E-mail missing`);
                 res.status(400).json({
                     err: {
-                        code: '0x0b',
                         message: 'Cannot create Entity due to data incompleteness'
                     }
                 });
             } else {
                 if (data.password == undefined) {
-                    appLogger.debug('CRUD User (Create)', '2', 'Password missing');
+                    appLogger.warning('Check user\'s fields', `Password missing`);
                     res.status(400).json({
                         err: {
-                            code: '0x0b',
                             message: 'Cannot create Entity due to data incompleteness'
                         }
                     });
@@ -40,27 +38,27 @@ export class UserValidator {
 
     public static validateFirstAdminCreation(req: Request, res: Response, next: Function): void {
         let data = req.body;
+        appLogger.verbose('Middleware(UserValidator)', 'Running middleware(validateFirstAdminCreation)');
         if (data.role == undefined) {
             next();
         } else {
             if (data.role == 'Admin') {
                 DB.Models.User.findOne({ role: 'Admin' }, (err, availableAdmin) => {
                     if (err) {
+                        appLogger.error('Middleware(UserValidator)', JSON.stringify(err));
                         res.status(500).json({
                             err: {
-                                errorCode: '0x0d',
                                 message: err
                             }
                         });
                     } else {
                         if (availableAdmin == undefined) {
+                            appLogger.info('Create ADMIN user', 'Admin user created');
                             next();
-                            appLogger.debug('CRUD User (Create)', '2', 'Admin user created');
                         } else {
-                            appLogger.debug('CRUD User (Create)', '2', 'Admin user already exists');
+                            appLogger.warning('Create ADMIN user', 'Admin user already exists');
                             res.status(400).json({
                                 err: {
-                                    errorCode: '0x0c',
                                     message: 'There is already an Admin'
                                 }
                             });
@@ -73,7 +71,6 @@ export class UserValidator {
                 } else {
                     res.status(400).json({
                         err: {
-                            errorCode: '0x10',
                             message: 'Cannot create Entity due to incorrect data (Allowed roles: [\'Admin\', \'User\'])'
                         }
                     });
@@ -83,6 +80,7 @@ export class UserValidator {
     }
 
     public static verifyOwnership(req: Request, res: Response, next: Function): void {
-        
+        appLogger.verbose('Middleware(UserValidator)', 'Running middleware(verifyOwnership)');
+        next();
     }
 }

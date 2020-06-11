@@ -28,15 +28,51 @@ enum ConsoleFontColor {
 }
 
 export class ConsoleLogger implements Logger {
-    public info(topic: string, information: string): void {
-        console.log(`${ConsoleFontColor.FgYellow}${topic}:${ConsoleFontColor.Reset}\n${ConsoleFontColor.FgCyan}${information}${ConsoleFontColor.Reset}`);
+    /**
+     * Writes verbose messages to the console:
+     *  - Color: White
+     * @param topic Topic
+     * @param message Verbose message
+     */
+    public verbose(topic: string, message: string): void {
+        if (DEBUG_LEVEL.includes('verbose')) {
+            console.log(`${ConsoleFontColor.FgWhite}[${new Date().toLocaleString()}, ${topic}]: \"${message}\"${ConsoleFontColor.Reset}`);
+        }
     }
-    public error(topic: string, errorCode: string, errorMessage: string): void {
-        console.log(`${ConsoleFontColor.FgYellow}${topic} (Error Code:${errorCode}):${ConsoleFontColor.Reset}\n${ConsoleFontColor.FgRed}${errorMessage}${ConsoleFontColor.Reset}`);
+
+    /**
+     * Writes info messages to the console:
+     *  - Color: Cyan
+     * @param topic Topic
+     * @param information Info message
+     */
+    public info(topic: string, message: string): void {
+        if (DEBUG_LEVEL.includes('info')) {
+            console.log(`${ConsoleFontColor.FgCyan}[${new Date().toLocaleString()}, ${topic}]: \"${message}\"${ConsoleFontColor.Reset}`);
+        }
     }
-    public debug(topic: string, debugLevel: string, debugInformation: string): void {
-        if(debugLevel <= DEBUG_LEVEL) {
-            console.log(`${ConsoleFontColor.FgYellow}${topic} (Debug level ${debugLevel}):${ConsoleFontColor.Reset}\n${ConsoleFontColor.FgMagenta}${debugInformation}${ConsoleFontColor.Reset}`);
+
+    /**
+     * Writes info messages to the console:
+     *  - Color: Yellow
+     * @param topic Topic
+     * @param warning Warning message
+     */
+    public warning(topic: string, message: string): void {
+        if (DEBUG_LEVEL.includes('warning')) {
+            console.log(`${ConsoleFontColor.FgYellow}[${new Date().toLocaleString()}, ${topic}]: \"${message}\"${ConsoleFontColor.Reset}`);
+        }
+    }
+
+    /**
+     * Writes info messages to the console:
+     *  - Color: Red
+     * @param topic Topic
+     * @param error Error message
+     */
+    public error(topic: string, message: string): void {
+        if (DEBUG_LEVEL.includes('error')) {
+            console.log(`${ConsoleFontColor.FgRed}[${new Date().toLocaleString()}, ${topic}]: \"${message}\"${ConsoleFontColor.Reset}`);
         }
     }
 }

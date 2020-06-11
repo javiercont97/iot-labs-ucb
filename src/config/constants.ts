@@ -19,14 +19,7 @@ export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb+srv://mainframe-d
 export const SALT_SIZE = SETTINGS.security.SAL_SIZE || 15;
 
 // Logger
-/**
- * Debug levels:
- *  0: No debug
- *  1: App status
- *  2: API calls (functions called)
- *  3: Data given to API function
- */
-export const DEBUG_LEVEL = SETTINGS.debugging.DEBUG_LEVEL || '3';
+export const DEBUG_LEVEL: Array<string> = SETTINGS.debugging.DEBUG_LEVEL || [];
 
 function loggerCreator(): Logger {
     if (SETTINGS.debugging.DEBUGGING_METHOD == undefined) {
@@ -34,9 +27,12 @@ function loggerCreator(): Logger {
     } else {
         if (SETTINGS.debugging.DEBUGGING_METHOD == 'Console') {
             return new ConsoleLogger();
-        }
-        if (SETTINGS.debugging.DEBUGGING_METHOD == 'File') {
-            return new FileLogger();
+        } else {
+            if (SETTINGS.debugging.DEBUGGING_METHOD == 'File') {
+                return new FileLogger();
+            } else {
+                return new ConsoleLogger();
+            }
         }
     }
 }

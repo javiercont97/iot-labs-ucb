@@ -1,5 +1,5 @@
 import mailjet = require('node-mailjet');
-import { appLogger } from '../../config/constants';
+import { appLogger, HOST_URL } from '../../config/constants';
 
 class Mailer {
     private static mailjet = mailjet.connect('a4c82f01ae8c4af028920c52363065fa', '1544ce6fff38e5aff2888f9c12444e3b');
@@ -27,11 +27,27 @@ class Mailer {
                         ],
                         "Subject": "Activar cuenta",
                         "TextPart": "",
-                        "HTMLPart": `<body>
-                                        <h3>Bienvenido a <a href='http://localhost:12321/'>Kelmorian Labs</a>!</h3> <br/>
-                                        <p>Si no creaste una cuenta ignora este mensage</p> <br/>
-                                        <a href='http://localhost:12321/api/activate-user?id=${id}'>Activar cuenta</a>
-                                    </body>`,
+                        "HTMLPart": `<link href="https://bootstrapbuildspace.sfo2.cdn.digitaloceanspaces.com//FaMTgWDWqBvS/bQGzymUKfyyK/bootstrap.css" rel="stylesheet">
+                                    <div class="container">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-md4">
+                                                <h3>Bienvenido a <a href='${HOST_URL}'>Kelmorian Labs</a>!</h3><br/>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center justify-content-center">
+                                            <p>
+                                                Para empezar a utilizar Kelmorian Labs activa tu cuenta haciendo click en el boton.
+                                            </p><br/>
+                                        </div>
+                                        <div class="row align-items-center justify-content-center">
+                                            <p>
+                                                Si no creaste una cuenta ignora este mensage
+                                            </p>
+                                        </div>
+                                        <div class="row align-items center justify-content-center">
+                                            <a class="btn btn-primary" href='${HOST_URL}/api/activate-user?id=${id}'>Activar cuenta</a>
+                                        </div>
+                                    </div>`,
                         "CustomID": "AppGettingStartedTest"
                     }
                 ]

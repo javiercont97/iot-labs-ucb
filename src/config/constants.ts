@@ -37,4 +37,7 @@ function loggerCreator(): Logger {
     }
 }
 
+// Utils
+export const HOST_URL = `${SETTINGS.server.HOST_URL}:${PORT}` || `http://localhost:${PORT}`
+
 export const appLogger = loggerCreator();

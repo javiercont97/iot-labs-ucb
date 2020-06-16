@@ -1,14 +1,9 @@
 import { randomBytes as CryptoRandomBytes, createCipher as CryptoCipher, createDecipher as CryptoDecipher } from 'crypto';
+import { Request, Response } from 'express';
+import { DB } from '../interfaces/dbManager';
+
 
 class Authentication {
-    private static appendSession() {
-
-    }
-
-    private static removeSession() {
-
-    }
-
     /**
      * 
      * @param text String to cipher
@@ -29,7 +24,7 @@ class Authentication {
     private static decrypt(encrypted: string, key: string): string {
         let decipher = CryptoDecipher('aes192', key);
         let decrypted = decipher.update(encrypted, 'hex');
-        decrypted = Buffer.concat([decrypted, decipher.final() ]);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();
     }
 
@@ -38,7 +33,7 @@ class Authentication {
      * @param userID User ID
      * @param platform OS platform (Win32, linux, darwin, etc)
      */
-    public static createSessionObject(userID: string, platform: string): {key: string, cipher: string, timeStamp: Date, platform: string } {
+    public static createSessionObject(userID: string, platform: string): { key: string, session: string } {
         let session = {
             timeStamp: new Date(),
             platform,
@@ -51,25 +46,68 @@ class Authentication {
 
         return {
             key,
-            cipher: this.encrypt(JSON.stringify({id: session.userID, platform: session.platform, timeStamp: session.timeStamp}), key),
-            timeStamp: new Date(),
-            platform
+            session: this.encrypt(JSON.stringify({ id: session.userID, platform: session.platform, timeStamp: session.timeStamp }), key)
         }
     };
 
     /**
      * 
-     * @param session Session object should contain .cipher value to be decrypted and compared to .platform, .id and .timeStamp
-     * @param key Key string is used to decrypt session .cipher value
+     * @param cipher Stored session object
+     * @param session Current session object
+     * @param key Decryption Key
      */
-    public static verifySession({cipher, platform, id, timeStamp}, key: string): boolean {
-        let decryptedSession = this.decrypt( cipher, key);
-        let sessionObj = JSON.parse(decryptedSession);
+    public static verifySession(cipher: string, session: string, key: string): boolean {
+        let storedSession = JSON.parse(this.decrypt(cipher, key));
+        let currentSession = JSON.parse(this.decrypt(session, key));
 
-        if(sessionObj === {id, platform, timeStamp}) {
+        if (storedSession.id == currentSession.id && storedSession.platform == currentSession.platform && storedSession.timeStamp == currentSession.timeStamp) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Verify is current session is active
+     * @param req Request object
+     * @param res Response object
+     * @param next Function to be executed on success
+     */
+    public static verifySessionActive(req: Request, res: Response, next: Function): void {
+        let id = String(req.query.user);
+        let session = String(req.query .session);
+
+        DB.Models.User.findById(id, (err, userDB) => {
+            if(err) {
+                return res.status(500).json({
+                    err
+                });
+            }
+            if(userDB === null) {
+                return res.status(404).json({
+                    err: {
+                        message: 'No such user'
+                    }
+                });
+            }
+
+            let openSessions = userDB.openSessions;
+
+            let index = openSessions.findIndex( value => {
+                return value.session == session;
+            });
+
+
+            if(index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
+                return res.status(403).json({
+                    err: {
+                        message: 'Invalid session'
+                    }
+                });
+            }
+
+            next();
+        });
+
     }
 }
 

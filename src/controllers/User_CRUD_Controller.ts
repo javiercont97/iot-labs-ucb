@@ -5,6 +5,7 @@ import { appLogger } from '../config/constants';
 import { DB } from '../interfaces/dbManager';
 
 import _ = require('underscore');
+import Mailer from '../services/mail/mailer';
 
 export class UserCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
@@ -19,11 +20,12 @@ export class UserCrudController extends CRUD_Controller {
                 appLogger.error('CRUD User (Create)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
-                        errorCode: '0x0c',
                         message: err
                     }
                 });
             } else {
+                Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
+
                 return res.json({
                     message: `User created successfully (ID=${userDB.id})`
                 });
@@ -34,7 +36,6 @@ export class UserCrudController extends CRUD_Controller {
     public read(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         res.status(501).json({
             err: {
-                errorCode: "0x07",
                 message: "Route callback unimplemented"
             }
         });
@@ -48,7 +49,6 @@ export class UserCrudController extends CRUD_Controller {
                 appLogger.error('CRUD User (Read one)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
-                        errorCode: "0x0d",
                         message: err
                     }
                 });
@@ -62,15 +62,19 @@ export class UserCrudController extends CRUD_Controller {
 
     public update(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let data = _.pick(req.body, ['name', 'email', 'salutation', 'img', 'password']);
-
         let id = req.params.id;
+
+        if('password' in data) {
+            // Hash password
+            data.password = PasswordHaher.saltHashPassword(data.password);
+        }
+
 
         DB.Models.User.findByIdAndUpdate(id, data, (err, userDB) => {
             if (err) {
                 appLogger.error('CRUD User (Update)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
-                        errorCode: "0x0e",
                         message: err
                     }
                 });
@@ -90,7 +94,6 @@ export class UserCrudController extends CRUD_Controller {
                 appLogger.error('CRUD User (Delete)', JSON.stringify(err));
                 res.status(404).json({
                     err: {
-                        errorCode: "0x0f",
                         message: err
                     }
                 });

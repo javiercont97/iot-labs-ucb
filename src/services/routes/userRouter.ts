@@ -5,6 +5,7 @@ import { Router } from 'express';
 import { UserValidator } from '../../middlewares/userValidator';
 import { AuthController } from '../../controllers/authController';
 import { appLogger } from '../../config/constants';
+import Authentication from '../../middlewares/authentication';
 
 export class UserRouter implements RouterController {
     public router: Router;
@@ -49,8 +50,13 @@ export class UserRouter implements RouterController {
         });
 
         appLogger.verbose('User router', `POST /logout`);
-        this.router.post(`/logout`, [UserValidator.verifyOwnership], (req: Request, res: Response) => {
+        this.router.post(`/logout`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
             AuthController.logout(req, res);
+        });
+
+        appLogger.verbose('User router', 'GET /activate-user');
+        this.router.get('/activate-user', (req: Request, res: Response) => {
+            AuthController.activateUser(req, res);
         });
     }
 }

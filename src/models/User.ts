@@ -1,16 +1,22 @@
 import { Document, Types, Model, Schema, model } from "mongoose";
 
 
+interface Session {
+    key: string,
+    session: string,
+    keep: boolean
+}
+
 declare interface IUser extends Document {
-    name: String,
-    email: String,
-    password: String,
-    salutation: String,
+    name: string,
+    email: string,
+    password: string,
+    salutation: string,
     apps: Types.ObjectId[],
-    openSessions: Object[],
-    img: String,
+    openSessions: Session[],
+    img: string,
     status: Boolean,
-    role: String
+    role: string
 }
 
 export interface UserModel extends Model<IUser> {};
@@ -51,7 +57,7 @@ export class User {
             },
             status: {
                 type: Boolean,
-                default: true
+                default: false
             },
             role: {
                 type: String,

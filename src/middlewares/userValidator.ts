@@ -1,3 +1,17 @@
+/********************************************
+ *
+ *	@file:			userValidator.ts
+ *  @module         middlewares
+ * 
+ *	@author:		Javier Mauricio Contreras Guzman
+ *
+ *	@description:	This class middleware validates user related operations
+ *                      - checkFields:                  verifies fields at creation
+ *                      - validateFirstAdminCreation:   verifies admin user creation
+ *
+ *******************************************/
+
+
 import { Request, Response } from 'express';
 import { appLogger } from '../config/constants';
 import { DB } from '../interfaces/dbManager';

@@ -1,3 +1,14 @@
+/********************************************
+ *
+ *	@file:			userRouter.ts
+ *	@module:		services/routes
+ *
+ *	@author:		Javier Mauricio Contreras Guzman
+ *
+ *	@description:	User related operations router
+ *
+ *******************************************/
+
 import { Request, Response } from 'express';
 import { UserCrudController } from "../../controllers/User_CRUD_Controller";
 import { RouterController } from '../../interfaces/routerController';

@@ -14,6 +14,7 @@ declare interface IUser extends Document {
     salutation: string,
     apps: Types.ObjectId[],
     openSessions: Session[],
+    devices: Types.ObjectId[],
     img: string,
     status: Boolean,
     role: string
@@ -50,6 +51,10 @@ export class User {
             },
             openSessions: {
                 type: [Object],
+                default: []
+            },
+            devices: {
+                type: [Types.ObjectId],
                 default: []
             },
             img: {

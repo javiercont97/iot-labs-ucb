@@ -1,6 +1,20 @@
+/********************************************
+ *
+ *	@file:			authController
+ *	@module:		controllers
+ *
+ *	@author:		Javier Mauricio Contreras Guzman
+ *
+ *	@description:	Authentication controllers
+ *                      - login:            Returns session object which is meant to be saved insive browser
+ *                      - logout:           Removes session object from system
+ *                      - activateUser      Activates user's account to use the system
+ *
+ *******************************************/
+
 import { Request, Response } from 'express';
 import _ = require('underscore');
-import { appLogger } from '../config/constants';
+import { appLogger, HOST_URL } from '../config/constants';
 import Authentication from '../middlewares/authentication';
 import { DB } from '../interfaces/dbManager';
 import { PasswordHaher } from '../middlewares/passwordHashing';
@@ -100,7 +114,7 @@ export class AuthController {
                     });
                 }
 
-                res.redirect('/signin');
+                res.redirect(`${HOST_URL}/signin`);
             });
         });
     }
@@ -123,7 +137,7 @@ export class AuthController {
                 });
             }
 
-            res.redirect('http://localhost:12321/signin');
+            res.redirect(`${HOST_URL}/signin`);
         });
     }
 }

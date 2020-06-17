@@ -44,7 +44,7 @@ export class UserCrudController extends CRUD_Controller {
     public readOne(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
 
-        DB.Models.User.findById(id, 'name email salutation apps img role', (err, userDB) => {
+        DB.Models.User.findById(id, 'name email salutation img role apps devices openSessions', (err, userDB) => {
             if (err) {
                 appLogger.error('CRUD User (Read one)', JSON.stringify(err));
                 res.status(404).json({
@@ -89,6 +89,9 @@ export class UserCrudController extends CRUD_Controller {
     public delete(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
 
+        /**
+         * @todo change this method to permanentely delete user and all his resources
+         */
         DB.Models.User.findByIdAndUpdate(id, {status: false}, (err, userDB) => {
             if (err) {
                 appLogger.error('CRUD User (Delete)', JSON.stringify(err));

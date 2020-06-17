@@ -92,9 +92,4 @@ export class UserValidator {
             }
         }
     }
-
-    public static verifyOwnership(req: Request, res: Response, next: Function): void {
-        appLogger.verbose('Middleware(UserValidator)', 'Running middleware(verifyOwnership)');
-        next();
-    }
 }

@@ -3,6 +3,7 @@ import { Document, Model, Schema, model } from "mongoose";
 
 declare interface IDevice extends Document {
     name: string,
+    description: string,
     apiKey: string
 }
 
@@ -16,13 +17,16 @@ export class Device {
         const schema = new Schema({
             name:{
                 type: String,
-                required: [true, 'Name is required'],
-                unique: true
+                required: [true, 'Name is required']
+            },
+            description: {
+                type: String,
+                required: [true, 'Description is required'],
+                default: ''
             },
             apiKey:{
                 type: String,
-                required: [true, 'API key i required'],
-                unique: true
+                required: [true, 'API key i required']
             }
         });
 

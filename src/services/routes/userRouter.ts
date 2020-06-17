@@ -36,22 +36,22 @@ export class UserRouter implements RouterController {
         });
 
         appLogger.verbose('User router', `GET /${this.baseUrl}`);
-        this.router.get(`/${this.baseUrl}`, (req: Request, res: Response) => {
+        this.router.get(`/${this.baseUrl}`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
             this.crud.read(req, res);
         });
 
         appLogger.verbose('User router', `GET /${this.baseUrl}/:id`);
-        this.router.get(`/${this.baseUrl}/:id`, (req: Request, res: Response) => {
+        this.router.get(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
             this.crud.readOne(req, res);
         });
 
         appLogger.verbose('User router', `PUT /${this.baseUrl}/:id`);
-        this.router.put(`/${this.baseUrl}/:id`, (req: Request, res: Response) => {
+        this.router.put(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
             this.crud.update(req, res);
         });
 
         appLogger.verbose('User router', `DELETE /${this.baseUrl}/:id`);
-        this.router.delete(`/${this.baseUrl}/:id`, (req: Request, res: Response) => {
+        this.router.delete(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
             this.crud.delete(req, res);
         });
 

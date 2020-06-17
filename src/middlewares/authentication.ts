@@ -104,7 +104,6 @@ class Authentication {
                     }
                 });
             }
-
             next();
         });
 

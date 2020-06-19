@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { CRUD_Controller } from '../interfaces/crudController';
-import { PasswordHaher } from '../middlewares/passwordHashing';
-import { appLogger } from '../config/constants';
-import { DB } from '../interfaces/dbManager';
+import { PasswordHaher } from '../../middlewares/passwordHashing';
+import { appLogger } from '../../config/constants';
+import { DB } from '../../interfaces/dbManager';
 
 import _ = require('underscore');
-import Mailer from '../services/mail/mailer';
+import Mailer from '../../middlewares/mailer';
 
 export class UserCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {

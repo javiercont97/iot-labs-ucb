@@ -10,13 +10,13 @@
  *******************************************/
 
 import { Request, Response } from 'express';
-import { UserCrudController } from "../../controllers/User_CRUD_Controller";
-import { RouterController } from '../../interfaces/routerController';
+import { UserCrudController } from "../controllers/User_CRUD_Controller";
+import { RouterController } from '../interfaces/routerController';
 import { Router } from 'express';
-import { UserValidator } from '../../middlewares/userValidator';
-import { AuthController } from '../../controllers/authController';
+import { UserValidator } from '../middlewares/userValidator';
+import { AuthController } from '../controllers/authController';
 import { appLogger } from '../../config/constants';
-import Authentication from '../../middlewares/authentication';
+import Authentication from '../middlewares/authentication';
 
 export class UserRouter implements RouterController {
     public router: Router;

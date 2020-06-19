@@ -1,8 +1,8 @@
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 
-import { ConsoleLogger } from "../services/logs/consoleLogger";
-import { FileLogger } from "../services/logs/fileLogger";
+import { ConsoleLogger } from "../middlewares/logs/consoleLogger";
+import { FileLogger } from "../middlewares/logs/fileLogger";
 import { Logger } from '../interfaces/logger';
 
 // load config.json

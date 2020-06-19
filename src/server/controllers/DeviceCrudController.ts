@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { CRUD_Controller } from "../interfaces/crudController";
-import { DB } from '../interfaces/dbManager';
+import { DB } from '../../interfaces/dbManager';
 import { randomBytes as CryptoRandomBytes } from 'crypto';
 
 import _ = require('underscore');
-import { appLogger } from '../config/constants';
+import { appLogger } from '../../config/constants';
 import { Types } from 'mongoose';
 
 export class DeviceCrudController extends CRUD_Controller {

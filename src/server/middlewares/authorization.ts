@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DB } from '../interfaces/dbManager';
+import { DB } from '../../interfaces/dbManager';
 import { Types } from 'mongoose';
 
 

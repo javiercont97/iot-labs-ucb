@@ -10,13 +10,13 @@
  *******************************************/
 
 import { Request, Response } from 'express';
-import { DeviceCrudController } from '../../controllers/DeviceCrudController';
-import { RouterController } from '../../interfaces/routerController';
+import { DeviceCrudController } from '../controllers/DeviceCrudController';
+import { RouterController } from '../interfaces/routerController';
 import { Router } from 'express';
-import { CRUD_Controller } from '../../interfaces/crudController';
+import { CRUD_Controller } from '../interfaces/crudController';
 import { appLogger } from '../../config/constants';
-import Authentication from '../../middlewares/authentication';
-import Authorization from '../../middlewares/authorization';
+import Authentication from '../middlewares/authentication';
+import Authorization from '../middlewares/authorization';
 
 export class DeviceRouter implements RouterController {
     public router: Router;

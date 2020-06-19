@@ -1,6 +1,6 @@
 import express = require('express');
 import { PORT, appLogger } from '../config/constants';
-import { router } from '../services/routes/router';
+import { router } from './routes/router';
 
 import {resolve as resolvePath} from 'path';
 

@@ -13,8 +13,8 @@
 
 
 import { Request, Response } from 'express';
-import { appLogger } from '../config/constants';
-import { DB } from '../interfaces/dbManager';
+import { appLogger } from '../../config/constants';
+import { DB } from '../../interfaces/dbManager';
 
 export class UserValidator {
     public static checkFields(req: Request, res: Response, next: Function): void {

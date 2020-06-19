@@ -14,10 +14,10 @@
 
 import { Request, Response } from 'express';
 import _ = require('underscore');
-import { appLogger, HOST_URL } from '../config/constants';
+import { appLogger, HOST_URL } from '../../config/constants';
 import Authentication from '../middlewares/authentication';
-import { DB } from '../interfaces/dbManager';
-import { PasswordHaher } from '../middlewares/passwordHashing';
+import { DB } from '../../interfaces/dbManager';
+import { PasswordHaher } from '../../middlewares/passwordHashing';
 
 
 export class AuthController {

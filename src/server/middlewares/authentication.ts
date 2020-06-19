@@ -1,6 +1,6 @@
 import { randomBytes as CryptoRandomBytes, createCipher as CryptoCipher, createDecipher as CryptoDecipher } from 'crypto';
 import { Request, Response } from 'express';
-import { DB } from '../interfaces/dbManager';
+import { DB } from '../../interfaces/dbManager';
 
 
 class Authentication {

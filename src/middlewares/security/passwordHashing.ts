@@ -1,5 +1,5 @@
 import { randomBytes, createHmac } from 'crypto';
-import { SALT_SIZE } from '../config/constants';
+import { SALT_SIZE, appLogger } from '../../config/constants';
 
 
 class PasswordInfo {
@@ -13,7 +13,12 @@ class PasswordInfo {
 }
 
 export class PasswordHaher {
-    private static genRandomString(length): String {
+    /**
+     * Generates a string of the given length in hex format
+     * @param {number} length Random string length
+     */
+    private static genRandomString(length: number): String {
+        appLogger.verbose('Password Hasher', 'Generating random string');
         return randomBytes(Math.ceil(length / 2))
             .toString('hex') /** convert to hexadecimal format */
             .slice(0, length);   /** return required number of characters */
@@ -21,24 +26,35 @@ export class PasswordHaher {
 
     /**
      * hash password with sha512.
-     * @function
      * @param {string} password - List of required fields.
      * @param {string} salt - Data to be validated.
      */
     private static sha512(password: String, salt: String): PasswordInfo {
+        appLogger.verbose('Password Hasher', 'Creating hash');
         let hash = createHmac('sha512', salt.toString() ); /** Hashing algorithm sha512 */
         hash.update(password.toString());
         let value = hash.digest('hex');
         return new PasswordInfo ( salt, value );
     };
 
-    public static saltHashPassword(userpassword): String {
+    /**
+     * Create a password hashed string
+     * @param {string} userpassword Password provided by User
+     */
+    public static saltHashPassword(userpassword: string): String {
+        appLogger.verbose('Password Hasher', 'Creating sal-hash');
         let salt = this.genRandomString(SALT_SIZE);
         let saltedHash = this.sha512(userpassword, salt);
         return `${saltedHash.salt}$${saltedHash.hash}`;
     }
 
+    /**
+     * Compares password given by user with DB stored hash
+     * @param {string} saltedHash DB stored hash
+     * @param {string} password Password provided by User
+     */
     public static verifyPassword(saltedHash: String, password: String): Boolean {
+        appLogger.verbose('Password Hasher', 'Validating hash');
         let salt = saltedHash.split('$')[0];
         let saltedHashToCompare = this.sha512(password, salt);
         return (saltedHash == `${saltedHashToCompare.salt}$${saltedHashToCompare.hash}`);

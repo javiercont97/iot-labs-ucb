@@ -57,6 +57,7 @@ export class UserValidator {
             next();
         } else {
             if (data.role == 'Admin') {
+                appLogger.verbose('Middleware(UserValidator)', 'Attempt to create Admin user');
                 DB.Models.User.findOne({ role: 'Admin' }, (err, availableAdmin) => {
                     if (err) {
                         appLogger.error('Middleware(UserValidator)', JSON.stringify(err));
@@ -67,7 +68,7 @@ export class UserValidator {
                         });
                     } else {
                         if (availableAdmin == undefined) {
-                            appLogger.info('Create ADMIN user', 'Admin user created');
+                            appLogger.verbose('Create ADMIN user', 'Admin user created');
                             next();
                         } else {
                             appLogger.warning('Create ADMIN user', 'Admin user already exists');
@@ -81,8 +82,10 @@ export class UserValidator {
                 });
             } else {
                 if (data.role == 'User') {
+                    appLogger.verbose('Middleware(UserValidator)', 'Attempt to create User');
                     next();
                 } else {
+                    appLogger.warning('Middleware(UserValidator)', 'Data incompleteness');
                     res.status(400).json({
                         err: {
                             message: 'Cannot create Entity due to incorrect data (Allowed roles: [\'Admin\', \'User\'])'

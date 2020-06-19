@@ -17,10 +17,14 @@ export class DB {
 
     private constructor() {
         connect( MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
+
+        appLogger.verbose('Database', 'Connecting DB server');
+
         this._db = connection;
         this._db.on('open', this.connected);
         this._db.on('error', this.error);
 
+        appLogger.verbose('Database', 'Loading DB models');
         this._models = {
             User: new User().model,
             Device: new Device().model

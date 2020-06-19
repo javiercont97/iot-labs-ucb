@@ -1,4 +1,5 @@
 import { Document, Types, Model, Schema, model } from "mongoose";
+import { appLogger } from "../config/constants";
 
 
 interface Session {
@@ -74,6 +75,7 @@ export class User {
     }
 
     public get model(): Model<IUser> {
+        appLogger.verbose('Database models', 'Creating user Model');
         return this._model;
     }
 }

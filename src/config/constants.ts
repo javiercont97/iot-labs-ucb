@@ -9,8 +9,9 @@ import { Logger } from '../interfaces/logger';
 const path = resolve('./config.json');
 const SETTINGS = JSON.parse(readFileSync(path).toString());
 
-// Server PORT
+// Server
 export const PORT = SETTINGS.server.PORT || 3000;
+export const HOST_URL = `${SETTINGS.server.HOST_URL}:${PORT}` || `http://localhost:${PORT}`
 
 // Database
 export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe`;
@@ -18,9 +19,11 @@ export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb+srv://mainframe-d
 // Authentication and Authorization
 export const SALT_SIZE = SETTINGS.security.SAL_SIZE || 15;
 
+// Services
+export const PING_FREQ = SETTINGS.services.PING_FREQ || 500;
+
 // Logger
 export const DEBUG_LEVEL: Array<string> = SETTINGS.debugging.DEBUG_LEVEL || [];
-
 function loggerCreator(): Logger {
     if (SETTINGS.debugging.DEBUGGING_METHOD == undefined) {
         return new ConsoleLogger();
@@ -38,6 +41,4 @@ function loggerCreator(): Logger {
 }
 
 // Utils
-export const HOST_URL = `${SETTINGS.server.HOST_URL}:${PORT}` || `http://localhost:${PORT}`
-
 export const appLogger = loggerCreator();

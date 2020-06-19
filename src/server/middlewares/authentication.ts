@@ -1,6 +1,7 @@
 import { randomBytes as CryptoRandomBytes, createCipher as CryptoCipher, createDecipher as CryptoDecipher } from 'crypto';
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
+import { appLogger } from '../../config/constants';
 
 
 class Authentication {
@@ -10,6 +11,7 @@ class Authentication {
      * @param key Key to cipher
      */
     private static encrypt(text: string, key: string): string {
+        appLogger.verbose('Middleware(Authentication)', 'Encryption called');
         const cipher = CryptoCipher('aes192', key);
         let token = cipher.update(text);
         token = Buffer.concat([token, cipher.final()]);
@@ -22,6 +24,7 @@ class Authentication {
      * @param key Key to decipher
      */
     private static decrypt(encrypted: string, key: string): string {
+        appLogger.verbose('Middleware(Authentication)', 'Decryption called');
         let decipher = CryptoDecipher('aes192', key);
         let decrypted = decipher.update(encrypted, 'hex');
         decrypted = Buffer.concat([decrypted, decipher.final()]);
@@ -34,6 +37,7 @@ class Authentication {
      * @param platform OS platform (Win32, linux, darwin, etc)
      */
     public static createSessionObject(userID: string, platform: string): { key: string, session: string } {
+        appLogger.verbose('Middleware(Authentication)', 'Create session object');
         let session = {
             timeStamp: new Date(),
             platform,
@@ -57,6 +61,7 @@ class Authentication {
      * @param key Decryption Key
      */
     public static verifySession(cipher: string, session: string, key: string): boolean {
+        appLogger.verbose('Middleware(Authentication)', 'Verify session object');
         let storedSession = JSON.parse(this.decrypt(cipher, key));
         let currentSession = JSON.parse(this.decrypt(session, key));
 
@@ -73,16 +78,19 @@ class Authentication {
      * @param next Function to be executed on success
      */
     public static verifySessionActive(req: Request, res: Response, next: Function): void {
+        appLogger.verbose('Middleware(Authentication)', 'Verify if session is active');
         let id = String(req.query.user);
         let session = String(req.query .session);
 
         DB.Models.User.findById(id, (err, userDB) => {
             if(err) {
+                appLogger.error('Middleware(Authentication)', JSON.stringify(err));
                 return res.status(500).json({
                     err
                 });
             }
             if(userDB === null) {
+                appLogger.warning('Middleware(Authentication)', 'No such user');
                 return res.status(404).json({
                     err: {
                         message: 'No such user'
@@ -98,12 +106,14 @@ class Authentication {
 
 
             if(index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
+                appLogger.warning('Middleware(Authentication)', 'Session rejected');
                 return res.status(403).json({
                     err: {
                         message: 'Invalid session'
                     }
                 });
             }
+            appLogger.verbose('Middleware(Authentication)', 'Session successfully verified');
             next();
         });
 

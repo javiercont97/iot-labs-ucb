@@ -1,5 +1,5 @@
 import mailjet = require('node-mailjet');
-import { appLogger, HOST_URL } from '../config/constants';
+import { appLogger, HOST_URL } from '../../config/constants';
 
 class Mailer {
     private static mailjet = mailjet.connect('a4c82f01ae8c4af028920c52363065fa', '1544ce6fff38e5aff2888f9c12444e3b');
@@ -11,6 +11,7 @@ class Mailer {
      * @param name User's name
      */
     public static sendActivationEmail(id: string, mail: string, name: string): void {
+        appLogger.verbose('Mailer', 'Sending user activation e-mail');
         let request = this.mailjet.post('send', { 'version': 'v3.1' })
             .request({
                 "Messages": [
@@ -37,7 +38,7 @@ class Mailer {
             });
 
         request.then((res) => {
-            JSON.stringify(res);
+            appLogger.verbose('Mailer', JSON.stringify(res.body));
         }).catch(err => {
             appLogger.error('Mailer', JSON.stringify(err));
         });
@@ -50,7 +51,7 @@ class Mailer {
      * @param name User's name
      */
     public static sendRecoveryMail(id: string, mail: string, name: string): void {
-
+        appLogger.verbose('Mailer', 'Sending account recovery e-mail');
     }
 }
 

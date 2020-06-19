@@ -17,7 +17,7 @@ import _ = require('underscore');
 import { appLogger, HOST_URL } from '../../config/constants';
 import Authentication from '../middlewares/authentication';
 import { DB } from '../../interfaces/dbManager';
-import { PasswordHaher } from '../../middlewares/passwordHashing';
+import { PasswordHaher } from '../../middlewares/security/passwordHashing';
 
 
 export class AuthController {
@@ -32,6 +32,7 @@ export class AuthController {
                 });
             }
             if (userDB === null) {
+                appLogger.warning('Authentication', 'No such user');
                 return res.status(400).json({
                     err: {
                         message: 'Incorrect username or password'
@@ -40,6 +41,7 @@ export class AuthController {
             }
 
             if (!userDB.status) {
+                appLogger.warning('Authentication', 'User not verified');
                 return res.status(400).json({
                     err: {
                         message: 'User not verified'
@@ -47,7 +49,9 @@ export class AuthController {
                 })
             }
 
+            appLogger.verbose('Authentication', 'Verify password');
             if (!PasswordHaher.verifyPassword(userDB.password, data.password)) {
+                appLogger.warning('Authentication', 'Incorrect');
                 return res.status(400).json({
                     err: {
                         message: 'Incorrect username or password'
@@ -62,11 +66,13 @@ export class AuthController {
 
             DB.Models.User.findByIdAndUpdate(userDB.id, {openSessions}, (err, sessionedUser) => {
                 if(err) {
+                    appLogger.error('Authentication', JSON.stringify(err));
                     return res.status(500).json({
                         err
                     });
                 }
 
+                appLogger.verbose('Authentication', 'User logged in');
                 res.json({
                     session: session.session,
                     userID: sessionedUser.id
@@ -81,11 +87,13 @@ export class AuthController {
 
         DB.Models.User.findById(id, (err, userDB) => {
             if(err) {
+                appLogger.error('Authentication', JSON.stringify(err));
                 return res.status(500).json({
                     err
                 });
             }
             if(userDB === null) {
+                appLogger.warning('Authentication', 'No such user');
                 return res.status(404).json({
                     err: {
                         message: 'No such user'
@@ -101,12 +109,14 @@ export class AuthController {
 
             DB.Models.User.findByIdAndUpdate(id, {openSessions}, (err, closedUser) => {
                 if(err) {
+                    appLogger.error('Authentication', JSON.stringify(err));
                     return res.status(500).json({
                         err
                     });
                 }
 
                 if(closedUser === null) {
+                    appLogger.warning('Authentication', 'No such user');
                     return res.status(404).json({
                         err: {
                             message: 'No such user'
@@ -114,6 +124,7 @@ export class AuthController {
                     });
                 }
 
+                appLogger.verbose('Authentication', 'User logged out');
                 res.redirect(`${HOST_URL}/signin`);
             });
         });
@@ -124,12 +135,14 @@ export class AuthController {
 
         DB.Models.User.findByIdAndUpdate(id, {status: true}, (err, activatedUser) => {
             if(err) {
+                appLogger.error('Authentication', JSON.stringify(err));
                 return res.status(500).json({
                     err
                 });
             }
 
             if(activatedUser === null) {
+                appLogger.warning('Authentication', 'No such user');
                 return res.status(404).json({
                     err: {
                         message: 'No such user'
@@ -137,6 +150,7 @@ export class AuthController {
                 });
             }
 
+            appLogger.verbose('Authentication', 'User has been activated');
             res.redirect(`${HOST_URL}/signin`);
         });
     }

@@ -11,6 +11,7 @@ export class DeviceCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let data = _.pick(req.body, ['name', 'description', 'userID']);
 
+        appLogger.verbose('CRUD Device (Create)', 'Generate API key');
         let apiKeyLength = 64;
         let apiKey = CryptoRandomBytes(Math.ceil(apiKeyLength / 2))
             .toString('hex')
@@ -18,6 +19,7 @@ export class DeviceCrudController extends CRUD_Controller {
 
         DB.Models.User.findById(data.userID, (err, userDB) => {
             if (err) {
+                appLogger.error('CRUD Device (Create)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         message: err
@@ -26,6 +28,7 @@ export class DeviceCrudController extends CRUD_Controller {
             }
 
             if (userDB == null) {
+                appLogger.warning('CRUD Device (Create)', 'Device not created, could not find User');
                 return res.status(404).json({
                     err: {
                         message: 'Device not created, could not find User'
@@ -50,12 +53,14 @@ export class DeviceCrudController extends CRUD_Controller {
 
                 DB.Models.User.findByIdAndUpdate(userDB.id, { devices }, (err, appenddedUser) => {
                     if (err) {
+                        appLogger.error('CRUD Device (Create)', JSON.stringify(err));
                         return res.status(500).json({
                             err: {
                                 message: err
                             }
                         });
                     }
+                    appLogger.verbose('CRUD Device (Create)', 'Device created');
                     return res.json({
                         message: `Device created successfully (ID=${deviceDB.id}) for user ID=${appenddedUser.id}`
                     });
@@ -70,6 +75,7 @@ export class DeviceCrudController extends CRUD_Controller {
         let ownerID = String(req.query.user);
         DB.Models.User.findById(ownerID, (err, userDB) => {
             if(err) {
+                appLogger.error('CRUD Device (Read List)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         message: err
@@ -78,6 +84,7 @@ export class DeviceCrudController extends CRUD_Controller {
             }
 
             if(userDB == null) {
+                appLogger.warning('CRUD Device (Read List)', 'User not found');
                 return res.status(404).json({
                     err: {
                         message: 'User not found'
@@ -87,12 +94,14 @@ export class DeviceCrudController extends CRUD_Controller {
 
             DB.Models.Device.find({_id: userDB.devices}, (err, devices) => {
                 if(err) {
+                    appLogger.error('CRUD Device (Read List)', JSON.stringify(err));
                     return res.status(500).json({
                         err: {
                             message: err
                         }
                     })
                 }
+                appLogger.verbose('CRUD Device (Read List)', 'Devices list retrieved');
                 res.json({
                     devices
                 });
@@ -105,6 +114,7 @@ export class DeviceCrudController extends CRUD_Controller {
 
         DB.Models.Device.findById(deviceID, (err, deviceDB) => {
             if(err) {
+                appLogger.error('CRUD Device (Read One)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         message: err
@@ -112,6 +122,7 @@ export class DeviceCrudController extends CRUD_Controller {
                 });
             }
             if(deviceDB == null) {
+                appLogger.warning('CRUD Device (Read One)', 'Device not found');
                 return res.status(404).json({
                     err: {
                         message: 'Device not found'
@@ -119,6 +130,7 @@ export class DeviceCrudController extends CRUD_Controller {
                 });
             }
 
+            appLogger.verbose('CRUD Device (Read One)', 'Device retrieved');
             res.json({
                 device: deviceDB
             });
@@ -132,6 +144,7 @@ export class DeviceCrudController extends CRUD_Controller {
 
         DB.Models.Device.findByIdAndUpdate(deviceID, data, (err, deviceDB) => {
             if(err) {
+                appLogger.error('CRUD Device (Update)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         message: err
@@ -139,6 +152,7 @@ export class DeviceCrudController extends CRUD_Controller {
                 });
             }
             if(deviceDB == null) {
+                appLogger.warning('CRUD Device (Update)', 'Device not found');
                 return res.status(404).json({
                     err: {
                         message: 'Device not found'
@@ -146,6 +160,7 @@ export class DeviceCrudController extends CRUD_Controller {
                 });
             }
 
+            appLogger.verbose('CRUD Device (Update)', 'Device updated');
             res.json({
                 message: 'Device updated successfully'
             });
@@ -158,6 +173,7 @@ export class DeviceCrudController extends CRUD_Controller {
 
         DB.Models.Device.findByIdAndDelete(deviceID, (err, deviceDB) => {
             if(err) {
+                appLogger.error('CRUD Device (Delete)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
                         message: err
@@ -165,6 +181,7 @@ export class DeviceCrudController extends CRUD_Controller {
                 });
             }
             if(deviceDB == null) {
+                appLogger.warning('CRUD Device (Delete)', 'Device not found');
                 return res.status(404).json({
                     err: {
                         message: 'Device not found'
@@ -174,6 +191,7 @@ export class DeviceCrudController extends CRUD_Controller {
 
             DB.Models.User.findById(deviceOwner, (err, userDB) => {
                 if(err) {
+                    appLogger.error('CRUD Device (Delete)', JSON.stringify(err));
                     return res.status(500).json({
                         err: {
                             message: err
@@ -188,12 +206,14 @@ export class DeviceCrudController extends CRUD_Controller {
 
                 DB.Models.User.findByIdAndUpdate(deviceOwner, {devices}, (err, updatedUser) => {
                     if(err) {
+                        appLogger.error('CRUD Device (Delete)', JSON.stringify(err));
                         return res.status(500).json({
                             err: {
                                 message: err
                             }
                         });
                     }
+                    appLogger.verbose('CRUD Device (Delete)', 'Device deleted');
                     res.json({
                         message: 'Device deleted successfully'
                     });

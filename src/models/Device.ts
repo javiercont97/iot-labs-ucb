@@ -1,4 +1,5 @@
 import { Document, Model, Schema, model } from "mongoose";
+import { appLogger } from "../config/constants";
 
 
 declare interface IDevice extends Document {
@@ -34,6 +35,7 @@ export class Device {
     }
 
     public get model(): Model<IDevice> {
+        appLogger.verbose('Database models', 'Creating device Model');
         return this._model;
     }
 }

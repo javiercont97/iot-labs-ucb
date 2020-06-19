@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { CRUD_Controller } from '../interfaces/crudController';
-import { PasswordHaher } from '../../middlewares/passwordHashing';
+import { PasswordHaher } from '../../middlewares/security/passwordHashing';
 import { appLogger } from '../../config/constants';
 import { DB } from '../../interfaces/dbManager';
 
 import _ = require('underscore');
-import Mailer from '../../middlewares/mailer';
+import Mailer from '../../middlewares/notification/mailer';
 
 export class UserCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
@@ -26,6 +26,7 @@ export class UserCrudController extends CRUD_Controller {
             } else {
                 Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
 
+                appLogger.verbose('CRUD User (Create)', 'User created');
                 return res.json({
                     message: `User created successfully (ID=${userDB.id})`
                 });
@@ -34,6 +35,7 @@ export class UserCrudController extends CRUD_Controller {
     }
 
     public read(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
+        appLogger.warning('CRUD User (Read list)', 'Method not implemented');
         res.status(501).json({
             err: {
                 message: "Route callback unimplemented"
@@ -53,6 +55,7 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
+                appLogger.verbose('CRUD User (Read one)', 'User retrieved');
                 return res.json({
                     user: userDB
                 });
@@ -79,6 +82,7 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
+                appLogger.verbose('CRUD User (Update)', 'User updated');
                 return res.json({
                     message: 'User updated successfully'
                 });
@@ -101,6 +105,7 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
+                appLogger.verbose('CRUD User (Delete)', 'User deleted');
                 return res.json({
                     message: 'User deleted successfully'
                 });

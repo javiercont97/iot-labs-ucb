@@ -1,8 +1,11 @@
 {
     "server": {
-        "HOST_URL": "http://192.168.0.14",
+        "HOST_URL": "http://192.168.0.13",
         "PORT": 12321,
         "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
+    },
+    "services": {
+        "PING_FREQ": 10000
     },
     "security": {
         "SALT_SIZE": 25

@@ -1,9 +1,10 @@
 import express = require('express');
 import { PORT, appLogger } from '../config/constants';
 import { router } from './routes/router';
+import WSTelemtryServer from '../services/wstt/wsts';
 
 import {resolve as resolvePath} from 'path';
-import WSTelemtryServer from '../services/wstt/wsts';
+import { createServer as HTTPCreateServer } from 'http';
 
 appLogger.verbose('Server status', 'Waking up server');
 
@@ -26,9 +27,10 @@ app.get('*', (req ,res) =>{
     res.sendFile(resolvePath(__dirname, '../../public/index.html'));
 });
 
-app.listen( PORT, () => {
+let server = HTTPCreateServer(app);
+
+let wstt = new WSTelemtryServer({server});
+
+server.listen( PORT, () => {
     appLogger.info('Server status', `Server listening on PORT ${PORT}`);
 });
-
-
-// let wstt = new WSTelemtryServer();

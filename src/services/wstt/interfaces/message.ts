@@ -1,6 +1,5 @@
 
 
-
 interface KMessage {
     topic: string,
     contend: string | Object,

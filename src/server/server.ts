@@ -3,6 +3,7 @@ import { PORT, appLogger } from '../config/constants';
 import { router } from './routes/router';
 
 import {resolve as resolvePath} from 'path';
+import WSTelemtryServer from '../services/wstt/wsts';
 
 appLogger.verbose('Server status', 'Waking up server');
 
@@ -28,3 +29,6 @@ app.get('*', (req ,res) =>{
 app.listen( PORT, () => {
     appLogger.info('Server status', `Server listening on PORT ${PORT}`);
 });
+
+
+// let wstt = new WSTelemtryServer();

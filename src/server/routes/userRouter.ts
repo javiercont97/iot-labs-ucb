@@ -10,7 +10,7 @@
  *******************************************/
 
 import { Request, Response } from 'express';
-import { UserCrudController } from "../controllers/User_CRUD_Controller";
+import { UserCrudController } from "../controllers/UserCrudController";
 import { RouterController } from '../interfaces/routerController';
 import { Router } from 'express';
 import { UserValidator } from '../middlewares/userValidator';

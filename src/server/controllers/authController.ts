@@ -49,10 +49,10 @@ export class AuthController {
                 })
             }
 
-            appLogger.verbose('Authentication', 'Verify password');
+            appLogger.verbose('Authentication', 'User verified');
             if (!PasswordHaher.verifyPassword(userDB.password, data.password)) {
-                appLogger.warning('Authentication', 'Incorrect');
-                return res.status(400).json({
+                appLogger.warning('Authentication', 'Access denied');
+                return res.status(403).json({
                     err: {
                         message: 'Incorrect username or password'
                     }

@@ -54,7 +54,7 @@ export class PasswordHaher {
      * @param {string} password Password provided by User
      */
     public static verifyPassword(saltedHash: String, password: String): Boolean {
-        appLogger.verbose('Password Hasher', 'Validating hash');
+        appLogger.verbose('Password Hasher', 'Processing password');
         let salt = saltedHash.split('$')[0];
         let saltedHashToCompare = this.sha512(password, salt);
         return (saltedHash == `${saltedHashToCompare.salt}$${saltedHashToCompare.hash}`);

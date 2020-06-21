@@ -1,6 +1,6 @@
 import { appLogger } from '../../config/constants';
 import WebSocket = require('ws');
-import WSTT_Client from './interfaces/peer';
+import WSTT_Client from './controllers/peerController';
 
 
 class WSTelemtryServer extends WebSocket.Server {

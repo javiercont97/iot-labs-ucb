@@ -24,7 +24,6 @@ class Authentication {
      * @param key Key to decipher
      */
     private static decrypt(encrypted: string, key: string): string {
-        appLogger.verbose('Middleware(Authentication)', 'Decryption called');
         let decipher = CryptoDecipher('aes192', key);
         let decrypted = decipher.update(encrypted, 'hex');
         decrypted = Buffer.concat([decrypted, decipher.final()]);
@@ -63,7 +62,9 @@ class Authentication {
     public static verifySession(cipher: string, session: string, key: string): boolean {
         appLogger.verbose('Middleware(Authentication)', 'Verify session object');
         let storedSession = JSON.parse(this.decrypt(cipher, key));
+        appLogger.verbose('Middleware(Authentication)', 'Decrypt stored session');
         let currentSession = JSON.parse(this.decrypt(session, key));
+        appLogger.verbose('Middleware(Authentication)', 'Decrypt provided session');
 
         if (storedSession.id == currentSession.id && storedSession.platform == currentSession.platform && storedSession.timeStamp == currentSession.timeStamp) {
             return true;

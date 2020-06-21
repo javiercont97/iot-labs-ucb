@@ -1,7 +1,7 @@
 import { UserRouter } from "./userRouter";
 import { RouterController } from '../interfaces/routerController';
 import { Router } from 'express';
-import { UserCrudController } from "../controllers/User_CRUD_Controller";
+import { UserCrudController } from "../controllers/UserCrudController";
 import { appLogger } from "../../config/constants";
 import { DeviceRouter } from "./deviceRouter";
 import { DeviceCrudController } from "../controllers/DeviceCrudController";

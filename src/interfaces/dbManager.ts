@@ -1,12 +1,14 @@
 import { UserModel, User } from "../models/User";
 import { DeviceModel, Device } from "../models/Device";
+import { AppModel, App } from "../models/App";
 
 import { Connection, connect, connection } from "mongoose";
 import { MONGO_URI, appLogger } from "../config/constants";
 
 declare interface IModels {
     User: UserModel,
-    Device: DeviceModel
+    Device: DeviceModel,
+    App: AppModel
 }
 
 export class DB {
@@ -27,7 +29,8 @@ export class DB {
         appLogger.verbose('Database', 'Loading DB models');
         this._models = {
             User: new User().model,
-            Device: new Device().model
+            Device: new Device().model,
+            App: new App().model
         }
     }
 

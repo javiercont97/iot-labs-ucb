@@ -1,11 +1,12 @@
-import { Document, Model, Schema, model } from "mongoose";
+import { Document, Model, Schema, model, Types } from "mongoose";
 import { appLogger } from "../config/constants";
 
 
 declare interface IDevice extends Document {
     name: string,
     description: string,
-    apiKey: string
+    apiKey: string,
+    app: Types.ObjectId
 }
 
 export interface DeviceModel extends Model<IDevice> {};
@@ -27,7 +28,11 @@ export class Device {
             },
             apiKey:{
                 type: String,
-                required: [true, 'API key i required']
+                required: [true, 'API key is required']
+            },
+            app: {
+                type: Types.ObjectId,
+                required: false
             }
         });
 

@@ -19,8 +19,6 @@ class WSTT_Client extends EventEmitter {
     
     // Events
     private onMessage = (message: string) => {
-        appLogger.warning('WSTT Client', message);
-        
         this.emit('broadcast', this, message);
     }
 

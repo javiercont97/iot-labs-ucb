@@ -18,9 +18,14 @@ export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb+srv://mainframe-d
 
 // Authentication and Authorization
 export const SALT_SIZE = SETTINGS.security.SAL_SIZE || 15;
+export const API_KEY_SIZE = SETTINGS.security.API_KEY_SIZE || 32;
 
 // Services
-export const PING_FREQ = SETTINGS.services.PING_FREQ || 500;
+export const PING_FREQ = SETTINGS.services.WSTT.PING_FREQ || 500;
+
+// File uploads
+export const ALLOWED_EXTENTIONS: Array<string> = SETTINGS.file_uploads.ALLOWED_EXTENTIONS || ['zip'];
+export const MAX_FILE_SIZE = SETTINGS.file_uploads.MAX_FILE_SIZE || 10;
 
 // Logger
 export const DEBUG_LEVEL: Array<string> = SETTINGS.debugging.DEBUG_LEVEL || [];

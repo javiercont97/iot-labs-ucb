@@ -1,7 +1,7 @@
 /********************************************
  *
  *	@file:			deviceRouter.ts
- *	@module:		services/routes
+ *	@module:		routes
  *
  *	@author:		Javier Mauricio Contreras Guzman
  *

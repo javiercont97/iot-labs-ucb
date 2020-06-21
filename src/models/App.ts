@@ -2,7 +2,7 @@ import { Document, Model, Schema, model } from "mongoose";
 import { appLogger } from "../config/constants";
 
 
-enum PrivacyLevelEnum {
+export enum PrivacyLevelEnum {
     PRIVATE,
     PUBLIC
 };
@@ -11,7 +11,6 @@ declare interface IApp extends Document {
     name: string,
     description: string,
     apiKey: string,
-    path: string,
     resourceFiles: string[],
     privacyLevel: PrivacyLevelEnum
 }
@@ -36,10 +35,6 @@ export class App {
             apiKey:{
                 type: String,
                 required: [true, 'API key is required']
-            },
-            path: {
-                type: String,
-                required: false
             },
             resourceFiles: {
                 type: [String],

@@ -8,17 +8,15 @@ class WSTelemtryServer extends WebSocket.Server {
 
     constructor (config: WebSocket.ServerOptions) {
         super(config);
-
-        appLogger.verbose('WSTT', 'Setup initialization');
-        this.setup();
+        appLogger.verbose('WSTT', 'WSTT Server initialization');
     }
 
-    private setup(): void {
+    public setupWSTT_Server(): void {
         this.on('connection', this.onConnection);
     }
 
     private onConnection = ( socket: WebSocket ) => {
-        appLogger.error('WSTT', `New client connected`);
+        appLogger.verbose('WSTT', `New client connected`);
         let client = new WSTT_Client(socket);
         this.clientList.push(client);
         client.on('broadcast', this.onBroadCast);

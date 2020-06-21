@@ -30,6 +30,7 @@ app.get('*', (req ,res) =>{
 let server = HTTPCreateServer(app);
 
 let wstt = new WSTelemtryServer({server});
+wstt.setupWSTT_Server();
 
 server.listen( PORT, () => {
     appLogger.info('Server status', `Server listening on PORT ${PORT}`);

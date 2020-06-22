@@ -18,6 +18,7 @@ import { appLogger } from '../../config/constants';
 import Authentication from '../middlewares/authentication';
 import Authorization from '../middlewares/authorization';
 import { FileValidator } from '../middlewares/fileValidator';
+import { AppRenderer } from '../controllers/AppRenderer';
 
 export class AppRouter implements RouterController {
     public router: Router;
@@ -54,6 +55,11 @@ export class AppRouter implements RouterController {
         appLogger.verbose('App router', `DELETE /${this.baseUrl}/:id`);
         this.router.delete(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAppOwnership], (req: Request, res: Response) => {
             this.crud.delete(req, res);
+        });
+        
+        appLogger.verbose('App router', `GET /render/:appID/:file`);
+        this.router.get(`/render/:appID/:file`, [], (req: Request, res: Response) => {
+            AppRenderer.renderApp(req, res);
         });
     }
 

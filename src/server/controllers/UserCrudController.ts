@@ -7,6 +7,9 @@ import { DB } from '../../interfaces/dbManager';
 import _ = require('underscore');
 import Mailer from '../../middlewares/notification/mailer';
 
+import { rmdirSync as deleteDir } from 'fs';
+import { resolve as resolvePath } from 'path';
+
 export class UserCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let data = _.pick(req.body, ['name', 'password', 'email', 'role']);
@@ -93,23 +96,57 @@ export class UserCrudController extends CRUD_Controller {
     public delete(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
 
-        /**
-         * @todo change this method to permanentely delete user and all his resources
-         */
-        DB.Models.User.findByIdAndUpdate(id, {status: false}, (err, userDB) => {
+        DB.Models.User.findById(id, (err, userDB) => {
             if (err) {
                 appLogger.error('CRUD User (Delete)', JSON.stringify(err));
-                res.status(404).json({
+                return res.status(404).json({
                     err: {
                         message: err
                     }
                 });
-            } else {
-                appLogger.verbose('CRUD User (Delete)', 'User deleted');
-                return res.json({
-                    message: 'User deleted successfully'
-                });
             }
+
+            DB.Models.Device.remove({_id: userDB.devices}, (err) => {
+                if (err) {
+                    appLogger.error('CRUD User (Delete)', JSON.stringify(err));
+                    return res.status(404).json({
+                        err: {
+                            message: err
+                        }
+                    });
+                }
+
+                DB.Models.App.find( {_id: userDB.apps}, (err, apps) => {
+                    if (err) {
+                        appLogger.error('CRUD User (Delete)', JSON.stringify(err));
+                        return res.status(404).json({
+                            err: {
+                                message: err
+                            }
+                        });
+                    }
+
+                    apps.forEach(app => {
+                        let filePath = resolvePath(__dirname, `../../../app/${app._id}`);
+                        deleteDir(filePath, {recursive: true});
+                    });
+                    
+                    DB.Models.App.remove({_id: userDB.apps}, (err) => {
+                        if (err) {
+                            appLogger.error('CRUD User (Delete)', JSON.stringify(err));
+                            return res.status(404).json({
+                                err: {
+                                    message: err
+                                }
+                            });
+                        }
+                        appLogger.verbose('CRUD User (Delete)', 'User deleted');
+                        return res.json({
+                            message: 'User deleted successfully'
+                        });
+                    });
+                });
+            });
         });
     }
 }

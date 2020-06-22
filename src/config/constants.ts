@@ -19,7 +19,7 @@ export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb://admin@localhost
 // Authentication and Authorization
 export const SALT_SIZE = SETTINGS.security.SALT_SIZE || 15;
 export const API_KEY_SIZE = SETTINGS.security.API_KEY_SIZE || 32;
-export const SESSION_IV = SETTINGS.security.SESSION_IV || "development-iv";
+export const SESSION_IV: string = SETTINGS.security.SESSION_IV || "0123456789abcdef";
 
 // Services
 export const PING_FREQ = SETTINGS.services.WSTT.PING_FREQ || 500;

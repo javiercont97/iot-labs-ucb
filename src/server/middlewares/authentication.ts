@@ -12,7 +12,7 @@ class Authentication {
      */
     private static encrypt(text: string, key: string): string {
         appLogger.verbose('Middleware(Authentication)', 'Encryption called');
-        const cipher = CryptoCipher('aes192', key, SESSION_IV);
+        const cipher = CryptoCipher('aes192', Buffer.from(key), SESSION_IV);
         let token = cipher.update(text);
         token = Buffer.concat([token, cipher.final()]);
         return token.toString('hex');
@@ -24,7 +24,7 @@ class Authentication {
      * @param key Key to decipher
      */
     private static decrypt(encrypted: string, key: string): string {
-        let decipher = CryptoDecipher('aes192', key, SESSION_IV);
+        let decipher = CryptoDecipher('aes192', Buffer.from(key), SESSION_IV);
         let decrypted = decipher.update(encrypted, 'hex');
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();
@@ -43,9 +43,9 @@ class Authentication {
             userID
         }
 
-        let key = CryptoRandomBytes(Math.ceil(32 / 2))
+        let key = CryptoRandomBytes(Math.ceil(24 / 2))
             .toString('hex')
-            .slice(0, 32);
+            .slice(0, 24);
 
         return {
             key,

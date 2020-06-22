@@ -24,7 +24,7 @@
     "security": {
         "SALT_SIZE": 25,
         "API_KEY_SIZE": 64,
-        "SESSION_IV": "918b86b60ced7c51020a369129a0ee6513e61a467a69"
+        "SESSION_IV": "7919cefe87098511"
     },
     "debugging": {
         "DEBUG_LEVEL": [

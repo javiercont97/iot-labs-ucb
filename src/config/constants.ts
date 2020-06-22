@@ -14,11 +14,12 @@ export const PORT = SETTINGS.server.PORT || 3000;
 export const HOST_URL = `${SETTINGS.server.HOST_URL}:${PORT}` || `http://localhost:${PORT}`
 
 // Database
-export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe`;
+export const MONGO_URI = SETTINGS.server.MONGO_URI || `mongodb://admin@localhost/mainframe`;
 
 // Authentication and Authorization
-export const SALT_SIZE = SETTINGS.security.SAL_SIZE || 15;
+export const SALT_SIZE = SETTINGS.security.SALT_SIZE || 15;
 export const API_KEY_SIZE = SETTINGS.security.API_KEY_SIZE || 32;
+export const SESSION_IV = SETTINGS.security.SESSION_IV || "development-iv";
 
 // Services
 export const PING_FREQ = SETTINGS.services.WSTT.PING_FREQ || 500;

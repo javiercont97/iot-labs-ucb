@@ -1,7 +1,7 @@
-import { randomBytes as CryptoRandomBytes, createCipher as CryptoCipher, createDecipher as CryptoDecipher } from 'crypto';
+import { randomBytes as CryptoRandomBytes, createCipheriv as CryptoCipher, createDecipheriv as CryptoDecipher } from 'crypto';
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
-import { appLogger } from '../../config/constants';
+import { appLogger, SESSION_IV } from '../../config/constants';
 
 
 class Authentication {
@@ -12,7 +12,7 @@ class Authentication {
      */
     private static encrypt(text: string, key: string): string {
         appLogger.verbose('Middleware(Authentication)', 'Encryption called');
-        const cipher = CryptoCipher('aes192', key);
+        const cipher = CryptoCipher('aes192', key, SESSION_IV);
         let token = cipher.update(text);
         token = Buffer.concat([token, cipher.final()]);
         return token.toString('hex');
@@ -24,7 +24,7 @@ class Authentication {
      * @param key Key to decipher
      */
     private static decrypt(encrypted: string, key: string): string {
-        let decipher = CryptoDecipher('aes192', key);
+        let decipher = CryptoDecipher('aes192', key, SESSION_IV);
         let decrypted = decipher.update(encrypted, 'hex');
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();

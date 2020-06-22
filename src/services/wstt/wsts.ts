@@ -16,13 +16,21 @@ class WSTelemtryServer extends WebSocket.Server {
     }
 
     private onConnection = ( socket: WebSocket ) => {
-        appLogger.verbose('WSTT', `New client connected`);
         let client = new WSTT_Client(socket);
         this.clientList.push(client);
         client.on('broadcast', this.onBroadCast);
+        client.on('closeConnection', this.onDisconnection);
+        appLogger.verbose('WSTT', `New client connected. Client count: ${this.clientList.length}`);
     }
 
-    private onBroadCast = (sender: WSTT_Client, message: string) => {
+    private onDisconnection = ( disconnectedClient: WSTT_Client ) => {
+        this.clientList = this.clientList.filter( (client: WSTT_Client) => {
+            return client != disconnectedClient;
+        });
+        appLogger.warning('WSTT', `Client disconected. Client count: ${this.clientList.length}`);
+    }
+
+    private onBroadCast = (sender: WSTT_Client, topic: string, message: string | any, senderID: string) => {
         this.clientList.forEach((client: WSTT_Client) => {
             if(sender !== client) {
                 client.sendMessage(message);

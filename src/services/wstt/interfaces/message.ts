@@ -1,8 +1,9 @@
+import IWSTTAuth from "./wsttAuth";
 
 
 interface KMessage {
     topic: string,
-    contend: string | Object,
+    message: string | IWSTTAuth | any,
     sender: string
 }
 

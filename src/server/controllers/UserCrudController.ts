@@ -15,8 +15,16 @@ export class UserCrudController extends CRUD_Controller {
         let data = _.pick(req.body, ['name', 'password', 'email', 'role']);
         // Hash password
         data.password = PasswordHaher.saltHashPassword(data.password);
+        
+        let creationData: any = {
+            ...data
+        };
 
-        let user = new DB.Models.User(data);
+        if(data.role == 'Admin') {
+            creationData.status = true
+        }
+
+        let user = new DB.Models.User(creationData);
 
         user.save((err, userDB) => {
             if (err) {
@@ -27,7 +35,9 @@ export class UserCrudController extends CRUD_Controller {
                     }
                 });
             } else {
-                Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
+                if(data.role != 'Admin') {
+                    Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
+                }
 
                 appLogger.verbose('CRUD User (Create)', 'User created');
                 return res.json({

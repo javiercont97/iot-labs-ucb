@@ -68,7 +68,7 @@ export class UserValidator {
                         });
                     } else {
                         if (availableAdmin == undefined) {
-                            appLogger.verbose('Create ADMIN user', 'Admin user created');
+                            appLogger.verbose('Create ADMIN user', 'Creating Admin user');
                             next();
                         } else {
                             appLogger.warning('Create ADMIN user', 'Admin user already exists');

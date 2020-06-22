@@ -17,6 +17,7 @@ import { UserValidator } from '../middlewares/userValidator';
 import { AuthController } from '../controllers/authController';
 import { appLogger } from '../../config/constants';
 import Authentication from '../middlewares/authentication';
+import Authorization from '../middlewares/authorization';
 
 export class UserRouter implements RouterController {
     public router: Router;
@@ -41,17 +42,17 @@ export class UserRouter implements RouterController {
         });
 
         appLogger.verbose('User router', `GET /${this.baseUrl}/:id`);
-        this.router.get(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
+        this.router.get(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAccountOwnership], (req: Request, res: Response) => {
             this.crud.readOne(req, res);
         });
 
         appLogger.verbose('User router', `PUT /${this.baseUrl}/:id`);
-        this.router.put(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
+        this.router.put(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAccountOwnership], (req: Request, res: Response) => {
             this.crud.update(req, res);
         });
 
         appLogger.verbose('User router', `DELETE /${this.baseUrl}/:id`);
-        this.router.delete(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
+        this.router.delete(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAccountOwnership], (req: Request, res: Response) => {
             this.crud.delete(req, res);
         });
 

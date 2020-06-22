@@ -96,7 +96,7 @@ export class UserCrudController extends CRUD_Controller {
     public delete(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
         let id = req.params.id;
 
-        DB.Models.User.findById(id, (err, userDB) => {
+        DB.Models.User.findByIdAndDelete(id, (err, userDB) => {
             if (err) {
                 appLogger.error('CRUD User (Delete)', JSON.stringify(err));
                 return res.status(404).json({
@@ -130,7 +130,7 @@ export class UserCrudController extends CRUD_Controller {
                         let filePath = resolvePath(__dirname, `../../../app/${app._id}`);
                         deleteDir(filePath, {recursive: true});
                     });
-                    
+
                     DB.Models.App.remove({_id: userDB.apps}, (err) => {
                         if (err) {
                             appLogger.error('CRUD User (Delete)', JSON.stringify(err));

@@ -222,44 +222,56 @@ export class AppCrudController extends CRUD_Controller {
                     });
                 }
 
-                let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
-                appFile.mv(filePath, (err) => {
+                let appPath = resolvePath(__dirname, `../../../app/${appDB._id}`);
+                rmdir(appPath, {recursive: true}, (err) => {
                     if (err) {
-                        appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                        appLogger.error('CRUD App (Update)', JSON.stringify(err));
                         return res.status(500).json({
                             err: {
                                 message: err
                             }
-                        });
-                    }
-                    zipReadStream(filePath)
-                        .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
-                        .promise()
-                        .then(() => {
-                            appLogger.verbose('CRUD App (Create)', 'ZIP file extracted');
-                            unlink(filePath, (err) => {
-                                if (err) {
-                                    appLogger.error('CRUD App (Create)', JSON.stringify(err));
-                                    return res.status(500).json({
-                                        err: {
-                                            message: err
-                                        }
-                                    })
-                                }
-                                appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
-                                appLogger.verbose('CRUD App (Update)', 'App updated');
-                                res.json({
-                                    message: 'App updated successfully'
-                                });
-                            });
-                        }).catch(err => {
+                        })
+                    };
+                    appLogger.verbose('CRUD App (Update)', 'Previous app removed');
+                    let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
+                    appFile.mv(filePath, (err) => {
+                        if (err) {
                             appLogger.error('CRUD App (Create)', JSON.stringify(err));
                             return res.status(500).json({
                                 err: {
                                     message: err
                                 }
                             });
-                        });
+                        }
+                        zipReadStream(filePath)
+                            .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
+                            .promise()
+                            .then(() => {
+                                appLogger.verbose('CRUD App (Create)', 'ZIP file extracted');
+                                unlink(filePath, (err) => {
+                                    if (err) {
+                                        appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                        return res.status(500).json({
+                                            err: {
+                                                message: err
+                                            }
+                                        });
+                                    }
+                                    appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
+                                    appLogger.verbose('CRUD App (Update)', 'App updated');
+                                    res.json({
+                                        message: 'App updated successfully'
+                                    });
+                                });
+                            }).catch(err => {
+                                appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                return res.status(500).json({
+                                    err: {
+                                        message: err
+                                    }
+                                });
+                            });
+                    });
                 });
             } else {
                 appLogger.verbose('CRUD App (Update)', 'App updated');

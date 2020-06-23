@@ -2,9 +2,9 @@ import IWSTTAuth from "./wsttAuth";
 
 
 interface KMessage {
+    targetApp: string,
     topic: string,
-    message: string | IWSTTAuth | any,
-    sender: string
+    message: string | IWSTTAuth | any
 }
 
 

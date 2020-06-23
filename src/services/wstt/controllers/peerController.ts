@@ -5,9 +5,14 @@ import WSTTAuth from "../middlewares/Auth";
 import IWSTTAuth from "../interfaces/wsttAuth";
 import KMessage from "../interfaces/message";
 
+
 class WSTT_Client extends EventEmitter {
     private socket: WebSocket;
     private isAuthenticated: boolean = false;
+
+    // private clientID: string;
+    // private clientType: string;
+
     private isAlive = true;
 
     private beat() {
@@ -24,23 +29,37 @@ class WSTT_Client extends EventEmitter {
     }
 
     private verifyCredentials = async (authObj: IWSTTAuth) => {
+        // should return a promise
         let auth = await WSTTAuth.Authenticate(authObj).then(res => res).catch(err => err);
 
         if (!auth) {
             this.emit('badApiKey', 'API Key rejected');
         }
+        // if(authObj.appID) {
+        //     this.clientType = 'APP';
+        //     this.clientID = authObj.appID
+        // } else {
+        //     this.clientType = 'DEVICE'
+        //     this.clientID = authObj.deviceID;
+        // }
+        
         this.isAuthenticated = auth;
     }
 
     // Events
     private onMessage = (message: string) => {
         let messageData: KMessage = JSON.parse(message);
+
         if (messageData.topic == "Auth") {
             let authData: IWSTTAuth = messageData.message;
             this.verifyCredentials(authData).then(() => { }).catch(err => { appLogger.error('WSTT Client', JSON.stringify(err)) });
         } else {
             if (this.isAuthenticated) {
-                this.emit('broadcast', this, messageData.topic, messageData.message, messageData.sender);
+                if (messageData.topic == "Subs") {
+                    this.emit('subscribe', messageData.message.targetApp, messageData.message.topic, this);
+                } else {
+                    this.emit('broadcast', messageData.targetApp, messageData.topic, messageData.message);
+                }
             }
         }
     }
@@ -50,18 +69,22 @@ class WSTT_Client extends EventEmitter {
         this.emit('closeConnection', this);
     }
 
+
     // Public API
-    public sendMessage(message: string): void {
+    public sendMessage(message: KMessage): void {
         if (this.isAuthenticated) {
             appLogger.verbose('WSTT Client', 'Send message');
-            this.socket.send(message);
+            this.socket.send(JSON.stringify(message));
         }
     }
-
+    
     public closeConnection(message: string = 'Closing connection'): void {
-        appLogger.verbose('WSTT Client', `Closing connection. ${message == 'Closing connection' ? '' : message}`);
+        appLogger.verbose('WSTT Client', `Closing connection.${message == 'Closing connection' ? '' : ` ${message}`}`);
         this.socket.send(JSON.stringify({
-            reason: message
+            topic: 'close',
+            message: {
+                reason: `${message == 'Closing connection' ? 'Normal close' : ` ${message}`}`
+            }
         }));
         this.socket.terminate();
     }

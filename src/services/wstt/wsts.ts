@@ -1,10 +1,12 @@
 import { appLogger } from '../../config/constants';
 import WebSocket = require('ws');
 import WSTT_Client from './controllers/peerController';
+import { KQueue } from './controllers/channelController';
 
 
 class WSTelemtryServer extends WebSocket.Server {
     clientList: Array<WSTT_Client> = [];
+    queue: KQueue;
 
     constructor (config: WebSocket.ServerOptions) {
         super(config);
@@ -12,6 +14,7 @@ class WSTelemtryServer extends WebSocket.Server {
     }
 
     public setupWSTT_Server(): void {
+        this.queue = KQueue.Instance;
         this.on('connection', this.onConnection);
     }
 
@@ -20,22 +23,24 @@ class WSTelemtryServer extends WebSocket.Server {
         this.clientList.push(client);
         client.on('broadcast', this.onBroadCast);
         client.on('closeConnection', this.onDisconnection);
+        client.on('subscribe', this.onSubscribe);
         appLogger.verbose('WSTT', `New client connected. Client count: ${this.clientList.length}`);
     }
 
     private onDisconnection = ( disconnectedClient: WSTT_Client ) => {
+        this.queue.removeConsumer(disconnectedClient);
         this.clientList = this.clientList.filter( (client: WSTT_Client) => {
             return client != disconnectedClient;
         });
-        appLogger.warning('WSTT', `Client disconected. Client count: ${this.clientList.length}`);
+        appLogger.verbose('WSTT', `Client disconected. Client count: ${this.clientList.length}`);
     }
 
-    private onBroadCast = (sender: WSTT_Client, topic: string, message: string | any, senderID: string) => {
-        this.clientList.forEach((client: WSTT_Client) => {
-            if(sender !== client) {
-                client.sendMessage(message);
-            }
-        });
+    private onBroadCast = (appID: string, topic: string, message: any) => {
+        this.queue.publish(appID, topic, message);
+    }
+    
+    private onSubscribe = (appID: string, topic: string, consumer: WSTT_Client) => {
+        this.queue.subscribe(appID, topic, consumer);
     }
 }
 

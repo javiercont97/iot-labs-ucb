@@ -10,7 +10,7 @@ import { resolve as resolvePath } from 'path';
 import { generateApiKey } from '../../middlewares/security/apiKeyGenerator';
 import { PrivacyLevelEnum } from '../../models/App';
 import { Extract as extractZIP } from 'unzipper';
-import { createReadStream as zipReadStream, unlink, rmdir } from 'fs';
+import { createReadStream as zipReadStream, unlink, rmdir, readdirSync as listItems } from 'fs';
 
 
 export class AppCrudController extends CRUD_Controller {
@@ -86,11 +86,24 @@ export class AppCrudController extends CRUD_Controller {
                                             err: {
                                                 message: err
                                             }
-                                        })
+                                        });
                                     }
                                     appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
-                                    res.json({
-                                        message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
+                                    let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
+
+                                    DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
+                                        if (err) {
+                                            appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                            return res.status(500).json({
+                                                err: {
+                                                    message: err
+                                                }
+                                            });
+                                        }
+                                        
+                                        res.json({
+                                            message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
+                                        });
                                     });
                                 });
                             }).catch(err => {
@@ -223,7 +236,7 @@ export class AppCrudController extends CRUD_Controller {
                 }
 
                 let appPath = resolvePath(__dirname, `../../../app/${appDB._id}`);
-                rmdir(appPath, {recursive: true}, (err) => {
+                rmdir(appPath, { recursive: true }, (err) => {
                     if (err) {
                         appLogger.error('CRUD App (Update)', JSON.stringify(err));
                         return res.status(500).json({
@@ -329,7 +342,7 @@ export class AppCrudController extends CRUD_Controller {
                         });
                     }
                     let filePath = resolvePath(__dirname, `../../../app/${appDB._id}`);
-                    rmdir(filePath, {recursive: true}, (err) => {
+                    rmdir(filePath, { recursive: true }, (err) => {
                         if (err) {
                             appLogger.error('CRUD App (Delete)', JSON.stringify(err));
                             return res.status(500).json({

@@ -19,6 +19,7 @@ import Authentication from '../middlewares/authentication';
 import Authorization from '../middlewares/authorization';
 import { FileValidator } from '../middlewares/fileValidator';
 import { AppRenderer } from '../controllers/AppRenderer';
+import { checkAppPrivacyLevel } from '../middlewares/rendererUtils';
 
 export class AppRouter implements RouterController {
     public router: Router;
@@ -57,10 +58,14 @@ export class AppRouter implements RouterController {
             this.crud.delete(req, res);
         });
         
+        appLogger.verbose('App router', `GET /render/:appID/`);
+        this.router.get(`/render/:appID/`, [checkAppPrivacyLevel], (req: Request, res: Response) => {
+            AppRenderer.redirectToApp(req, res);
+        });
+
         appLogger.verbose('App router', `GET /render/:appID/:file`);
-        this.router.get(`/render/:appID/:file`, [], (req: Request, res: Response) => {
-            AppRenderer.renderApp(req, res);
+        this.router.get(`/render/:appID/:file`, [checkAppPrivacyLevel], (req: Request, res: Response) => {
+            AppRenderer.getAppResource(req, res);
         });
     }
-
 }

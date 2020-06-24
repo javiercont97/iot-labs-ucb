@@ -2,6 +2,7 @@ import { randomBytes as CryptoRandomBytes, createCipheriv as CryptoCipher, creat
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
 import { appLogger, SESSION_IV } from '../../config/constants';
+import Authorization from './authorization';
 
 
 class Authentication {
@@ -59,7 +60,7 @@ class Authentication {
      * @param session Current session object
      * @param key Decryption Key
      */
-    public static verifySession(cipher: string, session: string, key: string): boolean {
+    private static verifySession(cipher: string, session: string, key: string): boolean {
         appLogger.verbose('Middleware(Authentication)', 'Verify session object');
         let storedSession = JSON.parse(this.decrypt(cipher, key));
         appLogger.verbose('Middleware(Authentication)', 'Decrypt stored session');
@@ -80,8 +81,8 @@ class Authentication {
      */
     public static verifySessionActive(req: Request, res: Response, next: Function): void {
         appLogger.verbose('Middleware(Authentication)', 'Verify if session is active');
-        let id = String(req.query.user);
-        let session = String(req.query .session);
+        let id = String(req.query.user) || String(req.get('user'));
+        let session = String(req.query .session) || String(req.get('session'));
 
         DB.Models.User.findById(id, (err, userDB) => {
             if(err) {
@@ -115,7 +116,11 @@ class Authentication {
                 });
             }
             appLogger.verbose('Middleware(Authentication)', 'Session successfully verified');
-            next();
+            if(req.params.action == 'render') {
+                Authorization.verifyAppOwnership(req, res, next);
+            } else {
+                next();
+            }
         });
 
     }

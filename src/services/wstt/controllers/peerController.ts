@@ -10,9 +10,6 @@ class WSTT_Client extends EventEmitter {
     private socket: WebSocket;
     private isAuthenticated: boolean = false;
 
-    // private clientID: string;
-    // private clientType: string;
-
     private isAlive = true;
 
     private beat() {
@@ -35,13 +32,6 @@ class WSTT_Client extends EventEmitter {
         if (!auth) {
             this.emit('badApiKey', 'API Key rejected');
         }
-        // if(authObj.appID) {
-        //     this.clientType = 'APP';
-        //     this.clientID = authObj.appID
-        // } else {
-        //     this.clientType = 'DEVICE'
-        //     this.clientID = authObj.deviceID;
-        // }
         
         this.isAuthenticated = auth;
     }
@@ -68,7 +58,6 @@ class WSTT_Client extends EventEmitter {
         appLogger.verbose('WSTT Client', `Socket connection closed`);
         this.emit('closeConnection', this);
     }
-
 
     // Public API
     public sendMessage(message: KMessage): void {

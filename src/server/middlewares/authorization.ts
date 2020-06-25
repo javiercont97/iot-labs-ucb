@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
 import { Types } from 'mongoose';
-import { appLogger } from '../../config/constants';
+import { appLogger, HOST_URL } from '../../config/constants';
+import { isRegExp } from 'underscore';
 
 
 class Authorization {
@@ -11,7 +12,7 @@ class Authorization {
         let userID = String(req.params.id);
 
         DB.Models.User.findById(owner, (err, userDB) => {
-            if(err) {
+            if (err) {
                 appLogger.error('Middleware(Authorization)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
@@ -20,7 +21,7 @@ class Authorization {
                 });
             }
 
-            if(userDB == null) {
+            if (userDB == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
                 return res.status(404).json({
                     err: {
@@ -30,12 +31,12 @@ class Authorization {
             }
 
             // admin allowed
-            if(userDB.role == 'Admin') {
+            if (userDB.role == 'Admin') {
                 appLogger.verbose('Middleware(Authorization)', 'Admin verified');
                 return next();
             }
 
-            if(owner != userID) {
+            if (owner != userID) {
                 appLogger.warning('Middleware(Authorization)', 'Acess denied');
                 return res.status(403).json({
                     err: {
@@ -55,7 +56,7 @@ class Authorization {
         let deviceID = String(req.params.id);
 
         DB.Models.User.findById(owner, (err, ownerUser) => {
-            if(err) {
+            if (err) {
                 appLogger.error('Middleware(Authorization)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
@@ -64,7 +65,7 @@ class Authorization {
                 });
             }
 
-            if(ownerUser == null) {
+            if (ownerUser == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
                 return res.status(404).json({
                     err: {
@@ -74,7 +75,7 @@ class Authorization {
             }
 
             // admin allowed
-            if(ownerUser.role == 'Admin') {
+            if (ownerUser.role == 'Admin') {
                 DB.Models.User.findOne({ devices: Types.ObjectId(deviceID) }, (err, realOwner) => {
                     if (err) {
                         appLogger.error('Middleware(Authorization)', JSON.stringify(err));
@@ -85,7 +86,7 @@ class Authorization {
                         });
                     }
 
-                    if(realOwner == null) {
+                    if (realOwner == null) {
                         appLogger.warning('Middleware(Authorization)', 'User not found');
                         return res.status(404).json({
                             err: {
@@ -101,7 +102,7 @@ class Authorization {
                 });
             } else {
                 let index = ownerUser.devices.indexOf(Types.ObjectId(deviceID));
-                if(index < 0) {
+                if (index < 0) {
                     appLogger.warning('Middleware(Authorization)', 'Device not found');
                     return res.status(404).json({
                         err: {
@@ -109,7 +110,7 @@ class Authorization {
                         }
                     });
                 }
-    
+
                 appLogger.verbose('Middleware(Authorization)', 'Device ownership verified');
                 next();
             }
@@ -122,7 +123,7 @@ class Authorization {
         let appID = String(req.params.id);
 
         DB.Models.User.findById(owner, (err, ownerUser) => {
-            if(err) {
+            if (err) {
                 appLogger.error('Middleware(Authorization)', JSON.stringify(err));
                 return res.status(500).json({
                     err: {
@@ -131,13 +132,17 @@ class Authorization {
                 });
             }
 
-            if(ownerUser == null) {
+            if (ownerUser == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
-                return res.status(404).json({
-                    err: {
-                        message: 'User not found'
-                    }
-                });
+                if (req.params.action == 'render') {
+                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                } else {
+                    return res.status(404).json({
+                        err: {
+                            message: 'User not found'
+                        }
+                    });
+                }
             }
 
             // admin allowed
@@ -152,13 +157,17 @@ class Authorization {
                         });
                     }
 
-                    if(realOwner == null) {
+                    if (realOwner == null) {
                         appLogger.warning('Middleware(Authorization)', 'User not found');
                         return res.status(404).json({
                             err: {
                                 message: 'User not found'
                             }
                         });
+                    }
+
+                    if (req.params.action == 'render') {
+                        return next();
                     }
 
                     req.query.user = realOwner._id;
@@ -168,13 +177,17 @@ class Authorization {
                 });
             } else {
                 let index = ownerUser.apps.indexOf(Types.ObjectId(appID));
-                if(index < 0) {
+                if (index < 0) {
                     appLogger.warning('Middleware(Authorization)', 'App not found');
-                    return res.status(404).json({
-                        err: {
-                            message: 'App not found'
-                        }
-                    });
+                    if (req.params.action == 'render') {
+                        return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    } else {
+                        return res.status(404).json({
+                            err: {
+                                message: 'App not found'
+                            }
+                        });
+                    }
                 }
 
                 appLogger.verbose('Middleware(Authorization)', 'App ownership verified');

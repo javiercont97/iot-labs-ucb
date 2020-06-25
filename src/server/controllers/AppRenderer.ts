@@ -4,21 +4,18 @@ import { DB } from '../../interfaces/dbManager';
 import { appLogger, HOST_URL } from '../../config/constants';
 
 export class AppRenderer {
-    /**
-     * @todo set middlewares for authorization
-     */
     public static redirectToApp(req: Request, res: Response): void {
         let appID = String(req.params.appID);
-        
+
         DB.Models.App.findById(appID, (err, appDB) => {
-            if(err) {
+            if (err) {
                 appLogger.error('App renderer', JSON.stringify(err));
                 return res.status(500).json({
                     err
                 });
             }
 
-            if(appDB == null) {
+            if (appDB == null) {
                 appLogger.warning('App renderer', 'App not found');
                 return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
             }
@@ -27,11 +24,11 @@ export class AppRenderer {
 
             let index = resources.findIndex(file => {
                 let aux = file.split('.');
-                let extention = aux[aux.length-1];
+                let extention = aux[aux.length - 1];
                 return extention == 'html';
             });
 
-            if(index < 0) {
+            if (index < 0) {
                 return res.status(404).json({
                     err: {
                         message: 'Resource not found'
@@ -42,20 +39,20 @@ export class AppRenderer {
 
             //========================================
             let user: string;
-            if(req.query.user) {
+            if (req.query.user) {
                 user = String(req.query.user);
             } else {
                 user = req.get('user');
             }
             let session: string;
-            if(req.query.session) {
+            if (req.query.session) {
                 session = String(req.query.session);
             } else {
                 session = req.get('session');
             }
             //========================================
-            
-            if(user == undefined && session == undefined) {
+
+            if (user == undefined && session == undefined) {
                 return res.redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}`);
             }
             res.redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}?user=${user}&session=${session}`);
@@ -68,40 +65,24 @@ export class AppRenderer {
         let appPath = resolvePath(__dirname, `../../../app/${appID}/`);
 
         DB.Models.App.findById(appID, (err, appDB) => {
-            if(err) {
+            if (err) {
                 appLogger.info('App renderer', JSON.stringify(err));
                 return res.status(500).json({
                     err
                 });
             }
 
-            if(appDB == null) {
+            if (appDB == null) {
                 appLogger.info('App renderer', 'App not found');
                 return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
             }
 
-            if(appDB.resourceFiles.indexOf(fileName) < 0) {
+            if (appDB.resourceFiles.indexOf(fileName) < 0) {
                 appLogger.info('App renderer', 'Resource not found');
                 return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
             }
 
-            // let user: string;
-            // if(req.query.user) {
-            //     user = String(req.query.user);
-            // } else {
-            //     user = req.get('user');
-            // }
-            // let session: string;
-            // if(req.query.session) {
-            //     session = String(req.query.session);
-            // } else {
-            //     session = req.get('session');
-            // }
-            
-            // res.set('user', user)
-            //     .set('session', session)
             res.sendFile(resolvePath(appPath, fileName));
-                // .redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}?user=${user}&session=${session}`);
         });
     }
 }

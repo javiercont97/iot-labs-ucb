@@ -78,8 +78,7 @@ export class KQueue {
         let subsTopicIndex = this.channels.get(appID).topics.findIndex(auxTopic => {
             return auxTopic.key == topic;
         });
-
-        console.log(`Targets ${this.channels.get(appID).topics[subsTopicIndex].consumers.length}`);
+        
         this.channels.get(appID).topics[subsTopicIndex].consumers.forEach( consumer => {
             consumer.sendMessage({
                 topic,

@@ -4,6 +4,7 @@ import { appLogger, HOST_URL } from '../../config/constants';
 import { PrivacyLevelEnum } from '../../models/App';
 import Authorization from './authorization';
 import Authentication from './authentication';
+import { Types } from 'mongoose';
 
 export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function) => {
     let appID = String(req.params.appID);
@@ -29,16 +30,21 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
         } else {
             appLogger.warning('Middleware (App Privacy Level)', 'Before rendering private app, verify app ownership');
             let owner = String(req.query.user);
-
-            if( owner !== 'undefined' ) {
+            if (owner != 'undefined') {
                 req.params.id = appID;
                 req.params.action = 'render';
                 Authentication.verifySessionActive(req, res, next);
             } else {
-                let aux = req.params.file.split('.');
-                if(aux[aux.length-1] != 'html') {
-                    next();
+                if(req.params.file != undefined) {
+                    let aux = req.params.file.split('.');
+                    if (aux[aux.length - 1] != 'html') {
+                        next();
+                    } else {
+                        appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
+                        return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    }
                 } else {
+                    appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
                     return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
                 }
             }

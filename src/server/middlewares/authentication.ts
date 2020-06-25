@@ -1,7 +1,7 @@
 import { randomBytes as CryptoRandomBytes, createCipheriv as CryptoCipher, createDecipheriv as CryptoDecipher } from 'crypto';
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
-import { appLogger, SESSION_IV } from '../../config/constants';
+import { appLogger, SESSION_IV, HOST_URL } from '../../config/constants';
 import Authorization from './authorization';
 
 
@@ -91,13 +91,17 @@ class Authentication {
                     err
                 });
             }
-            if(userDB === null) {
+            if (userDB === null) {
                 appLogger.warning('Middleware(Authentication)', 'No such user');
-                return res.status(404).json({
-                    err: {
-                        message: 'No such user'
-                    }
-                });
+                if (req.params.action == 'render') {
+                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                } else {
+                    return res.status(404).json({
+                        err: {
+                            message: 'No such user'
+                        }
+                    });
+                }
             }
 
             let openSessions = userDB.openSessions;
@@ -107,13 +111,17 @@ class Authentication {
             });
 
 
-            if(index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
+            if (index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
                 appLogger.warning('Middleware(Authentication)', 'Session rejected');
-                return res.status(403).json({
-                    err: {
-                        message: 'Invalid session'
-                    }
-                });
+                if (req.params.action == 'render') {
+                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                } else {
+                    return res.status(403).json({
+                        err: {
+                            message: 'Invalid session'
+                        }
+                    });
+                }
             }
             appLogger.verbose('Middleware(Authentication)', 'Session successfully verified');
             if(req.params.action == 'render') {

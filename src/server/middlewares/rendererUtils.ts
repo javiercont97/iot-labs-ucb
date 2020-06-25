@@ -2,9 +2,8 @@ import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
 import { appLogger, HOST_URL } from '../../config/constants';
 import { PrivacyLevelEnum } from '../../models/App';
-import Authorization from './authorization';
 import Authentication from './authentication';
-import { Types } from 'mongoose';
+
 
 export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function) => {
     let appID = String(req.params.appID);

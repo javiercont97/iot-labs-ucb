@@ -110,7 +110,6 @@ class Authentication {
                 return value.session == session;
             });
 
-
             if (index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
                 appLogger.warning('Middleware(Authentication)', 'Session rejected');
                 if (req.params.action == 'render') {
@@ -130,7 +129,6 @@ class Authentication {
                 next();
             }
         });
-
     }
 }
 

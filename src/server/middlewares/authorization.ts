@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
 import { Types } from 'mongoose';
 import { appLogger, HOST_URL } from '../../config/constants';
-import { isRegExp } from 'underscore';
 
 
 class Authorization {

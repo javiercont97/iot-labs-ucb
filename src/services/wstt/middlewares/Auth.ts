@@ -56,6 +56,11 @@ class WSTTAuth {
             });
         }
     }
+    // public static async AuthorizeToSubscribe(): Promise<boolean> {
+    //     return new Promise((resolve, reject) => {
+            
+    //     });
+    // }
 }
 
 export default WSTTAuth;

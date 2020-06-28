@@ -34,7 +34,7 @@ export class AppRouter implements RouterController {
 
     public setupRoutes() {
         appLogger.verbose('App router', `POST /${this.baseUrl}`);
-        this.router.post(`/${this.baseUrl}`, [Authentication.verifySessionActive, FileValidator.verifyFileExistance, FileValidator.verifyFileExtention, FileValidator.verifyFileSize], (req: Request, res: Response) => {
+        this.router.post(`/${this.baseUrl}`, [Authentication.verifySessionActive, FileValidator.verifyFileExistance], (req: Request, res: Response) => {
             this.crud.create(req, res);
         });
 
@@ -49,7 +49,7 @@ export class AppRouter implements RouterController {
         });
 
         appLogger.verbose('App router', `PUT /${this.baseUrl}/:id`);
-        this.router.put(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAppOwnership], (req: Request, res: Response) => {
+        this.router.put(`/${this.baseUrl}/:id`, [Authentication.verifySessionActive, Authorization.verifyAppOwnership, FileValidator.verifyFileExistance], (req: Request, res: Response) => {
             this.crud.update(req, res);
         });
 

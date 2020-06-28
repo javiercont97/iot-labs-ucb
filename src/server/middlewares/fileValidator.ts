@@ -6,15 +6,11 @@ import { UploadedFile } from 'express-fileupload';
 export class FileValidator {
     public static verifyFileExistance(req: Request, res: Response, next: Function): void {
         if(!req.files) {
-            appLogger.error('File Validator', 'No file uploaded');
-            res.status(400).json({
-                err: {
-                    message: 'No file uploaded'
-                }
-            });
+            appLogger.warning('File Validator', 'No file uploaded');
+            next();
         } else {
             appLogger.verbose('File Validator', 'File exists');
-            next();
+            FileValidator.verifyFileExtention(req, res, next);
         }
     }
 
@@ -24,7 +20,7 @@ export class FileValidator {
         let extention = fileName[fileName.length - 1];
 
         if(ALLOWED_EXTENTIONS.indexOf(extention) < 0) {
-            appLogger.error('File Validator', `File extention is not allowed [${extention}]`);
+            appLogger.warning('File Validator', `File extention is not allowed [${extention}]`);
             res.status(400).json({
                 err: {
                     message: 'Allowed file extentions are: [' + ALLOWED_EXTENTIONS.join(', ') + ']'
@@ -32,7 +28,7 @@ export class FileValidator {
             });
         } else {
             appLogger.verbose('File Validator', 'File extention verified');
-            next();
+            FileValidator.verifyFileSize(req, res, next);
         }
     }
 
@@ -40,7 +36,7 @@ export class FileValidator {
         let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];
 
         if( (appFile.size/1048576) > MAX_FILE_SIZE) {
-            appLogger.error('File Validator', `Max file size is 25[MB], this file is ${appFile.size/1048576}[MB]`);
+            appLogger.warning('File Validator', `Max file size is 25[MB], this file is ${appFile.size/1048576}[MB]`);
             res.status(400).json({
                 err: {
                     message: `Max file size is 25[MB], this file is ${appFile.size/1048576}[MB]`

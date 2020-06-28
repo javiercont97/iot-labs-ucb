@@ -3,14 +3,14 @@ import { CRUD_Controller } from "../interfaces/crudController";
 import { DB } from '../../interfaces/dbManager';
 
 import _ = require('underscore');
-import { appLogger, ALLOWED_EXTENTIONS, MAX_FILE_SIZE } from '../../config/constants';
+import { appLogger } from '../../config/constants';
 import { Types } from 'mongoose';
 import { UploadedFile } from 'express-fileupload';
 import { resolve as resolvePath } from 'path';
 import { generateApiKey } from '../../middlewares/security/apiKeyGenerator';
 import { PrivacyLevelEnum } from '../../models/App';
 import { Extract as extractZIP } from 'unzipper';
-import { createReadStream as zipReadStream, unlink, rmdir, readdirSync as listItems } from 'fs';
+import { createReadStream as zipReadStream, unlink, rmdir, readdirSync as listItems, mkdirSync } from 'fs';
 
 
 export class AppCrudController extends CRUD_Controller {
@@ -52,6 +52,8 @@ export class AppCrudController extends CRUD_Controller {
                 let apps = userDB.apps;
                 apps.push(Types.ObjectId(`${appDB._id}`));
 
+                mkdirSync(resolvePath(__dirname, `../../../app/${appDB._id}`));
+
                 DB.Models.User.findByIdAndUpdate(userDB._id, { apps }, (err, appendedUser) => {
                     if (err) {
                         appLogger.error('CRUD App (Create)', JSON.stringify(err));
@@ -63,35 +65,30 @@ export class AppCrudController extends CRUD_Controller {
                     }
                     appLogger.verbose('CRUD App (Create)', 'App created');
 
-                    let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];
-                    let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
-                    appFile.mv(filePath, (err) => {
-                        if (err) {
-                            appLogger.error('CRUD App (Create)', JSON.stringify(err));
-                            return res.status(500).json({
-                                err: {
-                                    message: err
-                                }
-                            });
-                        }
-                        zipReadStream(filePath)
-                            .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
-                            .promise()
-                            .then(() => {
-                                appLogger.verbose('CRUD App (Create)', 'ZIP file extracted');
-                                unlink(filePath, (err) => {
-                                    if (err) {
-                                        appLogger.error('CRUD App (Create)', JSON.stringify(err));
-                                        return res.status(500).json({
-                                            err: {
-                                                message: err
-                                            }
-                                        });
+                    if(!req.files) {
+                        // if file doesn't exist
+                        return res.json({
+                            message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
+                        });
+                    } else {
+                        // if file exists
+                        let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];
+                        let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
+                        appFile.mv(filePath, (err) => {
+                            if (err) {
+                                appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                return res.status(500).json({
+                                    err: {
+                                        message: err
                                     }
-                                    appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
-                                    let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
-
-                                    DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
+                                });
+                            }
+                            zipReadStream(filePath)
+                                .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
+                                .promise()
+                                .then(() => {
+                                    appLogger.verbose('CRUD App (Create)', 'ZIP file extracted');
+                                    unlink(filePath, (err) => {
                                         if (err) {
                                             appLogger.error('CRUD App (Create)', JSON.stringify(err));
                                             return res.status(500).json({
@@ -100,21 +97,34 @@ export class AppCrudController extends CRUD_Controller {
                                                 }
                                             });
                                         }
-                                        
-                                        res.json({
-                                            message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
+                                        appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
+                                        let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
+    
+                                        DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
+                                            if (err) {
+                                                appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                                return res.status(500).json({
+                                                    err: {
+                                                        message: err
+                                                    }
+                                                });
+                                            }
+                                            
+                                            res.json({
+                                                message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
+                                            });
                                         });
                                     });
+                                }).catch(err => {
+                                    appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                    return res.status(500).json({
+                                        err: {
+                                            message: err
+                                        }
+                                    });
                                 });
-                            }).catch(err => {
-                                appLogger.error('CRUD App (Create)', JSON.stringify(err));
-                                return res.status(500).json({
-                                    err: {
-                                        message: err
-                                    }
-                                });
-                            });
-                    });
+                        });
+                    }
                 });
             });
         });
@@ -213,27 +223,7 @@ export class AppCrudController extends CRUD_Controller {
             }
 
             if (req.files) {
-                let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];
-                let fileName = String(appFile.name).split('.');
-                let extention = fileName[fileName.length - 1];
-
-                if (ALLOWED_EXTENTIONS.indexOf(extention) < 0) {
-                    appLogger.error('File Validator', `File extention is not allowed [${extention}]`);
-                    return res.status(400).json({
-                        err: {
-                            message: 'Allowed file extentions are: [' + ALLOWED_EXTENTIONS.join(', ') + ']'
-                        }
-                    });
-                }
-
-                if ((appFile.size / 1048576) > MAX_FILE_SIZE) {
-                    appLogger.error('File Validator', `Max file size is 25[MB], this file is ${appFile.size / 1048576}[MB]`);
-                    res.status(400).json({
-                        err: {
-                            message: `Max file size is 25[MB], this file is ${appFile.size / 1048576}[MB]`
-                        }
-                    });
-                }
+                let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];                
 
                 let appPath = resolvePath(__dirname, `../../../app/${appDB._id}`);
                 rmdir(appPath, { recursive: true }, (err) => {
@@ -249,7 +239,7 @@ export class AppCrudController extends CRUD_Controller {
                     let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
                     appFile.mv(filePath, (err) => {
                         if (err) {
-                            appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                            appLogger.error('CRUD App (Update)', JSON.stringify(err));
                             return res.status(500).json({
                                 err: {
                                     message: err
@@ -260,17 +250,17 @@ export class AppCrudController extends CRUD_Controller {
                             .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
                             .promise()
                             .then(() => {
-                                appLogger.verbose('CRUD App (Create)', 'ZIP file extracted');
+                                appLogger.verbose('CRUD App (Update)', 'ZIP file extracted');
                                 unlink(filePath, (err) => {
                                     if (err) {
-                                        appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                        appLogger.error('CRUD App (Update)', JSON.stringify(err));
                                         return res.status(500).json({
                                             err: {
                                                 message: err
                                             }
                                         });
                                     }
-                                    appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
+                                    appLogger.verbose('CRUD App (Update)', 'ZIP file removed');
                                     appLogger.verbose('CRUD App (Update)', 'App updated');
                                     res.json({
                                         message: 'App updated successfully'

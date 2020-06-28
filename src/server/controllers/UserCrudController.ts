@@ -24,25 +24,57 @@ export class UserCrudController extends CRUD_Controller {
             creationData.status = true
         }
 
-        let user = new DB.Models.User(creationData);
-
-        user.save((err, userDB) => {
+        DB.Models.User.findOne({ name: data.name }, (err, userWithName) => {
             if (err) {
                 appLogger.error('CRUD User (Create)', JSON.stringify(err));
                 return res.status(500).json({
-                    err: {
-                        message: err
-                    }
+                    err
                 });
             } else {
-                if(data.role != 'Admin') {
-                    Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
-                }
+                if( userWithName != null ) {
+                    return res.status(400).json({
+                        err: {
+                            message: 'El nombre de usuario ya existe'
+                        }
+                    });
+                } else {
+                    DB.Models.User.findOne({ email: data.email }, (err, userWithEmail) => {
+                        if (err) {
+                            appLogger.error('CRUD User (Create)', JSON.stringify(err));
+                            return res.status(500).json({
+                                err
+                            });
+                        } else {
+                            if( userWithEmail != null ) {
+                                return res.status(400).json({
+                                    err: {
+                                        message: 'El correo ya fue registrado'
+                                    }
+                                });
+                            } else {
+                                let user = new DB.Models.User(creationData);
 
-                appLogger.verbose('CRUD User (Create)', 'User created');
-                return res.json({
-                    message: `User created successfully (ID=${userDB.id})`
-                });
+                                user.save((err, userDB) => {
+                                    if (err) {
+                                        appLogger.error('CRUD User (Create)', JSON.stringify(err));
+                                        return res.status(500).json({
+                                            err
+                                        });
+                                    } else {
+                                        if (data.role != 'Admin') {
+                                            Mailer.sendActivationEmail(userDB.id, userDB.email, userDB.name);
+                                        }
+
+                                        appLogger.verbose('CRUD User (Create)', 'User created');
+                                        return res.json({
+                                            message: `User created successfully (ID=${userDB.id})`
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
             }
         });
     }
@@ -63,9 +95,7 @@ export class UserCrudController extends CRUD_Controller {
             if (err) {
                 appLogger.error('CRUD User (Read one)', JSON.stringify(err));
                 res.status(404).json({
-                    err: {
-                        message: err
-                    }
+                    err
                 });
             } else {
                 appLogger.verbose('CRUD User (Read one)', 'User retrieved');
@@ -90,9 +120,7 @@ export class UserCrudController extends CRUD_Controller {
             if (err) {
                 appLogger.error('CRUD User (Update)', JSON.stringify(err));
                 res.status(404).json({
-                    err: {
-                        message: err
-                    }
+                    err
                 });
             } else {
                 appLogger.verbose('CRUD User (Update)', 'User updated');

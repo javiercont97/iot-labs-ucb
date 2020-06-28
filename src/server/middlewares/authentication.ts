@@ -94,7 +94,11 @@ class Authentication {
             if (userDB === null) {
                 appLogger.warning('Middleware(Authentication)', 'No such user');
                 if (req.params.action == 'render') {
-                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    return res.json({
+                        err: {
+                            message: 'Sin autorización'
+                        }
+                    });
                 } else {
                     return res.status(404).json({
                         err: {
@@ -113,7 +117,11 @@ class Authentication {
             if (index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
                 appLogger.warning('Middleware(Authentication)', 'Session rejected');
                 if (req.params.action == 'render') {
-                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    return res.json({
+                        err: {
+                            message: 'Sin autorización'
+                        }
+                    });
                 } else {
                     return res.status(403).json({
                         err: {

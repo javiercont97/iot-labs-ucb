@@ -17,7 +17,12 @@ export class AppRenderer {
 
             if (appDB == null) {
                 appLogger.warning('App renderer', 'App not found');
-                return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
+                // return res.status(404).json({
+                //     err: {
+                //         message: 'Aplicación no encontrada'
+                //     }
+                // })
+                return res.status(404).redirect(`${HOST_URL}/appnotfound`);
             }
 
             let resources = appDB.resourceFiles;
@@ -53,9 +58,9 @@ export class AppRenderer {
             //========================================
 
             if (user == undefined && session == undefined) {
-                return res.redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}`);
+                return res.status(301).redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}`);
             }
-            res.redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}?user=${user}&session=${session}`);
+            res.status(301).redirect(`${HOST_URL}/api/render/${appID}/${resources[index]}?user=${user}&session=${session}`);
         });
     }
 
@@ -74,12 +79,12 @@ export class AppRenderer {
 
             if (appDB == null) {
                 appLogger.info('App renderer', 'App not found');
-                return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
+                return res.status(308).redirect(`${HOST_URL}/appnotfound`);
             }
 
             if (appDB.resourceFiles.indexOf(fileName) < 0) {
                 appLogger.info('App renderer', 'Resource not found');
-                return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
+                return res.status(308).redirect(`${HOST_URL}/appnotfound`);
             }
 
             res.sendFile(resolvePath(appPath, fileName));

@@ -35,7 +35,7 @@ export class AuthController {
                 appLogger.warning('Authentication', 'No such user');
                 return res.status(400).json({
                     err: {
-                        message: 'Incorrect username or password'
+                        message: 'Usuario o contraseña incorrectos'
                     }
                 });
             }
@@ -44,9 +44,9 @@ export class AuthController {
                 appLogger.warning('Authentication', 'User not verified');
                 return res.status(400).json({
                     err: {
-                        message: 'User not verified'
+                        message: 'El usuario no ha sido verificado. Active su usuario mediante el correo electrónico'
                     }
-                })
+                });
             }
 
             appLogger.verbose('Authentication', 'User verified');
@@ -54,7 +54,7 @@ export class AuthController {
                 appLogger.warning('Authentication', 'Access denied');
                 return res.status(403).json({
                     err: {
-                        message: 'Incorrect username or password'
+                        message: 'Usuario o contraseña incorrectos'
                     }
                 });
             }
@@ -96,7 +96,7 @@ export class AuthController {
                 appLogger.warning('Authentication', 'No such user');
                 return res.status(404).json({
                     err: {
-                        message: 'No such user'
+                        message: 'Usuario no encontrado'
                     }
                 });
             }
@@ -119,13 +119,15 @@ export class AuthController {
                     appLogger.warning('Authentication', 'No such user');
                     return res.status(404).json({
                         err: {
-                            message: 'No such user'
+                            message: 'Usuario no encontrado'
                         }
                     });
                 }
 
                 appLogger.verbose('Authentication', 'User logged out');
-                res.redirect(`${HOST_URL}/signin`);
+                res.json({
+                    message: 'Sesión finalizada'
+                });
             });
         });
     }
@@ -145,13 +147,13 @@ export class AuthController {
                 appLogger.warning('Authentication', 'No such user');
                 return res.status(404).json({
                     err: {
-                        message: 'No such user'
+                        message: 'Usuario no encontrado'
                     }
                 });
             }
 
             appLogger.verbose('Authentication', 'User has been activated');
-            res.redirect(`${HOST_URL}/signin`);
+            res.status(301).redirect(`${HOST_URL}/signin`);
         });
     }
 }

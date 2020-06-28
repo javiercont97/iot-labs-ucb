@@ -1,6 +1,5 @@
 *.html
-*.json
-*.png
-*.jpg
 *.ico
+*.png
+*.json
 */

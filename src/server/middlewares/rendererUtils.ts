@@ -20,7 +20,11 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
 
         if (appDB == null) {
             appLogger.warning('Middleware (App Privacy Level)', 'App not found');
-            return res.status(404).redirect(`${HOST_URL}/APP-NOT-FOUND`);
+            return res.json({
+                err: {
+                    message: 'Aplicación no encontrada'
+                }
+            });
         }
 
         if (appDB.privacyLevel == PrivacyLevelEnum.PUBLIC) {
@@ -40,11 +44,19 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
                         next();
                     } else {
                         appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                        return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                        return res.json({
+                            err: {
+                                message: 'Sin autorización'
+                            }
+                        });
                     }
                 } else {
                     appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    return res.json({
+                        err: {
+                            message: 'Sin autorización'
+                        }
+                    });
                 }
             }
         }

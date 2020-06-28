@@ -134,7 +134,11 @@ class Authorization {
             if (ownerUser == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
                 if (req.params.action == 'render') {
-                    return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                    return res.json({
+                        err: {
+                            message: 'Sin autorización'
+                        }
+                    });
                 } else {
                     return res.status(404).json({
                         err: {
@@ -179,7 +183,11 @@ class Authorization {
                 if (index < 0) {
                     appLogger.warning('Middleware(Authorization)', 'App not found');
                     if (req.params.action == 'render') {
-                        return res.status(403).redirect(`${HOST_URL}/NOT-ALLOWED`);
+                        return res.json({
+                            err: {
+                                message: 'Sin autorización'
+                            }
+                        });
                     } else {
                         return res.status(404).json({
                             err: {

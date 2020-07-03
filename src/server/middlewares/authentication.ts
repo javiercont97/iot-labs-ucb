@@ -102,7 +102,7 @@ class Authentication {
                 } else {
                     return res.status(404).json({
                         err: {
-                            message: 'No such user'
+                            message: 'Usuario no encontrado'
                         }
                     });
                 }
@@ -125,7 +125,7 @@ class Authentication {
                 } else {
                     return res.status(403).json({
                         err: {
-                            message: 'Invalid session'
+                            message: 'Sesión inválida'
                         }
                     });
                 }

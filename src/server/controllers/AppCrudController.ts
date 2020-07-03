@@ -65,7 +65,7 @@ export class AppCrudController extends CRUD_Controller {
                     }
                     appLogger.verbose('CRUD App (Create)', 'App created');
 
-                    if(!req.files) {
+                    if (!req.files) {
                         // if file doesn't exist
                         return res.json({
                             message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
@@ -99,7 +99,7 @@ export class AppCrudController extends CRUD_Controller {
                                         }
                                         appLogger.verbose('CRUD App (Create)', 'ZIP file removed');
                                         let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
-    
+
                                         DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
                                             if (err) {
                                                 appLogger.error('CRUD App (Create)', JSON.stringify(err));
@@ -109,7 +109,7 @@ export class AppCrudController extends CRUD_Controller {
                                                     }
                                                 });
                                             }
-                                            
+
                                             res.json({
                                                 message: `App created successfully (ID=${appDB._id}) for user ID=${appendedUser._id}`
                                             });
@@ -223,7 +223,7 @@ export class AppCrudController extends CRUD_Controller {
             }
 
             if (req.files) {
-                let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];                
+                let appFile: UploadedFile = req.files.appFiles || req.files.appFiles[0];
 
                 let appPath = resolvePath(__dirname, `../../../app/${appDB._id}`);
                 rmdir(appPath, { recursive: true }, (err) => {
@@ -261,9 +261,22 @@ export class AppCrudController extends CRUD_Controller {
                                         });
                                     }
                                     appLogger.verbose('CRUD App (Update)', 'ZIP file removed');
-                                    appLogger.verbose('CRUD App (Update)', 'App updated');
-                                    res.json({
-                                        message: 'App updated successfully'
+                                    let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
+
+                                    DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
+                                        if (err) {
+                                            appLogger.error('CRUD App (Create)', JSON.stringify(err));
+                                            return res.status(500).json({
+                                                err: {
+                                                    message: err
+                                                }
+                                            });
+                                        }
+
+                                        appLogger.verbose('CRUD App (Update)', 'App updated');
+                                        res.json({
+                                            message: 'App updated successfully'
+                                        });
                                     });
                                 });
                             }).catch(err => {

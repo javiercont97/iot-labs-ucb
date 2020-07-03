@@ -2,6 +2,9 @@ import { PORT, appLogger } from '../config/constants';
 import express = require('express');
 import { json as jsonParser, urlencoded as urlParser} from 'body-parser';
 import fileUploader = require('express-fileupload');
+
+import compression = require('compression');
+
 import { router } from './routes/router';
 import WSTelemtryServer from '../services/wstt/wsts';
 
@@ -20,6 +23,9 @@ appLogger.verbose('Server', 'URL-encoded parser has been set up');
 
 app.use(fileUploader());
 appLogger.verbose('Server', 'File parser has been set up');
+
+app.use(compression());
+appLogger.verbose('Server', 'Compression middleware has been set up');
 
 app.use(express.static(resolvePath(__dirname, '../../public')));
 

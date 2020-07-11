@@ -31,6 +31,15 @@ class WSTT_Client extends EventEmitter {
 
         if (!auth) {
             this.emit('badApiKey', 'API Key rejected');
+            this.socket.send(JSON.stringify({
+                topic: 'Auth',
+                res: 'rejected'
+            }));
+        } else {
+            this.socket.send(JSON.stringify({
+                topic: 'Auth',
+                res: 'accepted'
+            }));
         }
         
         this.isAuthenticated = auth;

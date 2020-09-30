@@ -44,6 +44,37 @@ class Mailer {
         });
     }
 
+    
+    public static sendNotificationEmail(mail: string, name: string, app: string, appID: string): void {
+        appLogger.verbose('Mailer', 'Sending application ready e-mail notification');
+        let request = this.mailjet.post('send', { 'version': 'v3.1' })
+            .request({
+                "Messages": [
+                    {
+                        "From": {
+                            "Email": "kelmorian.labs@gmail.com",
+                            "Name": "Kelmorian Labs"
+                        },
+                        "To": [
+                            {
+                                "Email": mail,
+                                "Name": name
+                            }
+                        ],
+                        "Subject": `Your app "${app}" is ready`,
+                        "TextPart": `Dear ${name} your application is ready`,
+                        "HTMLPart": `<h3>Your app <a href="${HOST_URL}/api/render/${appID}">${app}</a> is ready to use`
+                    }
+                ]
+            });
+
+        request.then((res) => {
+            appLogger.verbose('Mailer', JSON.stringify(res.body));
+        }).catch(err => {
+            appLogger.error('Mailer', JSON.stringify(err));
+        });
+    }
+
     /**
      * Sends a recovery e-mail to user's specified mail
      * @param id User ID

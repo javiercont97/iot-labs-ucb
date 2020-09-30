@@ -82,10 +82,10 @@ export class AppRenderer {
                 return res.status(308).redirect(`${HOST_URL}/appnotfound`);
             }
 
-            if (appDB.resourceFiles.indexOf(fileName) < 0) {
-                appLogger.info('App renderer', 'Resource not found');
-                return res.status(308).redirect(`${HOST_URL}/appnotfound`);
-            }
+            // if (appDB.resourceFiles.indexOf(fileName) < 0) {
+            //     appLogger.info('App renderer', 'Resource not found');
+            //     return res.status(308).redirect(`${HOST_URL}/appnotfound`);
+            // }
 
             res.sendFile(resolvePath(appPath, fileName));
         });

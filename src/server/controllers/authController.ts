@@ -6,8 +6,8 @@
  *	@author:		Javier Mauricio Contreras Guzman
  *
  *	@description:	Authentication controllers
- *                      - login:            Returns session object which is meant to be saved insive browser
- *                      - logout:           Removes session object from system
+ *                      - login:            Returns session object which is meant to be saved by the application client
+ *                      - logout:           Removes session object from system's database
  *                      - activateUser      Activates user's account to use the system
  *
  *******************************************/

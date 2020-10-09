@@ -52,8 +52,6 @@ class Broker implements QueueClient {
         if (!username || !password) {
             let err: any = new Error('No username or password provided');
             appLogger.error('MQTT_BROKER', 'No username or password provided');
-            console.log(client);
-            appLogger.error('MQTT_BROKER', 'Client with no username nor password above');
             callback(err, false);
         } else {
             DB.Models.Device.findById(username, (err, deviceDB) => {

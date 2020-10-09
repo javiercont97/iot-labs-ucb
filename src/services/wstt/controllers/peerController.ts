@@ -8,7 +8,7 @@ import KMessage from "../interfaces/message";
 
 class WSTT_Client extends EventEmitter {
     private socket: WebSocket;
-    private isAuthenticated: boolean = false;
+    private isAuthenticated: boolean = true;   // assume client will connect with valid credentials
 
     private isAlive = true;
 
@@ -55,9 +55,9 @@ class WSTT_Client extends EventEmitter {
         } else {
             if (this.isAuthenticated) {
                 if (messageData.topic == "Subs") {
-                    this.emit('subscribe', messageData.message.targetApp, messageData.message.topic, this);
+                    this.emit('subscribe', messageData.message.topic, this);
                 } else {
-                    this.emit('broadcast', messageData.targetApp, messageData.topic, messageData.message);
+                    this.emit('broadcast', messageData.topic, messageData.message);
                 }
             }
         }

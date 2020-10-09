@@ -1,8 +1,7 @@
 
 
 interface IWSTTAuth {
-    appID?: string,
-    deviceID?: string,
+    appID: string,
     apiKey: string
 }
 

@@ -6,10 +6,12 @@ import fileUploader = require('express-fileupload');
 import compression = require('compression');
 
 import { router } from './routes/router';
-import WSTelemtryServer from '../services/wstt/wsts';
+import WSTelemtryServer from '../services/wstt/wstt';
+import Broker from '../services/mqtt/Broker';
 
 import {resolve as resolvePath} from 'path';
 import { createServer as HTTPCreateServer } from 'http';
+import { MessageQueue } from '../services/message_queue/message_queue';
 
 appLogger.verbose('Server', 'Waking up server');
 
@@ -45,6 +47,13 @@ let server = HTTPCreateServer(app);
 
 let wstt = new WSTelemtryServer({server});
 wstt.setupWSTT_Server();
+
+let broker = new Broker();
+broker.init();
+
+// register message queue clients
+MessageQueue.mqtt = broker;
+MessageQueue.wstt = wstt;
 
 server.listen( PORT, () => {
     appLogger.info('Server', `Server listening on PORT ${PORT}`);

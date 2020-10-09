@@ -2,9 +2,11 @@ import { appLogger } from '../../config/constants';
 import WebSocket = require('ws');
 import WSTT_Client from './controllers/peerController';
 import { KQueue } from './controllers/channelController';
+import { QueueClient } from '../message_queue/interfaces/queue_client';
+import { MessageQueue } from '../message_queue/message_queue';
 
 
-class WSTelemtryServer extends WebSocket.Server {
+class WSTelemtryServer extends WebSocket.Server implements QueueClient{
     clientList: Array<WSTT_Client> = [];
     queue: KQueue;
 
@@ -35,12 +37,27 @@ class WSTelemtryServer extends WebSocket.Server {
         appLogger.verbose('WSTT', `Client disconected. Client count: ${this.clientList.length}`);
     }
 
-    private onBroadCast = (appID: string, topic: string, message: any) => {
-        this.queue.publish(appID, topic, message);
+    private onBroadCast = (topic: string, message: any) => {
+        this.queue.publish(topic, message);
+        this.publish(topic, message);
     }
     
-    private onSubscribe = (appID: string, topic: string, consumer: WSTT_Client) => {
-        this.queue.subscribe(appID, topic, consumer);
+    private onSubscribe = (topic: string, consumer: WSTT_Client) => {
+        this.queue.subscribe(topic, consumer);
+    }
+
+    /**
+     * QueueClient interface
+     */
+    publish(topic: string, message: string | object): void {
+        console.log(topic);
+        console.log(message);
+        MessageQueue.publishToMQTT(topic, message);
+    }
+    notify(topic: string, message: string | object): void {
+        console.log(topic);
+        console.log(message);
+        this.queue.publish(topic, message);
     }
 }
 

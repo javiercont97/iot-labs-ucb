@@ -23,6 +23,9 @@ export const SESSION_IV: string = SETTINGS.security.SESSION_IV || "0123456789abc
 
 // Services
 export const PING_FREQ = SETTINGS.services.WSTT.PING_FREQ || 500;
+export const MQTT_PORT = SETTINGS.services.MQTT.MQTT_PORT || 1883;
+
+
 
 // File uploads
 export const ALLOWED_EXTENTIONS: Array<string> = SETTINGS.file_uploads.ALLOWED_EXTENTIONS || ['zip'];

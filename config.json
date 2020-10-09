@@ -13,6 +13,9 @@
         },
         "GUEST_APPS": {
             
+        },
+        "MQTT": {
+            "MQTT_PORT": 8090
         }
     },
     "file_uploads": {

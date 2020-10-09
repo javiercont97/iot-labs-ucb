@@ -23,6 +23,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/kelmorian/mainframe-core#readme",
   "dependencies": {
+    "aedes": "^0.43.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",

@@ -1,4 +1,3 @@
-import { KTopic } from "../interfaces/topic";
 import { appLogger } from "../../../config/constants";
 import WSTT_Client from "./peerController";
 
@@ -6,13 +5,10 @@ import WSTT_Client from "./peerController";
 export class KQueue {
     private static _instance: KQueue;
 
-    private channels = new Map<String, KTopic>();
-    // this.channels.get('app').topics.get('topic').forEach( consumer => {
-    //     // stuff
-    // });
+    private channels = new Map<string, Array<WSTT_Client>>();
 
     private constructor() {
-        appLogger.verbose('WSTT Queue', 'Message queue created');
+        appLogger.verbose('WSTT Queue', 'WS message queue created');
     }
 
     public static get Instance(): KQueue {
@@ -23,66 +19,30 @@ export class KQueue {
         }
     }
 
-    public subscribe(appID: string, topic: string, consumer: WSTT_Client): void {
+    public subscribe(topic: string, consumer: WSTT_Client): void {
         appLogger.verbose('WSTT Queue', `Subscribe to topic`);
 
-        if (!this.channels.has(appID)) {
+        if (!this.channels.has(topic)) {
             // There is no channel for this app. Got to create
-            appLogger.verbose('WSTT Queue', `Create app channel`);
-            this.channels.set(appID, {
-                topics: []
-            });
-        }
-
-        let topicIndex = this.channels.get(appID).topics.findIndex(auxTopic => {
-            return auxTopic.key == topic;
-        });
-        if (topicIndex < 0) {
-            // App channel does not have this topic. Then create one
             appLogger.verbose('WSTT Queue', `Create topic`);
-            this.channels.get(appID).topics.push({
-                key: topic,
-                consumers: []
-            });
+            this.channels.set(topic, []);
         }
-
-        let subsTopicIndex = this.channels.get(appID).topics.findIndex(auxTopic => {
-            return auxTopic.key == topic;
-        });
-        this.channels.get(appID).topics[subsTopicIndex].consumers.push(consumer);
+        
+        this.channels.get(topic).push(consumer);
     }
     
-    public publish(appID: string, topic: string, message: any): void {
+    public publish(topic: string, message: any): void {
         appLogger.verbose('WSTT Queue', `Publish message`);
 
-        if(!this.channels.has(appID)) {
+        if(!this.channels.has(topic)) {
             // There is no channel for this app. Got to create
-            appLogger.verbose('WSTT Queue', `Create app channel`);
-            this.channels.set(appID, {
-               topics: []
-            });
-        }
-
-        let topicIndex = this.channels.get(appID).topics.findIndex(auxTopic => {
-            return auxTopic.key == topic;
-        });
-        if (topicIndex < 0) {
-            // App channel does not have this topic. Then create one
             appLogger.verbose('WSTT Queue', `Create topic`);
-            this.channels.get(appID).topics.push({
-                key: topic,
-                consumers: []
-            });
+            this.channels.set(topic, []);
         }
-
-        let subsTopicIndex = this.channels.get(appID).topics.findIndex(auxTopic => {
-            return auxTopic.key == topic;
-        });
         
-        this.channels.get(appID).topics[subsTopicIndex].consumers.forEach( consumer => {
+        this.channels.get(topic).forEach( consumer => {
             consumer.sendMessage({
                 topic,
-                targetApp: appID,
                 message
             });
         });
@@ -92,22 +52,16 @@ export class KQueue {
         // can be optimized using appID instead of removing from everything
         appLogger.verbose('WSTT Queue', 'Removing consumer');
 
-        this.channels.forEach((app: KTopic) => {
+        let topics = this.channels.keys();
 
-            app.topics.forEach( topic => {
-                topic.consumers = topic.consumers.filter(consumer => {
-                    return consumer != consumerToRemove
-                });
-
-                appLogger.verbose('WSTT Queue', `Client unsubscribed from ${topic.key}. Consumer count: ${topic.consumers.length}`);
+        for(let i = 0 ;i< this.channels.size;i++) {
+            let currentTopic = topics.next().value;
+            let clients = this.channels.get(currentTopic).filter(client => {
+                return client != consumerToRemove;
             });
+            this.channels.set(currentTopic, clients);
 
-            app.topics = app.topics.filter( topic => {
-                if(topic.consumers.length == 0) {
-                    appLogger.verbose('WSTT Queue', `Topic ${topic.key} has no consumer. Removing topic`);
-                }
-                return topic.consumers.length != 0;
-            });
-        });
+            appLogger.verbose('WSTT Queue', `Client unsubscribed from ${currentTopic}. Client count: ${this.channels.size}`);
+        }
     }
 }

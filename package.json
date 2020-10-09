@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node build/server/server.js",
     "build": "tsc",
+    "clear-build": "rm -r build",
     "devel-env": "nodemon build/server/server.js -e js"
   },
   "repository": {

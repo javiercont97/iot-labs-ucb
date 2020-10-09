@@ -36,7 +36,7 @@ class Broker implements QueueClient {
             payload: Buffer.from(message),
             retain: false
         }, err => {
-            appLogger.error('MQTT_BROKER', JSON.stringify(err));
+            // appLogger.error('MQTT_BROKER', JSON.stringify(err));
         });
     }
 

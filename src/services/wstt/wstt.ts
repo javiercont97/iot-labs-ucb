@@ -50,13 +50,9 @@ class WSTelemtryServer extends WebSocket.Server implements QueueClient{
      * QueueClient interface
      */
     publish(topic: string, message: string | object): void {
-        console.log(topic);
-        console.log(message);
         MessageQueue.publishToMQTT(topic, message);
     }
     notify(topic: string, message: string | object): void {
-        console.log(topic);
-        console.log(message);
         this.queue.publish(topic, message);
     }
 }

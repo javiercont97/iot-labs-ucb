@@ -18,8 +18,8 @@ class DockerCompiler {
      * @param path Path to application folder. This should be the folder that contains .pro file and other Qt stuff
      */
     public static compile(path: string, app: string, appID: string, userMail: string, userName: string) {
-        let qmake: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly qmake`;
-        let make: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly make`;
+        let qmake: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15-em1.39.10 qmake`;
+        let make: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15-em1.39.10 make`;
 
         appLogger.verbose('WASM_COMPILING', 'Running qmake');
         exec(qmake, (err, stdout, stderr) => {

@@ -16,7 +16,9 @@ class Broker implements QueueClient {
 
         this.m_broker.on('publish', (packet, client: mqtt.Client) => {
             if(!packet.topic.includes('$SYS')) {
-                this.publish(packet.topic, packet.payload.toString())
+                if(client !== null ) {
+                    this.publish(packet.topic, packet.payload.toString());
+                }
             }
         });
     }
@@ -81,6 +83,5 @@ class Broker implements QueueClient {
         }
     }
 }
-
 
 export default Broker;

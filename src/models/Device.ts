@@ -32,7 +32,7 @@ export class Device {
             },
             app: {
                 type: Types.ObjectId,
-                required: [true, 'Target app is required']
+                required: false
             }
         });
 

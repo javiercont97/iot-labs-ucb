@@ -9,7 +9,7 @@ import { generateApiKey } from '../../middlewares/security/apiKeyGenerator';
 
 export class DeviceCrudController extends CRUD_Controller {
     public create(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs>, res: Response<any>): void {
-        let data = _.pick(req.body, ['name', 'description', 'userID', 'appID']);
+        let data = _.pick(req.body, ['name', 'description', 'userID']);
 
         DB.Models.User.findById(data.userID, (err, userDB) => {
             if (err) {
@@ -37,9 +37,6 @@ export class DeviceCrudController extends CRUD_Controller {
                 description: data.description,
                 apiKey
             };
-            if(data.appID) {
-                creationData.app = data.appID;
-            }
 
             let device = new DB.Models.Device(creationData);
 

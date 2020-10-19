@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IoT Labs</title>
+    <link rel="stylesheet" href="../assets/css/imt.min.css">
+    <link href="../assets/css/login.css" rel="stylesheet">
+</head>
+
+<body id="body">
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Registrar</h3>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input id="userName2" type="text" class="form-control" placeholder="Nombre">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input id="email2" type="email" class="form-control" placeholder="e-mail">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input id="pass2" type="password" class="form-control" placeholder="Contraseña">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input id="pass3" type="password" class="form-control" placeholder="Repetir contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input id="signupButton" type="button" value="Registrar" class="btn float-right btn-primary" onclick="signUp()">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        ¿Ya tienes una cuenta?<a class="text-white" href="/">Ingresar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- import scripts -->
+    <script src="./js/signup.js"></script>
+
+    <!-- bootstrap imports -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+
+</html>

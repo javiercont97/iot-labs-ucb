@@ -18,7 +18,7 @@ class Mailer {
                     {
                         "From": {
                             "Email": "kelmorian.labs@gmail.com",
-                            "Name": "Kelmorian Labs"
+                            "Name": "IoT Labs"
                         },
                         "To": [
                             {
@@ -53,7 +53,7 @@ class Mailer {
                     {
                         "From": {
                             "Email": "kelmorian.labs@gmail.com",
-                            "Name": "Kelmorian Labs"
+                            "Name": "IoT Labs"
                         },
                         "To": [
                             {
@@ -61,9 +61,13 @@ class Mailer {
                                 "Name": name
                             }
                         ],
-                        "Subject": `Your app "${app}" is ready`,
-                        "TextPart": `Dear ${name} your application is ready`,
-                        "HTMLPart": `<h3>Your app <a href="${HOST_URL}/api/render/${appID}">${app}</a> is ready to use`
+                        "TemplateID": 1810027,
+                        "Subject": `${app} lista para usar`,
+                        "Variables": {
+                            "user_name": `${name}`,
+                            "app_name": `${app}`,
+                            "app_link": `${HOST_URL}/api/render/${appID}`
+                        }
                     }
                 ]
             });

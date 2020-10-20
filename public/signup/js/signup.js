@@ -56,7 +56,7 @@ let signUp = () => {
             } else {
                 let reqBody = {
                     name: document.getElementById('userName2').value,
-                    email: document.getElementById('email').value,
+                    email: document.getElementById('email2').value,
                     password: document.getElementById('pass2').value
                 };
 

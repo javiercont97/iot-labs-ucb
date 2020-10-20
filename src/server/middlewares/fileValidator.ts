@@ -23,7 +23,7 @@ export class FileValidator {
             appLogger.warning('File Validator', `File extention is not allowed [${extention}]`);
             res.status(400).json({
                 err: {
-                    message: 'Allowed file extentions are: [' + ALLOWED_EXTENTIONS.join(', ') + ']'
+                    message: 'Las extenciones permitidas son: [' + ALLOWED_EXTENTIONS.join(', ') + ']'
                 }
             });
         } else {
@@ -39,7 +39,7 @@ export class FileValidator {
             appLogger.warning('File Validator', `Max file size is 25[MB], this file is ${appFile.size/1048576}[MB]`);
             res.status(400).json({
                 err: {
-                    message: `Max file size is 25[MB], this file is ${appFile.size/1048576}[MB]`
+                    message: `El tamaño maximo permitido es 25[MB], el tamaño de este archivo es ${appFile.size/1048576}[MB]`
                 }
             });
         } else {

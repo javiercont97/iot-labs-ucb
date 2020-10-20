@@ -61,7 +61,7 @@ if (credentials == null) {
                         currentAppCard += `                </p>`;
                         currentAppCard += `            </div>`;
                         currentAppCard += `            <div class="row d-flex justify-content-center">`;
-                        currentAppCard += `                <button class="btn btn-primary")" data-toggle="modal" data-target="#updateAppModal-${app._id}">`;
+                        currentAppCard += `                <button class="btn btn-primary" data-toggle="modal" data-target="#updateAppModal-${app._id}">`;
                         currentAppCard += `                    <span>`;
                         currentAppCard += `                        <img src="../../assets/img/icons/pencil.white.svg" title="Editar"/>`;
                         currentAppCard += `                    </span>`;
@@ -179,7 +179,6 @@ if (credentials == null) {
                     container.innerHTML = appCards.join('\n');
                 } else {
                     console.log(res.err.message);
-                    window.location = '/';
                 }
             }).catch(err => {
                 console.log(err);
@@ -200,18 +199,32 @@ if (credentials == null) {
  * @param {string} apiKey Application API key
  */
 let copyApiKey = (id, apiKey) => {
-    navigator.clipboard.writeText(`appID: "${id}"\napiKey: "${apiKey}"`);
-    let successMessage = '';
-    successMessage += `<div id="apiKeyCopied" class="alert alert-info alert-dismissible fade show" role="alert">`;
-    successMessage += `    API key copiada`;
-    successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
-    successMessage += `    <span aria-hidden="true">&times;</span>`;
-    successMessage += `    </button>`;
-    successMessage += `</div>`;
-    document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-    setTimeout(() => {
-        document.getElementById('apiKeyCopied').remove();
-    }, 4500);
+    if(navigator.clipboard) {
+        navigator.clipboard.writeText(`appID: "${id}"\napiKey: "${apiKey}"`);
+        let successMessage = '';
+        successMessage += `<div id="apiKeyCopied" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        successMessage += `    API key copiada al portapapeles`;
+        successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        successMessage += `    <span aria-hidden="true">&times;</span>`;
+        successMessage += `    </button>`;
+        successMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('apiKeyCopied').remove();
+        }, 4500);
+    } else {
+        let successMessage = '';
+        successMessage += `<div id="apiKeyCopied" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        successMessage += `    API key: appID: "${id}", apiKey: "${apiKey}"`;
+        successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        successMessage += `    <span aria-hidden="true">&times;</span>`;
+        successMessage += `    </button>`;
+        successMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('apiKeyCopied').remove();
+        }, 4500);
+    }
 }
 
 
@@ -296,7 +309,21 @@ let editApp = (id) => {
                     $(`#updateAppModal-${id}`).modal('hide');
                     window.location.reload();
                 } else {
-                    console.log(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="editError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('editError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -333,7 +360,21 @@ let deleteApp = (id) => {
                 if (response.ok) {
                     window.location.reload();
                 } else {
-                    console.log(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="deleteError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('deleteError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -382,7 +423,21 @@ let uploadCode = (id) => {
                         document.getElementById('uploadAlert').remove();
                     }, 4500);
                 } else {
-                    console.log(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="uploadError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('uploadError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -416,18 +471,32 @@ let openApp = (id, privacy) => {
  * @param {string} id App ID
  */
 let shareApp = (id) => {
-    navigator.clipboard.writeText(`http://${window.location.host}/api/render/${id}`);
-    let successMessage = '';
-    successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
-    successMessage += `    Enlace a la aplicación copiado`;
-    successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
-    successMessage += `    <span aria-hidden="true">&times;</span>`;
-    successMessage += `    </button>`;
-    successMessage += `</div>`;
-    document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-    setTimeout(() => {
-        document.getElementById('shareMessage').remove();
-    }, 4500);
+    if(navigator.clipboard) {
+        navigator.clipboard.writeText(`http://${window.location.host}/api/render/${id}`);
+        let successMessage = '';
+        successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        successMessage += `    Enlace a la aplicación copiado`;
+        successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        successMessage += `    <span aria-hidden="true">&times;</span>`;
+        successMessage += `    </button>`;
+        successMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('shareMessage').remove();
+        }, 4500);
+    } else {
+        let successMessage = '';
+        successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        successMessage += `    Enlace a la aplicación: http://${window.location.host}/api/render/${id}`;
+        successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        successMessage += `    <span aria-hidden="true">&times;</span>`;
+        successMessage += `    </button>`;
+        successMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('shareMessage').remove();
+        }, 4500);
+    }
 }
 
 //=============================================================================================
@@ -516,7 +585,21 @@ let createApp = () => {
                     $('#createAppModal').modal('hide');
                     window.location.reload();
                 } else {
-                    console.log(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="createApplicationError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('createApplicationError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

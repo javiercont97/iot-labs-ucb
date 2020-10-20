@@ -1,8 +1,9 @@
 import { appLogger } from '../../config/constants';
 import { exec } from 'child_process';
 import Mailer from '../notification/mailer';
-
-
+import { Extract as extractZIP } from 'unzipper';
+import { createReadStream as zipReadStream, readdirSync as listItems } from 'fs';
+import { resolve as resolvePath } from 'path';
 
 // var sys = require('sys')
 // var exec = require('child_process').exec;
@@ -37,6 +38,13 @@ class DockerCompiler {
                 appLogger.error('WASM_COMPILING', stderr);
                 appLogger.verbose('WASM_COMPILING', 'App finished building');
                 Mailer.sendNotificationEmail(userMail, userName, app, appID);
+
+                zipReadStream(resolvePath(__dirname, `../../../assets/qtlogo.zip`))
+                    .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appID}`) }))
+                    .promise()
+                    .then(() => {
+
+                    });
             });
         });
     }

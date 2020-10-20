@@ -127,8 +127,21 @@ if (credentials == null) {
 
                     container.innerHTML = devicesCards.join('\n');
                 } else {
-                    alert(res.err.message);
-                    window.location = '/';
+                    let warningMessage = '';
+                    warningMessage += `<div id="loadDevicesError1" class="alert alert-warning alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        warningMessage += `    ${res.err.message}`;
+                    } else {
+                        warningMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    warningMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    warningMessage += `    <span aria-hidden="true">&times;</span>`;
+                    warningMessage += `    </button>`;
+                    warningMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('loadDevicesError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -149,8 +162,32 @@ if (credentials == null) {
  * @param {string} apiKey Application API key
  */
 let copyApiKey = (id, apiKey) => {
-    navigator.clipboard.writeText(`deviceID: "${id}"\napiKey: "${apiKey}"`);
-    alert('API key copiada');
+    if(navigator.clipboard) {
+        navigator.clipboard.writeText(`deviceID: "${id}"\napiKey: "${apiKey}"`);
+        let copyApiKeyMessage = '';
+        copyApiKeyMessage += `<div id="copyAPIKeySuccess" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        copyApiKeyMessage += `    API key copiada al portapapeles`;
+        copyApiKeyMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        copyApiKeyMessage += `    <span aria-hidden="true">&times;</span>`;
+        copyApiKeyMessage += `    </button>`;
+        copyApiKeyMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = copyApiKeyMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('copyAPIKeySuccess').remove();
+        }, 4500);
+    } else {
+        let copyApiKeyMessage = '';
+        copyApiKeyMessage += `<div id="copyAPIKeySuccess" class="alert alert-info alert-dismissible fade show" role="alert">`;
+        copyApiKeyMessage += `    API key: deviceID: "${id}", apiKey: "${apiKey}"`;
+        copyApiKeyMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        copyApiKeyMessage += `    <span aria-hidden="true">&times;</span>`;
+        copyApiKeyMessage += `    </button>`;
+        copyApiKeyMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = copyApiKeyMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('copyAPIKeySuccess').remove();
+        }, 4500);
+    }
 }
 
 
@@ -161,14 +198,34 @@ let editDevice = (id) => {
     }
 
     if (data.name.length <= 0 || data.name.length >= 20) {
-        alert('El nombre debe estar entre 1 y 20 caracteres');
-        document.getElementById(`appName-${id}`).focus();
+        let warningMessage = '';
+        warningMessage += `<div id="editDeviceWarn1" class="alert alert-warning alert-dismissible fade show" role="alert">`;
+        warningMessage += `    El nombre debe estar entre 1 y 20 caracteres`;
+        warningMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        warningMessage += `    <span aria-hidden="true">&times;</span>`;
+        warningMessage += `    </button>`;
+        warningMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('editDeviceWarn1').remove();
+            document.getElementById(`appName-${id}`).focus();
+        }, 4500);
         return;
     }
 
     if (data.description.length <= 0 || data.description.length >= 100) {
-        alert('La descripción debe estar entre 1 y 100 caracteres');
-        document.getElementById(`appDescription-${id}`).focus();
+        let warningMessage = '';
+        warningMessage += `<div id="editDeviceWarn2" class="alert alert-warning alert-dismissible fade show" role="alert">`;
+        warningMessage += `    La descripción debe estar entre 1 y 100 caracteres`;
+        warningMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        warningMessage += `    <span aria-hidden="true">&times;</span>`;
+        warningMessage += `    </button>`;
+        warningMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('editDeviceWarn2').remove();
+            document.getElementById(`appDescription-${id}`).focus();
+        }, 4500);
         return;
     }
 
@@ -195,7 +252,21 @@ let editDevice = (id) => {
                     $(`#updateDeviceModal-${id}`).modal('hide');
                     window.location.reload();
                 } else {
-                    alert(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="editDeviceError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('editDeviceError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -232,7 +303,21 @@ let deleteDevice = (id) => {
                 if (response.ok) {
                     window.location.reload();
                 } else {
-                    alert(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="deleteDeviceError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('deleteDeviceError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -253,14 +338,34 @@ let createDevice = () => {
     }
 
     if (data.name.length <= 0 || data.name.length >= 20) {
-        alert('El nombre debe estar entre 1 y 20 caracteres');
-        document.getElementById('appName').focus();
+        let warningMessage = '';
+        warningMessage += `<div id="createDeviceWarn1" class="alert alert-warning alert-dismissible fade show" role="alert">`;
+        warningMessage += `    El nombre debe estar entre 1 y 20 caracteres`;
+        warningMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        warningMessage += `    <span aria-hidden="true">&times;</span>`;
+        warningMessage += `    </button>`;
+        warningMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('createDeviceWarn1').remove();
+            document.getElementById('appName').focus();
+        }, 4500);
         return;
     }
 
     if (data.description.length <= 0 || data.description.length >= 100) {
-        alert('La descripción debe estar entre 1 y 100 caracteres');
-        document.getElementById('appDescription').focus();
+        let warningMessage = '';
+        warningMessage += `<div id="createDeviceWarn2" class="alert alert-warning alert-dismissible fade show" role="alert">`;
+        warningMessage += `    La descripción debe estar entre 1 y 100 caracteres`;
+        warningMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+        warningMessage += `    <span aria-hidden="true">&times;</span>`;
+        warningMessage += `    </button>`;
+        warningMessage += `</div>`;
+        document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
+        setTimeout(() => {
+            document.getElementById('createDeviceWarn2').remove();
+            document.getElementById('appDescription').focus();
+        }, 4500);
         return;
     }
 
@@ -289,7 +394,21 @@ let createDevice = () => {
                     $('#createDeviceModal').modal('hide');
                     window.location.reload();
                 } else {
-                    alert(res.err.message);
+                    let errorMessage = '';
+                    errorMessage += `<div id="createDeviceError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('createDeviceError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

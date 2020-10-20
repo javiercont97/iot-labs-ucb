@@ -24,6 +24,9 @@ if (credentials == null) {
                     document.getElementById('updateUserPassword').value = '';
                 } else {
                     console.log(res.err.message);
+                    localStorage.removeItem('session');
+                    sessionStorage.removeItem('session');
+
                     window.location = '/';
                 }
             }).catch(err => {
@@ -175,8 +178,21 @@ let deleteAccount = () => {
                         window.location = '/';
                     }, 4500);
                 } else {
-                    console.log(res.err.message);
-                    window.location = '/';
+                    let errorMessage = '';
+                    errorMessage += `<div id="deleteUserError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
+                    if(res.err.message) {
+                        errorMessage += `    ${res.err.message}`;
+                    } else {
+                        errorMessage += `    Ha ocurrido un error inesperado. Intentelo de nuevo más tarde`;
+                    }
+                    errorMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
+                    errorMessage += `    <span aria-hidden="true">&times;</span>`;
+                    errorMessage += `    </button>`;
+                    errorMessage += `</div>`;
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
+                    setTimeout(() => {
+                        document.getElementById('deleteUserError1').remove();
+                    }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

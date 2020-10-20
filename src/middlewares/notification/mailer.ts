@@ -62,6 +62,7 @@ class Mailer {
                             }
                         ],
                         "TemplateID": 1810027,
+                        "TemplateLanguage": true,
                         "Subject": `${app} lista para usar`,
                         "Variables": {
                             "user_name": `${name}`,

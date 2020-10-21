@@ -1,0 +1,36 @@
+.qml-p-keyword {
+    color: #f92672;
+}
+
+.qml-variable {
+    color: #3eaac0;
+}
+
+.qml-comment {
+    color: #56565c;
+}
+
+.qml-arg,
+.qml-function {
+    color: #81b121;
+}
+
+.qml-string {
+    color: #fd971f;
+}
+
+.indent-1 {
+    padding-left: 1rem;
+}
+.indent-2 {
+    padding-left: 2rem;
+}
+.indent-3 {
+    padding-left: 3rem;
+}
+.indent-4 {
+    padding-left: 4rem;
+}
+.indent-5 {
+    padding-left: 5rem;
+}

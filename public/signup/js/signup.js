@@ -77,7 +77,7 @@ let signUp = () => {
                             if (r.ok) {
                                 let successMessage = '';
                                 successMessage += `<div class="alert alert-info alert-dismissible fade show" role="alert">`;
-                                successMessage += `    Para finalizar el proceso de creación active su usuario mediante el corro electrónico`;
+                                successMessage += `    Para finalizar el proceso de creación active su usuario mediante el correo electrónico`;
                                 successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
                                 successMessage += `    <span aria-hidden="true">&times;</span>`;
                                 successMessage += `    </button>`;

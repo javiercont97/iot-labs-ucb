@@ -38,7 +38,8 @@ class Mailer {
             });
 
         request.then((res) => {
-            appLogger.verbose('Mailer', JSON.stringify(res.body));
+            // appLogger.verbose('Mailer', JSON.stringify(res.body));
+            appLogger.verbose('Mailer', 'User activation mail send');
         }).catch(err => {
             appLogger.error('Mailer', JSON.stringify(err));
         });
@@ -74,7 +75,8 @@ class Mailer {
             });
 
         request.then((res) => {
-            appLogger.verbose('Mailer', JSON.stringify(res.body));
+            // appLogger.verbose('Mailer', JSON.stringify(res.body));
+            appLogger.verbose('Mailer', 'App ready mail send');
         }).catch(err => {
             appLogger.error('Mailer', JSON.stringify(err));
         });
@@ -87,7 +89,8 @@ class Mailer {
      * @param name User's name
      */
     public static sendRecoveryMail(id: string, mail: string, name: string): void {
-        appLogger.verbose('Mailer', 'Sending account recovery e-mail');
+        // appLogger.verbose('Mailer', 'Sending account recovery e-mail');
+        appLogger.warning('Mailer', 'Not implemented');
     }
 }
 

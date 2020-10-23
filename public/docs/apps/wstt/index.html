@@ -111,7 +111,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/docs/editor/intro/">Introducción</a>
                         <a class="collapse-item" href="/docs/editor/gui/">Interfaz</a>
-                        <a class="collapse-item" href="/docs/editor/exec/">Ejecución de apps</a>
                         <a class="collapse-item" href="/docs/editor/packaging/">Creación de paquetes</a>
                     </div>
                 </div>
@@ -170,8 +169,64 @@
                         <h1 class="h3 mb-0 text-gray-800">Comunicación - WebSocket</h1>
                     </div>
 
+                    <div class="row mx-2">
+                        <p>
+                            El cliente basado en WebSockets desarrollado para la plataforma se encuentra disponible en el editor, tanto para realizar pruebas como para desplegar la aplicación en internet.
+                            La interfaz pretende ser muy minimalista de modo que tiene todo lo necesario para funcionar y ser fácil de entender
+                        </p>
+                    </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Obteniendo el API key</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Para obtener el API key necesario es necesario con dirigirse a la <a href="/lab/apps/">pantalla de aplicaciones</a> y registrar una aplicación con el botón [+]
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/createApp-screenshot.png" width="70%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Al presionar el botón se desplegará una ventana modal con un formulario que requiere los datos de la aplicación.
+                            El campo &quot;Acceso&quot; configura la aplicación para que sea accesible únicamente por el usuario que la creó o por cualquiera en internet.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/createAppModal-screenshot.png" width="50%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Por último debes copiar el API key utilizando el cuarto botón en la tarjeta de la aplicación.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary">
+                            <img src="../../../assets/img/icons/copyApiKey.white.svg" width="30rem">
+                        </button>
+                    </div>
+                    
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">API</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            La API hace uso de un elemento de QML para facilitar su acceso y configuración, IoTLabsWS. Todo inicia por la importación del módulo de comunicaciones y
+                            continua por la configuran mediante una serie de atributos. Que permiten al cliente conctarse, autenticarse, enviar y recibir mensajes desde y hacia el servidor.
+                            La autenticación, al igual que la desconexión se realizan de forma automática por lo que el usuario no debe preocuparse por ello.
+                        </p>
+                    </div>
+
                     <!-- Content Row -->
-                    <div class="row ml-2">
+                    <div class="row mx-2">
                         <div>
                             <hr class="my-1">
                             <span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
@@ -226,16 +281,6 @@
                             API de comunicación
                             <hr class="my-1">
                         </div>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row ml-2">
-
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row ml-2">
-
                     </div>
                 </div>
                 <!-- /.container-fluid -->

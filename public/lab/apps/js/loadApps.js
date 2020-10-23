@@ -117,10 +117,13 @@ if (credentials == null) {
                         currentAppCard += `                    <label for="appDescription-${app._id}">Descripción</label>`;
                         currentAppCard += `                    <input type="text" class="form-control" id="appDescription-${app._id}" value="${app.description}">`;
                         currentAppCard += `                </div>`;
-                        currentAppCard += `                <select id="appPrivacy-${app._id}" class="form-control">`;
-                        currentAppCard += `                    <option value=1 ${app.privacyLevel == 1? 'selected': ''}>Pública</option>`;
-                        currentAppCard += `                    <option value=2 ${app.privacyLevel == 1? '': 'selected'}>Privada</option>`;
-                        currentAppCard += `                </select>`;
+                        currentAppCard += `                <div class="form-group">`;
+                        currentAppCard += `                    <label for="appPrivacy-${app._id}">Acceso</label>`;
+                        currentAppCard += `                    <select id="appPrivacy-${app._id}" class="form-control">`;
+                        currentAppCard += `                        <option value=1 ${app.privacyLevel == 1? 'selected': ''}>Pública</option>`;
+                        currentAppCard += `                        <option value=2 ${app.privacyLevel == 1? '': 'selected'}>Privada</option>`;
+                        currentAppCard += `                    </select>`;
+                        currentAppCard += `                </div>`;
                         currentAppCard += `            </div>`;
                         currentAppCard += `            <div class="modal-footer">`;
                         currentAppCard += `                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>`;

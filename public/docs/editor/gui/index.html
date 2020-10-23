@@ -110,7 +110,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/docs/editor/intro/">Introducción</a>
                         <a class="collapse-item" href="/docs/editor/gui/">Interfaz</a>
-                        <a class="collapse-item" href="/docs/editor/exec/">Ejecución de apps</a>
                         <a class="collapse-item" href="/docs/editor/packaging/">Creación de paquetes</a>
                     </div>
                 </div>
@@ -156,7 +155,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3>IoT Labs Docs</h3>
+                    <h3>Editor - Interfaz</h3>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -169,20 +168,75 @@
                         <h1 class="h3 mb-0 text-gray-800">Interfaz Gráfica</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            La Interfaz general consta de cuatro partes
+                        </p>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <ul>
+                            <li>Editor</li>
+                            <li>Barra de Herramientas</li>
+                            <li>Pre-visualizador</li>
+                            <li>Registro de errores y advertencias</li>
+                        </ul>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/editor-screenshot.png" width="70%">
                     </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Barra de Herramientas</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            La barra de Herramientas presenta accesos rápidos a algunas funciones del editor, como ser:
+                        </p>
+                    </div>
+
+                    <div class="row mx-2">
+                        <ul>
+                            <li>Archivo nuevo: &lt;Ctrl&gt; + N</li>
+                            <li>Abrir archivo: &lt;Ctrl&gt; + O</li>
+                            <li>Guardar cambios: &lt;Ctrl&gt; + S</li>
+                            <li>Ejecutar aplicación: &lt;Ctrl&gt; + R</li>
+                            <li>Empaquetar aplicación: &lt;Ctrl&gt; + K, &lt;Ctrl&gt; + P</li>
+                            <li>Copiar: &lt;Ctrl&gt; + C</li>
+                            <li>Cortar: &lt;Ctrl&gt; + X</li>
+                            <li>Pegar: &lt;Ctrl&gt; + V</li>
+                        </ul>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/editor-toolbar.png" width="30%">
+                    </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Registro de errores</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            La pre-visualización se encuentra construido con el motor de renderizado de Qt (QQuickWidget) por lo que es capaz de procesar todos los elementos soportados por esta clase.
+                            No obstante, no es capaz de procesar todos los componentes de QtQuick. La pre-visualización se muestra en la esquina superior derecha con los últimos cambios que hayan sido guardados.
+                        </p>
+                    </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Pre-visualizador</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            El registro de errores reportará cualquier error de sintaxis presente en el código. Por ejemplo, cuando se intenta asignar una propiedad que no existe.
+                            En el registro no se mostraran los mensajes de la consola por lo que estos solo serán visibles cuando la aplicación se encuentre en el navegador.
+                            La errores y advertencias se muestran con los últimos cambios que hayan sido guardados.
+                        </p>
+                    </div>
+
                 </div>
                 <!-- /.container-fluid -->
 

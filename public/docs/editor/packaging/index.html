@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" href="../../../assets/css/imt.css">
 
+    <link rel="stylesheet" href="../../css/codeFormatting.css">
 </head>
 
 <body id="page-top">
@@ -110,7 +111,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/docs/editor/intro/">Introducción</a>
                         <a class="collapse-item" href="/docs/editor/gui/">Interfaz</a>
-                        <a class="collapse-item" href="/docs/editor/exec/">Ejecución de apps</a>
                         <a class="collapse-item" href="/docs/editor/packaging/">Creación de paquetes</a>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3>IoT Labs Docs</h3>
+                    <h3>Editor - Empaquetado</h3>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -169,19 +169,58 @@
                         <h1 class="h3 mb-0 text-gray-800">Empaquetado y Distribución</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            Para empaquetar y distribuir las aplicaciones por internet existe una herramienta en el editor. Cuando el usuario desee publicar la aplicación es suficiente con utilizar la herramienta y cargar el paquete generado a la plataforma.
+                            El tiempo que demora la compilación de la aplicación en una página web se encuentra entre 2 y 10 minutos. Cuando su aplicación este lista recibirá un correo electrónico como notificación.
+                        </p>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Archivos generados</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
+                    <div class="row mx-2">
+                        <p>
+                            El proceso de empaquetado genera dos archivos. Un archivo llamado <span class="qml-p-keyword">userApp.qml</span> y otro con extensión <span class="qml-p-keyword">.zip</span>.
+                            El archivo ZIP es el paquete que contiene la aplicación y debe ser cargado en la plataforma. Mientras que el archivo QML es un archivo temporal que puede ser eliminado sin riesgo.
+                        </p>
+                    </div>
 
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Cargando archivo a la plataforma</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Para cargar el paquete generado debe dirigirse a la <a href="/lab/apps/">página de aplicaciones</a> y presionar el tercer botón de la tarjeta de la aplicación que desea cargar.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary">
+                            <img src="../../../assets/img/icons/appUpload.white.svg" width="30em">
+                        </button>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            El siguiente paso es cargar el archivo ZIP generado mediante la ventana modal de carga de archivos.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/uploadCodeModal-screenshot.png" width="50%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Finalmente debe esperar a que termine el proceso de compilación, el servidor enviará un correo electrónico notificando que el proceso ha terminado.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/emailNotification-screenshot.png" width="50%">
                     </div>
                 </div>
                 <!-- /.container-fluid -->

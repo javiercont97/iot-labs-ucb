@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" href="../../../assets/css/imt.css">
 
+    <link rel="stylesheet" href="../../css/codeFormatting.css">
 </head>
 
 <body id="page-top">
@@ -110,7 +111,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/docs/editor/intro/">Introducción</a>
                         <a class="collapse-item" href="/docs/editor/gui/">Interfaz</a>
-                        <a class="collapse-item" href="/docs/editor/exec/">Ejecución de apps</a>
                         <a class="collapse-item" href="/docs/editor/packaging/">Creación de paquetes</a>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3>IoT Labs Docs</h3>
+                    <h3>Dispositivos - Cliente MQTT Python</h3>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -170,19 +170,160 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row mx-2">
+                        <p>
+                            El cliente <a href="https://wiki.eclipse.org/Paho" target="_blank">Paho MQTT</a> de Eclipse se encuentra disponible para muchas plataformas y en diversos lenguajes de programación.
+                            Lo que lo convierte en una alternativa muy buena para utilizar MQTT en proyectos de todo tipo.
+                        </p>
+                    </div>
 
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Obteniendo el API key</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            Para obtener el API key necesario es necesario con dirigirse a la <a href="/lab/devices/">pantalla de dispositivos</a> y registrar un dispositivo con el botón [+]
+                        </p>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
 
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/createDevice-screenshot.png" width="70%">
                     </div>
+
+
+                    <div class="row mx-2">
+                        <p>
+                            Al presionar el botón se desplegará una ventana modal con el formulario de creación de dispositivo.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/createDeviceModal-screenshot.png" width="50%">
+                    </div>
+                    
+                    <div class="row mx-2">
+                        <p>
+                            Por último debes copiar el API key utilizando el tercer botón en la tarjeta del dispositivo.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary">
+                            <img src="../../../assets/img/icons/copyApiKey.white.svg" width="30rem">
+                        </button>
+                    </div>
+
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Ejemplo de un dispositivo con una Raspberry y Python</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Materiales:
+                        </p>
+                    </div>
+
+                    <div class="row mx-2">
+                        <ul>
+                            <li>Raspberry</li>
+                            <li>MCP3008</li>
+                            <li>LM35</li>
+                            <li>RGB LED</li>
+                            <li>LED</li>
+                        </ul>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            El circuito a armar corresponde al del <a href="../../../assets/demo.pdf" download="demo.pdf">laboratorio demostrativo</a>. De modo que si buscas un documento más detallado lo puedes descargar en el enlace.
+                            Sin embargo, la idea general es muy simple. Se trata de un laboratorio básico en el que se trata de publicar el estado de los LEDs desde la interfaz gráfica y la temperatura desde el dispositivo.
+                        </p>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/circuito-demo.png" width="70%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <div>
+                            <hr class="my-1">
+                            <span class="qml-p-keyword">import</span> paho.mqtt.client <span class="qml-p-keyword">as</span> mqtt <br>
+                            <span class="qml-p-keyword">from</span> time <span class="qml-p-keyword">import</span> sleep <br>
+                            <span class="qml-p-keyword">from</span> gpiozero <span class="qml-p-keyword">import</span> RGPLED, PWMLED, MCP3008 <br>
+                            <br>
+                            <span class="qml-variable">sensor</span> = MCP3008(channel = 0) <br>
+                            <span class="qml-variable">rgb</span> = RGBLED(17, 27, 22, active_high=<span class="qml-string">False</span>) <br>
+                            <span class="qml-variable">led</span> = PWMLED(23) <br>
+                            <br>
+                            <span class="qml-p-keyword">def</span> <span class="qml-function">onConnect</span> ( <span class="qml-arg">client</span>, <span class="qml-arg">userdata</span>, <span class="qml-arg">flags</span>, <span class="qml-arg">rc</span> ): <br>
+                                <span class="qml-function indent-1">print </span> ( &quot;<span class="qml-string">Connected</span>&quot; ) <br>
+                                <span class="qml-comment indent-1"># Subscribirse al los topics del RGB, red, green y blue</span> <br>
+                                <span class="qml-variable indent-1">client</span>.<span class="qml-function">subscribe</span> (&quot;<span class="qml-string">iotlabs/rgb/red</span>&quot;) <br>
+                                <span class="qml-variable indent-1">client</span>.<span class="qml-function">subscribe</span> (&quot;<span class="qml-string">iotlabs/rgb/green</span>&quot;) <br>
+                                <span class="qml-variable indent-1">client</span>.<span class="qml-function">subscribe</span> (&quot;<span class="qml-string">iotlabs/rgb/blue</span>&quot;) <br>
+                                <span class="qml-comment indent-1"># Subscribirse al topic del LED con PWM, pwm</span> <br>
+                                <span class="qml-variable indent-1">client</span>.<span class="qml-function">subscribe</span> (&quot;<span class="qml-string">iotlabs/pwm</span>&quot;) <br>
+                                <br>
+                            <span class="qml-p-keyword">def</span> <span class="qml-function">onMessage</span> ( <span class="qml-arg">client</span>, <span class="qml-arg">userdata</span>, <span class="qml-arg">message</span> ): <br>
+                                <span class="qml-comment indent-1"># Comparar el topic del mensaje recibido con el deseado</span> <br>
+                                <span class="qml-p-keyword indent-1">if</span> <span class="qml-variable">message.topic</span> == &quot;<span class="qml-string">iotlabs/rgb/red</span>&quot;: <br>
+                                    <span class="qml-comment indent-2"># Decodificar el payload con el encoding UTF-8 para conviertirlo en string</span> <br>
+                                    <span class="qml-p-keyword indent-2">if</span> <span class="qml-variable">message.payload</span>.<span class="qml-function">decode</span> (&quot;<span class="qml-string">utf-8</span>&quot;) == &quot;<span class="qml-string">on</span>&quot;: <br>
+                                        <span class="qml-comment indent-3"># Encender el led Rojo del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (1, <span class="qml-variable">rgb.value</span>[1], <span class="qml-variable">rgb.value</span>[2] ) <br>
+                                    <span class="qml-p-keyword indent-2">else</span>: <br>
+                                    <span class="qml-comment indent-3"># Apagar el led Rojo del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (0, <span class="qml-variable">rgb.value</span>[1], <span class="qml-variable">rgb.value</span>[2] ) <br>
+                                <span class="qml-p-keyword indent-1">elif</span> <span class="qml-variable">message.topic</span> == &quot;<span class="qml-string">iotlabs/rgb/green</span>&quot;: <br>
+                                    <span class="qml-p-keyword indent-2">if</span> <span class="qml-variable">message.payload</span>.<span class="qml-function">decode</span> (&quot;<span class="qml-string">utf-8</span>&quot;) == &quot;<span class="qml-string">on</span>&quot;: <br>
+                                        <span class="qml-comment indent-3"># Encender el led Verde del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (<span class="qml-variable">rgb.value</span>[0], 1, <span class="qml-variable">rgb.value</span>[2] ) <br>
+                                    <span class="qml-p-keyword indent-2">else</span>: <br>
+                                    <span class="qml-comment indent-3"># Apagar el led Verde del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (<span class="qml-variable">rgb.value</span>[0], 0, <span class="qml-variable">rgb.value</span>[2] ) <br>
+                                <span class="qml-p-keyword indent-1">elif</span> <span class="qml-variable">message.topic</span> == &quot;<span class="qml-string">iotlabs/rgb/blue</span>&quot;: <br>
+                                    <span class="qml-p-keyword indent-2">if</span> <span class="qml-variable">message.payload</span>.<span class="qml-function">decode</span> (&quot;<span class="qml-string">utf-8</span>&quot;) == &quot;<span class="qml-string">on</span>&quot;: <br>
+                                        <span class="qml-comment indent-3"># Encender el led Azul del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (<span class="qml-variable">rgb.value</span>[0], <span class="qml-variable">rgb.value</span>[1], 1 ) <br>
+                                    <span class="qml-p-keyword indent-2">else</span>: <br>
+                                        <span class="qml-comment indent-3"># Apagar el led Azul del RGB</span> <br>
+                                        <span class="qml-variable indent-3">rgb.value</span> = (<span class="qml-variable">rgb.value</span>[0], <span class="qml-variable">rgb.value</span>[1], 0 ) <br>
+                                <span class="qml-p-keyword indent-1">elif</span> <span class="qml-variable">message.topic</span> == &quot;<span class="qml-string">iotlabs/pwm</span>&quot;: <br>
+                                    <span class="qml-comment indent-2"># Modificar el ciclo de trabajo del LED con PWM al valor recibido en el payload</span> <br>
+                                    <span class="qml-variable indent-2">led.value</span> = <span class="qml-function">float</span> ( <span class="qml-variable">message.payload</span> ) <br>
+                                <br>
+                            <span class="qml-comment"># Configurar el cliente</span> <br>
+                            <span class="qml-variable">deviceID</span> = &quot;<span class="qml-string">ID del dispositivo</span>&quot; <br>
+                            <span class="qml-variable">deviceAPIkey</span> = &quot;<span class="qml-string">API key del dispositivo</span>&quot; <br>
+                            <span class="qml-variable">client</span> = mqtt.<span class="qml-function">Client</span> ( <span class="qml-variable">deviceID</span> ) <br>
+                            <span class="qml-variable">client.on_connect</span> = onConnect <br>
+                            <span class="qml-variable">client.on_message</span> = onMessage <br>
+                            <br>
+                            <span class="qml-comment"># Conectarse al Broker</span> <br>
+                            <span class="qml-variable">client</span>.<span class="qml-function">connect</span> ( &quot;<span class="qml-string">imt-iotlabs.net</span>&quot; ) <br>
+                            <span class="qml-comment"># Proporcionar las credenciales al Broker</span> <br>
+                            <span class="qml-variable">client</span>.<span class="qml-function">username_pw_set</span> ( <span class="qml-variable">deviceID</span>, <span class="qml-variable">deviceAPIkey</span> ) <br>
+                            <br>
+                            <span class="qml-comment"># Iniciar el loop de eventos del cliente MQTT</span> <br>
+                            <span class="qml-variable">client</span>.<span class="qml-function">loop_start</span> () <br>
+                            <br>
+                            <span class="qml-comment"># Publicar las lecturas del sensor analógico LM35 conectado al canal 0 del MCP3008 en grados centígrados con un intervalo de 2 segundos</span> <br>
+                            <span class="qml-p-keyword">for</span> i <span class="qml-p-keyword">in</span> <span class="qml-function">range</span> ( 100 ): <br>
+                                <span class="qml-variable indent-1">client</span>.<span class="qml-function">publish</span> ( &quot;<span class="qml-string">iotlabs/temperature</span>&quot;, <span class="qml-function">str</span> ( <span class="qml-variable">sensor.value</span> * 3.3 * 100 ) ) <br>
+                                <span class="qml-function indent-1">sleep</span> (2) <br>
+                            <br>
+                            <span class="qml-variable">client</span>.<span class="qml-function">loop_stop</span> () <br>
+                            <hr class="my-1">
+                            Cliente MQTT de ejemplo
+                            <hr class="my-1">
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /.container-fluid -->
 

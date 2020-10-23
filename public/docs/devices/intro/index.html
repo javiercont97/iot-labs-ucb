@@ -110,7 +110,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/docs/editor/intro/">Introducción</a>
                         <a class="collapse-item" href="/docs/editor/gui/">Interfaz</a>
-                        <a class="collapse-item" href="/docs/editor/exec/">Ejecución de apps</a>
                         <a class="collapse-item" href="/docs/editor/packaging/">Creación de paquetes</a>
                     </div>
                 </div>
@@ -156,7 +155,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3>IoT Labs Docs</h3>
+                    <h3>Dispositivos - Introducción</h3>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -170,18 +169,28 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row mx-2">
+                        <p>
+                            Las dispositivos que pueden conectarse a la plataforma no están limitados a ninguno en específico. Los únicos requisitos son que utilice el protocolo MQTT 3.1 y que
+                            disponga de un ID y un API key. Al igual que en las aplicaciones, el API key se optiene al crear un dispositivo en la plataforma.
+                        </p>
+                    </div>
 
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Broker MQTT</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            La plataforma utiliza el puerto 1883 para exponer el broker MQTT que utiliza la versión 3.1 segun el estándar de <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html" target="_blank">OASIS</a>.
+                            Lo que significa que cualquier cliente MQTT que soporte la versión 3.1 es capaz de conectarse y utilizar la plataforma, por ejemplo el cliente <a href="https://wiki.eclipse.org/Paho" target="_blank">Paho MQTT</a> de Eclipse o <a href="https://github.com/knolleary/pubsubclient" target="_blank">PubSubClient</a> disponible en GitHub.
+                        </p>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        En la siguiente sección se mostrará un ejemplo del un cliente MQTT utilizando Paho MQTT para python en una Raspberry.
                     </div>
                 </div>
                 <!-- /.container-fluid -->

@@ -155,7 +155,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3>IoT Labs Docs</h3>
+                    <h3>Message Logger - Interfaz</h3>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -168,20 +168,66 @@
                         <h1 class="h3 mb-0 text-gray-800">Interfaz Gráfica</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            La interfaz gráfica de Message Logger es bastante simple ya que contiene lo básico para trabajar con MQTT.
+                            El primer paso será el de establecer conexión con el Broker. En el menú MQTT Client el botón Connect desplegará una ventana solicitando los datos necesarios para conectarse con el Broker.
+                        </p>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/messageLoggerConnection-screenshot.png" width="40%">
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
+                    <div class="row mx-2">
+                        <p>
+                            En los campos Device ID y API key debe ingresar esos datos como si se tratara de un dispositivo. Por lo que debe realizar el mismo procedimiento para <a href="/docs/devices/mqtt/">registrar un dispositivo</a>.
+                        </p>
                     </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Indicador de estado</h1>
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            En la esquina superior derecha se muestra un indicador del estado de la aplicación. El color rojo se utiliza para indicar que el estado es deconectado.
+                        </p>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/messageLogger-screenshot.png" width="40%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            El siguiente estado es el de conectado y listo para registrar mensajes representado con el color amarillo.
+                            En este punto el botón Start Logging en la esquina inferior derecha se habilita de modo que se puede empezar a registrar mensajes.
+                        </p>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/readyToLog.screenshot.png" width="40%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Por último se encuentra el estado Registrando, es decir que los mensajes en el topic selecionado se están registrando en la aplicación.
+                            También se puede observar que el botón en la esquina inferior derecha cambió de función dado que ahora dice Stop Logging o detener el registro.
+                        </p>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center">
+                        <img src="../../../assets/img/logging-sreenshot.png" width="40%">
+                    </div>
+
+                    <div class="row mx-2">
+                        <p>
+                            Una vez concluida la sesión se puede proceder a desconectar el cliente en el menú MQTT CLient con el bot
+                            on Disconnect. Por otro lado si lo que desea es limpiar los datos para iniciar una nueva sesión en el menú Data exite la opción de limpiar los datos con el botón Clear
+                        </p>
+                    </div>
+
                 </div>
                 <!-- /.container-fluid -->
 

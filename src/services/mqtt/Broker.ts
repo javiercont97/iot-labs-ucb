@@ -77,6 +77,7 @@ class Broker implements QueueClient {
                     callback(error, false);
                     return;
                 } else {
+                    appLogger.verbose('MQTT_BROKER', `Client Connected (${username})`);
                     callback(null, true);
                 }
             });

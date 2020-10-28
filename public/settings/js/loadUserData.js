@@ -50,9 +50,9 @@ document.getElementById('updateButton').addEventListener('click', () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('warm1').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('warm1').remove();
+        // }, 4500);
     } else {
         if(document.getElementById('updateUserPassword').value.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) == null && document.getElementById('updateUserPassword').value != '') {
             let warningMessage = '';
@@ -63,9 +63,9 @@ document.getElementById('updateButton').addEventListener('click', () => {
             warningMessage += `    </button>`;
             warningMessage += `</div>`;
             document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-            setTimeout(() => {
-                document.getElementById('warn2').remove();
-            }, 4500);
+            // setTimeout(() => {
+            //     document.getElementById('warn2').remove();
+            // }, 4500);
         } else {
             let data = {
             }
@@ -129,9 +129,9 @@ document.getElementById('updateButton').addEventListener('click', () => {
                             errorMessage += `    </button>`;
                             errorMessage += `</div>`;
                             document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                            setTimeout(() => {
-                                document.getElementById('alert2').remove();
-                            }, 4500);
+                            // setTimeout(() => {
+                            //     document.getElementById('alert2').remove();
+                            // }, 4500);
                         }
                     }).catch(err => {
                         console.log(err);
@@ -190,9 +190,9 @@ let deleteAccount = () => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('deleteUserError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('deleteUserError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

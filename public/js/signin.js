@@ -42,9 +42,9 @@ let loginNormal = () => {
                     errorMessage += `</div>`;
                     document.getElementById('body').innerHTML = errorMessage + document.getElementById('body').innerHTML;
                     
-                    setTimeout(() => {
-                        document.getElementById('error').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('error').remove();
+                    // }, 4500);
                     document.getElementById('email').focus();
                 }
             }).catch(err => {

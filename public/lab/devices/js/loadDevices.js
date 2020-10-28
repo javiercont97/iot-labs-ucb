@@ -139,9 +139,9 @@ if (credentials == null) {
                     warningMessage += `    </button>`;
                     warningMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('loadDevicesError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('loadDevicesError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -172,9 +172,9 @@ let copyApiKey = (id, apiKey) => {
         copyApiKeyMessage += `    </button>`;
         copyApiKeyMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = copyApiKeyMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('copyAPIKeySuccess').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('copyAPIKeySuccess').remove();
+        // }, 4500);
     } else {
         let copyApiKeyMessage = '';
         copyApiKeyMessage += `<div id="copyAPIKeySuccess" class="alert alert-info alert-dismissible fade show" role="alert">`;
@@ -184,9 +184,9 @@ let copyApiKey = (id, apiKey) => {
         copyApiKeyMessage += `    </button>`;
         copyApiKeyMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = copyApiKeyMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('copyAPIKeySuccess').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('copyAPIKeySuccess').remove();
+        // }, 4500);
     }
 }
 
@@ -206,10 +206,10 @@ let editDevice = (id) => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('editDeviceWarn1').remove();
-            document.getElementById(`appName-${id}`).focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('editDeviceWarn1').remove();
+        //     document.getElementById(`appName-${id}`).focus();
+        // }, 4500);
         return;
     }
 
@@ -222,10 +222,10 @@ let editDevice = (id) => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('editDeviceWarn2').remove();
-            document.getElementById(`appDescription-${id}`).focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('editDeviceWarn2').remove();
+        //     document.getElementById(`appDescription-${id}`).focus();
+        // }, 4500);
         return;
     }
 
@@ -264,9 +264,9 @@ let editDevice = (id) => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('editDeviceError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('editDeviceError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -315,9 +315,9 @@ let deleteDevice = (id) => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('deleteDeviceError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('deleteDeviceError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -346,10 +346,10 @@ let createDevice = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('createDeviceWarn1').remove();
-            document.getElementById('appName').focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('createDeviceWarn1').remove();
+        //     document.getElementById('appName').focus();
+        // }, 4500);
         return;
     }
 
@@ -362,10 +362,10 @@ let createDevice = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('createDeviceWarn2').remove();
-            document.getElementById('appDescription').focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('createDeviceWarn2').remove();
+        //     document.getElementById('appDescription').focus();
+        // }, 4500);
         return;
     }
 
@@ -406,9 +406,9 @@ let createDevice = () => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('createDeviceError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('createDeviceError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

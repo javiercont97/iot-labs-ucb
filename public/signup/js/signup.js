@@ -20,9 +20,9 @@ let signUp = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('body').innerHTML = warningMessage + document.getElementById('body').innerHTML;
-        setTimeout(() => {
-            document.getElementById('warm1').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('warm1').remove();
+        // }, 4500);
         document.getElementById('userName2').focus();
     } else {
         if (!isValidPassword(document.getElementById('pass2').value)) {
@@ -34,9 +34,9 @@ let signUp = () => {
             warningMessage += `    </button>`;
             warningMessage += `</div>`;
             document.getElementById('body').innerHTML = warningMessage + document.getElementById('body').innerHTML;
-            setTimeout(() => {
-                document.getElementById('warn2').remove();
-            }, 4500);
+            // setTimeout(() => {
+            //     document.getElementById('warn2').remove();
+            // }, 4500);
             document.getElementById('userName2').focus();
         } else {
 
@@ -49,9 +49,9 @@ let signUp = () => {
                 warningMessage += `    </button>`;
                 warningMessage += `</div>`;
                 document.getElementById('body').innerHTML = warningMessage + document.getElementById('body').innerHTML;
-                setTimeout(() => {
-                    document.getElementById('warn3').remove();
-                }, 4500);
+                // setTimeout(() => {
+                //     document.getElementById('warn3').remove();
+                // }, 4500);
                 document.getElementById('userName2').focus();
             } else {
                 let reqBody = {

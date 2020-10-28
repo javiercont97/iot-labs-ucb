@@ -212,9 +212,9 @@ let copyApiKey = (id, apiKey) => {
         successMessage += `    </button>`;
         successMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('apiKeyCopied').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('apiKeyCopied').remove();
+        // }, 4500);
     } else {
         let successMessage = '';
         successMessage += `<div id="apiKeyCopied" class="alert alert-info alert-dismissible fade show" role="alert">`;
@@ -224,9 +224,9 @@ let copyApiKey = (id, apiKey) => {
         successMessage += `    </button>`;
         successMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('apiKeyCopied').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('apiKeyCopied').remove();
+        // }, 4500);
     }
 }
 
@@ -247,10 +247,10 @@ let editApp = (id) => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('editWarn1').remove();
-            document.getElementById(`appName-${id}`).focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('editWarn1').remove();
+        //     document.getElementById(`appName-${id}`).focus();
+        // }, 4500);
         return;
     }
 
@@ -263,10 +263,10 @@ let editApp = (id) => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('editWarn2').remove();
-            document.getElementById(`appDescription-${id}`).focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('editWarn2').remove();
+        //     document.getElementById(`appDescription-${id}`).focus();
+        // }, 4500);
         return;
     }
 
@@ -279,10 +279,10 @@ let editApp = (id) => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('editWarn3').remove();
-            document.getElementById(`appPrivacy-${id}`).focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('editWarn3').remove();
+        //     document.getElementById(`appPrivacy-${id}`).focus();
+        // }, 4500);
         return;
     }
 
@@ -324,9 +324,9 @@ let editApp = (id) => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('editError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('editError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -375,9 +375,9 @@ let deleteApp = (id) => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('deleteError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('deleteError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -422,9 +422,9 @@ let uploadCode = (id) => {
                     successMessage += `    </button>`;
                     successMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('uploadAlert').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('uploadAlert').remove();
+                    // }, 4500);
                 } else {
                     let errorMessage = '';
                     errorMessage += `<div id="uploadError1" class="alert alert-danger alert-dismissible fade show" role="alert">`;
@@ -438,9 +438,9 @@ let uploadCode = (id) => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('uploadError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('uploadError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);
@@ -484,9 +484,9 @@ let shareApp = (id) => {
         successMessage += `    </button>`;
         successMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('shareMessage').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('shareMessage').remove();
+        // }, 4500);
     } else {
         let successMessage = '';
         successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
@@ -496,9 +496,9 @@ let shareApp = (id) => {
         successMessage += `    </button>`;
         successMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = successMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('shareMessage').remove();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('shareMessage').remove();
+        // }, 4500);
     }
 }
 
@@ -522,10 +522,10 @@ let createApp = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('createWarn1').remove();
-            document.getElementById('appName').focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('createWarn1').remove();
+        //     document.getElementById('appName').focus();
+        // }, 4500);
         return;
     }
 
@@ -538,10 +538,10 @@ let createApp = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('createWarn2').remove();
-            document.getElementById('appDescription').focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('createWarn2').remove();
+        //     document.getElementById('appDescription').focus();
+        // }, 4500);
         return;
     }
 
@@ -554,10 +554,10 @@ let createApp = () => {
         warningMessage += `    </button>`;
         warningMessage += `</div>`;
         document.getElementById('alertArea').innerHTML = warningMessage + document.getElementById('alertArea').innerHTML;
-        setTimeout(() => {
-            document.getElementById('createWarn3').remove();
-            document.getElementById('appPrivacy').focus();
-        }, 4500);
+        // setTimeout(() => {
+        //     document.getElementById('createWarn3').remove();
+        //     document.getElementById('appPrivacy').focus();
+        // }, 4500);
         return;
     }
 
@@ -600,9 +600,9 @@ let createApp = () => {
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
                     document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
-                    setTimeout(() => {
-                        document.getElementById('createApplicationError1').remove();
-                    }, 4500);
+                    // setTimeout(() => {
+                    //     document.getElementById('createApplicationError1').remove();
+                    // }, 4500);
                 }
             }).catch(err => {
                 console.log(err);

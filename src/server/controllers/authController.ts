@@ -24,7 +24,15 @@ export class AuthController {
     public static login(req: Request, res: Response): void {
         let data = _.pick(req.body, ['name', 'password', 'platform', 'keepSession']);
 
-        DB.Models.User.findOne({ name: data.name }, (err, userDB) => {
+        let searchCondition: {email?: string, name?: string} = {};
+
+        if(String(data.name).includes('@')) {
+            searchCondition.email = data.name;
+        } else {
+            searchCondition.name = data.name;
+        }
+
+        DB.Models.User.findOne(searchCondition, (err, userDB) => {
             if (err) {
                 appLogger.error('Authentication', JSON.stringify(err));
                 return res.status(500).json({

@@ -25,17 +25,17 @@ class DockerCompiler {
         appLogger.verbose('WASM_COMPILING', 'Running qmake');
         exec(qmake, (err, stdout, stderr) => {
             if(err) {
+                appLogger.error('WASM_COMPILING', stderr);
                 return;
             }
             appLogger.verbose('WASM_COMPILING', stdout);
-            appLogger.error('WASM_COMPILING', stderr);
             appLogger.verbose('WASM_COMPILING', 'Running make');
             exec(make, (err, stdout, stderr) => {
                 if(err) {
+                    appLogger.error('WASM_COMPILING', stderr);
                     return;
                 }
                 appLogger.verbose('WASM_COMPILING', stdout);
-                appLogger.error('WASM_COMPILING', stderr);
                 appLogger.verbose('WASM_COMPILING', 'App finished building');
                 Mailer.sendNotificationEmail(userMail, userName, app, appID);
 

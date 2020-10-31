@@ -8,11 +8,9 @@
         "WSTT": {
             "PING_FREQ": 10000
         },
-        "DB": {
-
-        },
         "GUEST_APPS": {
-            
+            "AMMOUNT_OF_COMPILATION_WORKERS": 1,
+            "CPUS_PER_WORKER": 0.8
         },
         "MQTT": {
             "MQTT_PORT": 8090
@@ -31,7 +29,6 @@
     },
     "debugging": {
         "DEBUG_LEVEL": [
-            "verbose",
             "info",
             "warning",
             "error"

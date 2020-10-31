@@ -24,7 +24,8 @@ export const SESSION_IV: string = SETTINGS.security.SESSION_IV || "0123456789abc
 // Services
 export const PING_FREQ = SETTINGS.services.WSTT.PING_FREQ || 500;
 export const MQTT_PORT = SETTINGS.services.MQTT.MQTT_PORT || 1883;
-
+export const AMMOUNT_OF_COMPILATION_WORKERS = SETTINGS.services.GUEST_APPS.AMMOUNT_OF_COMPILATION_WORKERS || 1;
+export const CPUS_PER_WORKER = SETTINGS.services.GUEST_APPS.CPUS_PER_WORKER || 1;
 
 
 // File uploads

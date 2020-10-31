@@ -12,6 +12,7 @@ import Broker from '../services/mqtt/Broker';
 import {resolve as resolvePath} from 'path';
 import { createServer as HTTPCreateServer } from 'http';
 import { MessageQueue } from '../services/message_queue/message_queue';
+import { CompilationQueue } from '../middlewares/build/compilationQueue';
 
 appLogger.verbose('Server', 'Waking up server');
 
@@ -50,6 +51,8 @@ wstt.setupWSTT_Server();
 
 let broker = new Broker();
 broker.init();
+
+CompilationQueue.init();
 
 // register message queue clients
 MessageQueue.mqtt = broker;

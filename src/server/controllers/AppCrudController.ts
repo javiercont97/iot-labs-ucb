@@ -12,6 +12,7 @@ import { PrivacyLevelEnum } from '../../models/App';
 import { Extract as extractZIP } from 'unzipper';
 import { createReadStream as zipReadStream, unlink, rmdir, readdirSync as listItems, mkdirSync } from 'fs';
 import DockerCompiler from '../../middlewares/build/wasmCompiler';
+import { CompilationQueue } from '../../middlewares/build/compilationQueue';
 
 
 export class AppCrudController extends CRUD_Controller {
@@ -114,7 +115,8 @@ export class AppCrudController extends CRUD_Controller {
                                                         });
                                                     }
 
-                                                    DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appDB._id, userDB.email, userDB.name);
+                                                    CompilationQueue.enqueueJob(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appDB._id, userDB.email, userDB.name);
+                                                    // DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appDB._id, userDB.email, userDB.name);
                                                     appLogger.verbose('CRUD App (Create)', 'Application compiled');
 
                                                     let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
@@ -298,7 +300,8 @@ export class AppCrudController extends CRUD_Controller {
                                                     });
                                                 }
 
-                                                DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
+                                                CompilationQueue.enqueueJob(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
+                                                // DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
                                                 appLogger.verbose('CRUD App (Update)', 'Application compiled');
 
                                                 let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));

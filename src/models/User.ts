@@ -36,7 +36,7 @@ export class User {
             },
             email:{
                 type: String,
-                required: [true, 'email i required'],
+                required: [true, 'email is required'],
                 unique: true
             },
             password: {

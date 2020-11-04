@@ -24,7 +24,8 @@ let loginNormal = () => {
                     let save = {
                         name: reqBody.name,
                         session: res.session,
-                        userID: res.userID
+                        userID: res.userID,
+                        keepSession: reqBody.keepSession
                     }
                     if(reqBody.keepSession) {
                         localStorage.setItem('session', JSON.stringify(save));
@@ -40,11 +41,17 @@ let loginNormal = () => {
                     errorMessage += `    <span aria-hidden="true">&times;</span>`;
                     errorMessage += `    </button>`;
                     errorMessage += `</div>`;
-                    document.getElementById('body').innerHTML = errorMessage + document.getElementById('body').innerHTML;
+
+                    if(document.getElementById('alertArea').childElementCount == 2) {
+                        document.getElementById('alertArea').removeChild(document.getElementById('alertArea').lastChild);
+                    }
+                    document.getElementById('alertArea').innerHTML = errorMessage + document.getElementById('alertArea').innerHTML;
                     
                     // setTimeout(() => {
                     //     document.getElementById('error').remove();
                     // }, 4500);
+                    document.getElementById('pass').value = '';
+
                     document.getElementById('email').focus();
                 }
             }).catch(err => {
@@ -54,3 +61,15 @@ let loginNormal = () => {
             console.log(err.message);
         });
 };
+
+document.getElementById('pass').addEventListener('keypress', e => {
+    if(e.key == 'Enter') {
+        loginNormal();
+    }
+});
+
+document.getElementById('email').addEventListener('keypress', e => {
+    if(e.key == 'Enter') {
+        loginNormal();
+    }
+});

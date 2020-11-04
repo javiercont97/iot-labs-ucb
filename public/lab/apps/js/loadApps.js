@@ -145,7 +145,7 @@ if (credentials == null) {
                         currentAppCard += `            </div>`;
                         currentAppCard += `            <div class="modal-body">`;
                         currentAppCard += `                <div class="custom-file">`;
-                        currentAppCard += `                    <input type="file" class="custom-file-input" id="file-${app._id}">`;
+                        currentAppCard += `                    <input type="file" class="custom-file-input" id="file-${app._id}" onchange="showFileNameToBeUploaded('file-${app._id}')">`;
                         currentAppCard += `                    <label class="custom-file-label" for="file-${app._id}" data-browse="Seleccionar">Seleccionar archivo</label>`;
                         currentAppCard += `                </div>`;
                         currentAppCard += `            </div>`;
@@ -610,4 +610,15 @@ let createApp = () => {
         }).catch(err => {
             console.log(err);
         });
+}
+
+
+//=============================================================================================
+// Show file name modal callback
+//=============================================================================================
+
+let showFileNameToBeUploaded = (id) => {
+    let fileName = $(`#${id}`).val();
+    fileName = fileName.replace('C:\\fakepath\\', '');
+    $(`#${id}`).next('.custom-file-label').html(fileName);
 }

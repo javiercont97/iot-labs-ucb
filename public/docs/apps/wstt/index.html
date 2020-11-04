@@ -229,54 +229,54 @@
                     <div class="row mx-2">
                         <div>
                             <hr class="my-1">
-                            <span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
-                            <span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
-                            <span class="qml-p-keyword">import</span> IMT.IoTLabsWS 1.0 <span class="qml-comment">// Importar el módulo de comunicaciones</span> <br>
-                            <br>
-                            <span class="qml-p-keyword">Item</span> { <br>
-                                <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
-                                <span class="indent-1 qml-p-keyword">IoTLabsWS</span> { <br>
-                                    <span class="indent-2 qml-variable">id</span>: client <br>
-                                    <span class="indent-2 qml-variable">host</span>: &quot;<span class="qml-string">ws://imt-iotlabs.net</span>&quot; <br>
-                                    <span class="indent-2 qml-variable">appID</span>: &quot;<span class="qml-string">tu appID</span>&quot; <br>
-                                    <span class="indent-2 qml-variable">apiKey</span>: &quot;<span class="qml-string">tu api key</span>&quot; <br>
-                                    <br>
-                                    <span class="indent-2 qml-variable">Component.onCompleted</span>: { <br>
-                                        <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando el componente termina de cargarse</span> <br>
-                                        <span class="indent-3 qml-function">connectServer</span> () <span class="qml-comment">// Conectarse al servidor</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2 qml-variable">onConnectionEstablished</span>: { <br>
-                                        <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando se establece conexión</span> <br>
-                                        <span class="indent-3 qml-function">subscribe</span> ( &quot;<span class="qml-string">topic/to/subscribe</span>&quot; ) <span class="qml-comment">// Subscribirse al topic topic/to/subscribe</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2 qml-variable">onCredentialsRejected</span>: { <br>
-                                        <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando las credenciales no son validas</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2 qml-variable">onMessageRecieved</span>: { <br>
-                                        <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando se recibe un mensaje</span> <br>
-                                        <span class="indent-3 qml-comment">// En esta función se recibe el argumento message</span> <br>
-                                        <span class="indent-3 qml-variable">let</span> parsedMessage = JSON.<span class="qml-function">parse</span> ( <span class="qml-arg">message</span> ) <span class="qml-comment">// Convertir el mensaje en un objeto de JavaScript</span> <br>
-                                        <br>
-                                        <span class="indent-3 qml-p-keyword">if</span> ( <span class="qml-arg">parsedMessage.topic</span> == &quot;<span class="qml-string">topic/to/subscribe</span>&quot; ) { <br>
-                                            <span class="indent-4 qml-comment">// Procesar el mensaje se debe acceder al mismo con parsedMessage.message</span> <br>
-                                            <span class="indent-4"></span>console.<span class="qml-function">log</span> ( <span class="qml-arg">parsedMessage.message</span> )</span> <span class="qml-comment">// Mostrar el mentaje recibido en la consola del navegador</span> <br>
-                                        <span class="indent-3">}</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                <span class="indent-1">}</span> <br>
-                                <span class="indent-1"><span class="qml-p-keyword">Switch</span> {</span> <br>
-                                    <span class="indent-2 qml-variable">anchors.centerIn</span>: parent <br>
-                                    <span class="indent-2 qml-variable">text</span>: &quot;<span class="qml-string">Switch me!</span>&quot; <br>
-                                    <span class="indent-2 qml-variable">onCheckedChanged</span>: { <br>
-                                        <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando el switch cambia de estado</span> <br>
-                                        <span class="indent-3 qml-comment">// En esta función se recibe el argumento checked. También es posible manipular otros elementos mediante el id</span> <br>
-                                        <span class="indent-3 qml-p-keyword">if</span> (<span class="qml-arg">checked</span>) { <br>
-                                            <span class="indent-4">client.<span class="qml-function">publish</span> ( &quot;<span class="qml-string">topic/to/publish</span>&quot;, &quot;<span class="qml-string">switch_on</span>&quot;)</span> <span class="qml-comment">// Publicar el mentaje switch_on al topic topic/to/publish</span> <br>
-                                        <span class="indent-3">}</span> <span class="qml-p-keyword">else </span> {<br>
-                                            <span class="indent-4"></span>client.<span class="qml-function">publish</span> ( &quot;<span class="qml-string">topic/to/publish</span>&quot;, &quot;<span class="qml-string">switch_off</span>&quot;)</span> <span class="qml-comment">// Publicar el mentaje switch_off al topic topic/to/publish</span> <br>
-                                        <span class="indent-3">}</span> <br>
-                                    <span class="indent-2">} <br>
-                                <span class="indent-1">}</span> <br>
-                            }
+                            <span class="lineNumber-3">1</span><span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
+                            <span class="lineNumber-3">2</span><span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
+                            <span class="lineNumber-3">3</span><span class="qml-p-keyword">import</span> IMT.IoTLabsWS 1.0 <span class="qml-comment">// Importar el módulo de comunicaciones</span> <br>
+                            <span class="lineNumber-3">4</span><br>
+                            <span class="lineNumber-3">5</span><span class="qml-p-keyword">Item</span> { <br>
+                            <span class="lineNumber-3">6</span>    <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
+                            <span class="lineNumber-3">7</span>    <span class="indent-1 qml-p-keyword">IoTLabsWS</span> { <br>
+                            <span class="lineNumber-3">8</span>        <span class="indent-2 qml-variable">id</span>: client <br>
+                            <span class="lineNumber-3">9</span>        <span class="indent-2 qml-variable">host</span>: &quot;<span class="qml-string">ws://imt-iotlabs.net</span>&quot; <br>
+                            <span class="lineNumber-2">10</span>       <span class="indent-2 qml-variable">appID</span>: &quot;<span class="qml-string">tu appID</span>&quot; <br>
+                            <span class="lineNumber-2">11</span>       <span class="indent-2 qml-variable">apiKey</span>: &quot;<span class="qml-string">tu api key</span>&quot; <br>
+                            <span class="lineNumber-2">12</span>       <br>
+                            <span class="lineNumber-2">13</span>       <span class="indent-2 qml-variable">Component.onCompleted</span>: { <br>
+                            <span class="lineNumber-2">14</span>           <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando el componente termina de cargarse</span> <br>
+                            <span class="lineNumber-2">15</span>           <span class="indent-3 qml-function">connectServer</span> () <span class="qml-comment">// Conectarse al servidor</span> <br>
+                            <span class="lineNumber-2">16</span>       <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">17</span>       <span class="indent-2 qml-variable">onConnectionEstablished</span>: { <br>
+                            <span class="lineNumber-2">18</span>           <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando se establece conexión</span> <br>
+                            <span class="lineNumber-2">19</span>           <span class="indent-3 qml-function">subscribe</span> ( &quot;<span class="qml-string">topic/to/subscribe</span>&quot; ) <span class="qml-comment">// Subscribirse al topic topic/to/subscribe</span> <br>
+                            <span class="lineNumber-2">20</span>       <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">21</span>       <span class="indent-2 qml-variable">onCredentialsRejected</span>: { <br>
+                            <span class="lineNumber-2">22</span>           <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando las credenciales no son validas</span> <br>
+                            <span class="lineNumber-2">23</span>       <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">24</span>       <span class="indent-2 qml-variable">onMessageRecieved</span>: { <br>
+                            <span class="lineNumber-2">25</span>           <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando se recibe un mensaje</span> <br>
+                            <span class="lineNumber-2">26</span>           <span class="indent-3 qml-comment">// En esta función se recibe el argumento message</span> <br>
+                            <span class="lineNumber-2">27</span>           <span class="indent-3 qml-variable">let</span> parsedMessage = JSON.<span class="qml-function">parse</span> ( <span class="qml-arg">message</span> ) <span class="qml-comment">// Convertir el mensaje en un objeto de JavaScript</span> <br>
+                            <span class="lineNumber-2">28</span>           <br>
+                            <span class="lineNumber-2">29</span>           <span class="indent-3 qml-p-keyword">if</span> ( <span class="qml-arg">parsedMessage.topic</span> == &quot;<span class="qml-string">topic/to/subscribe</span>&quot; ) { <br>
+                            <span class="lineNumber-2">30</span>               <span class="indent-4 qml-comment">// Procesar el mensaje se debe acceder al mismo con parsedMessage.message</span> <br>
+                            <span class="lineNumber-2">31</span>               <span class="indent-4"></span>console.<span class="qml-function">log</span> ( <span class="qml-arg">parsedMessage.message</span> )</span> <span class="qml-comment">// Mostrar el mentaje recibido en la consola del navegador</span> <br>
+                            <span class="lineNumber-2">32</span>           <span class="indent-3">}</span> <br>
+                            <span class="lineNumber-2">33</span>       <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">34</span>   <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">35</span>   <span class="indent-1"><span class="qml-p-keyword">Switch</span> {</span> <br>
+                            <span class="lineNumber-2">36</span>       <span class="indent-2 qml-variable">anchors.centerIn</span>: parent <br>
+                            <span class="lineNumber-2">37</span>       <span class="indent-2 qml-variable">text</span>: &quot;<span class="qml-string">Switch me!</span>&quot; <br>
+                            <span class="lineNumber-2">38</span>       <span class="indent-2 qml-variable">onCheckedChanged</span>: { <br>
+                            <span class="lineNumber-2">39</span>           <span class="indent-3 qml-comment">// Función de JavaScript que se ejecuta cuando el switch cambia de estado</span> <br>
+                            <span class="lineNumber-2">40</span>           <span class="indent-3 qml-comment">// En esta función se recibe el argumento checked. También es posible manipular otros elementos mediante el id</span> <br>
+                            <span class="lineNumber-2">41</span>           <span class="indent-3 qml-p-keyword">if</span> (<span class="qml-arg">checked</span>) { <br>
+                            <span class="lineNumber-2">42</span>               <span class="indent-4">client.<span class="qml-function">publish</span> ( &quot;<span class="qml-string">topic/to/publish</span>&quot;, &quot;<span class="qml-string">switch_on</span>&quot;)</span> <span class="qml-comment">// Publicar el mentaje switch_on al topic topic/to/publish</span> <br>
+                            <span class="lineNumber-2">43</span>           <span class="indent-3">}</span> <span class="qml-p-keyword">else </span> {<br>
+                            <span class="lineNumber-2">44</span>               <span class="indent-4"></span>client.<span class="qml-function">publish</span> ( &quot;<span class="qml-string">topic/to/publish</span>&quot;, &quot;<span class="qml-string">switch_off</span>&quot;)</span> <span class="qml-comment">// Publicar el mentaje switch_off al topic topic/to/publish</span> <br>
+                            <span class="lineNumber-2">45</span>           <span class="indent-3">}</span> <br>
+                            <span class="lineNumber-2">46</span>       <span class="indent-2">} <br>
+                            <span class="lineNumber-2">47</span>   <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">48</span>}
                             <hr class="my-1">
                             API de comunicación
                             <hr class="my-1">

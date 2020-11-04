@@ -180,47 +180,46 @@
                     <div class="row mx-2">
                         <div>
                             <hr class="my-1">
-                            <span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
-                            <span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
-                            <br>
-                            <span class="qml-p-keyword">Item</span> { <br>
-                                <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
-                                <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
-                                <span class="indent-2"><span class="qml-variable">spacing</span>: 5</span> <span class="qml-comment">// spacing determina la separación entre componentes</span> <br>
-                                <span class="indent-2"><span class="qml-variable">width</span>: 300</span> <span class="qml-comment">// width determina el ancho de la columna, para esto es posible utilizar anchors.</span> <br>
-                                <span class="indent-2"><span class="qml-variable">height</span>: 300</span> <span class="qml-comment">// height determina el alto de la columna, para esto es posible utilizar anchors. </span> <br>
-                                <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
-                                    <span class="indent-3 qml-comment">// Propiedades de Label</span> <br>
-                                <span class="indent-2">}</span> <br>
-                                <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
-                                    <span class="indent-3 qml-comment">// Propiedades de Button</span> <br>
-                                <span class="indent-2">}</span> <br>
-                                <span class="indent-2"><span class="qml-p-keyword">Row</span> {</span> <br>
-                                    <span class="indent-3 qml-comment">// Es posible insertar elementos de layout dentro de otros</span> <br>
-                                <span class="indent-2">}</span> <br>
-                                <span class="indent-1">}</span> <br>
-                                <br>
-                                <span class="indent-1"><span class="qml-p-keyword">Row</span> {</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">spacing</span>: 5</span> <span class="qml-comment">// spacing determina la separación entre componentes</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">width</span>: 300</span> <span class="qml-comment">// width determina el ancho de la fila, para esto es posible utilizar anchors.</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">height</span>: 300</span> <span class="qml-comment">// height determina el alto de la fila, para esto es posible utilizar anchors. </span> <br>
-                                    <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
-                                        <span class="indent-3 qml-comment">// Propiedades de Label</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
-                                        <span class="indent-3 qml-comment">// Propiedades de Button</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Column</span> {</span> <br>
-                                        <span class="indent-3 qml-comment">// Es posible insertar elementos de layout dentro de otros</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                <span class="indent-1">}</span> <br>
-                                
-                                <span class="indent-1"><span class="qml-p-keyword">Row</span> {</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">anchors.fill</span>: parent</span> <span class="qml-comment">// es posible utilizar anchors para algunas propiedades. En este caso la fila ocupará todo el espacio (fill) de su elemento padre, id: root</span><br>
-                                <span class="indent-1">}</span> <br>
-
-                            }
+                            <span class="lineNumber-3">1</span><span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
+                            <span class="lineNumber-3">2</span><span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
+                            <span class="lineNumber-3">3</span><br>
+                            <span class="lineNumber-3">4</span><span class="qml-p-keyword">Item</span> { <br>
+                            <span class="lineNumber-3">5</span>    <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
+                            <span class="lineNumber-3">6</span>    <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
+                            <span class="lineNumber-3">7</span>    <span class="indent-2"><span class="qml-variable">spacing</span>: 5</span> <span class="qml-comment">// spacing determina la separación entre componentes</span> <br>
+                            <span class="lineNumber-3">8</span>    <span class="indent-2"><span class="qml-variable">width</span>: 300</span> <span class="qml-comment">// width determina el ancho de la columna, para esto es posible utilizar anchors.</span> <br>
+                            <span class="lineNumber-3">9</span>    <span class="indent-2"><span class="qml-variable">height</span>: 300</span> <span class="qml-comment">// height determina el alto de la columna, para esto es posible utilizar anchors. </span> <br>
+                            <span class="lineNumber-2">10</span>    <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
+                            <span class="lineNumber-2">11</span>        <span class="indent-3 qml-comment">// Propiedades de Label</span> <br>
+                            <span class="lineNumber-2">12</span>    <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">13</span>    <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
+                            <span class="lineNumber-2">14</span>        <span class="indent-3 qml-comment">// Propiedades de Button</span> <br>
+                            <span class="lineNumber-2">15</span>    <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">16</span>    <span class="indent-2"><span class="qml-p-keyword">Row</span> {</span> <br>
+                            <span class="lineNumber-2">17</span>        <span class="indent-3 qml-comment">// Es posible insertar elementos de layout dentro de otros</span> <br>
+                            <span class="lineNumber-2">18</span>    <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">19</span>    <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">20</span>    <br>
+                            <span class="lineNumber-2">21</span>    <span class="indent-1"><span class="qml-p-keyword">Row</span> {</span> <br>
+                            <span class="lineNumber-2">22</span>        <span class="indent-2"><span class="qml-variable">spacing</span>: 5</span> <span class="qml-comment">// spacing determina la separación entre componentes</span> <br>
+                            <span class="lineNumber-2">23</span>        <span class="indent-2"><span class="qml-variable">width</span>: 300</span> <span class="qml-comment">// width determina el ancho de la fila, para esto es posible utilizar anchors.</span> <br>
+                            <span class="lineNumber-2">24</span>        <span class="indent-2"><span class="qml-variable">height</span>: 300</span> <span class="qml-comment">// height determina el alto de la fila, para esto es posible utilizar anchors. </span> <br>
+                            <span class="lineNumber-2">25</span>        <br>
+                            <span class="lineNumber-2">26</span>        <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
+                            <span class="lineNumber-2">27</span>            <span class="indent-3 qml-comment">// Propiedades de Label</span> <br>
+                            <span class="lineNumber-2">28</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">29</span>        <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
+                            <span class="lineNumber-2">30</span>            <span class="indent-3 qml-comment">// Propiedades de Button</span> <br>
+                            <span class="lineNumber-2">31</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">32</span>        <span class="indent-2"><span class="qml-p-keyword">Column</span> {</span> <br>
+                            <span class="lineNumber-2">33</span>            <span class="indent-3 qml-comment">// Es posible insertar elementos de layout dentro de otros</span> <br>
+                            <span class="lineNumber-2">34</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">35</span>    <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">36</span>    <br>
+                            <span class="lineNumber-2">37</span>    <span class="indent-1"><span class="qml-p-keyword">Row</span> {</span> <br>
+                            <span class="lineNumber-2">38</span>        <span class="indent-2"><span class="qml-variable">anchors.fill</span>: parent</span> <span class="qml-comment">// es posible utilizar anchors para algunas propiedades. En este caso la fila ocupará todo el espacio (fill) de su elemento padre, id: root</span><br>
+                            <span class="lineNumber-2">39</span>    <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">40</span>}
                             <hr class="my-1">
                             Elementos de layout
                             <hr class="my-1">
@@ -242,51 +241,51 @@
                     <div class="row mx-2">
                         <div>
                             <hr class="my-1">
-                            <span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
-                            <span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
-                            <br>
-                            <span class="qml-p-keyword">Item</span> { <br>
-                                <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
-                                <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">anchors.centerIn</span>: parent</span> <span class="qml-comment">// Colocar la columna en el centro del elemento padre</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">spacing</span>: 50</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Hello world</span>&quot; <br>
-                                        <span class="indent-3 qml-variable">font.pointSize</span>: 25 <span class="qml-comment">// Cambiar el tamaño de la fuente a 25pt</span><br>
-
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Click me!</span>&quot; <br>
-                                        <span class="indent-3 qml-variable">onClicked</span>: { <br>
-                                            <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el botón es clickeado</span> <br>
-                                            <span class="indent-4 qml-comment">// En esta función no se reciben argumentos. Sin embargo, es posible manipular otros elementos mediante el id</span> <br>
-                                        <span class="indent-3">} <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Switch</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Switch me!</span>&quot; <br>
-                                        <span class="indent-3 qml-variable">onCheckedChanged</span>: { <br>
-                                            <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el switch cambia de estado</span> <br>
-                                            <span class="indent-4 qml-comment">// En esta función se recibe el argumento checked. También es posible manipular otros elementos mediante el id</span> <br>
-                                            <span class="indent-4 qml-p-keyword">if</span> (<span class="qml-arg">checked</span>) { <br>
-                                                <span class="indent-5 qml-comment">// El switch esta encendido</span> <br>
-                                            <span class="indent-4">}</span> <span class="qml-p-keyword">else </span> {<br>
-                                                    <span class="indent-5 qml-comment">// El switch esta apagado</span> <br>
-                                            <span class="indent-4">}</span> <br>
-                                        <span class="indent-3">} <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Slider</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">from</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
-                                        <span class="indent-3 qml-variable">to</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 1</span> <br>
-                                        <span class="indent-3 qml-variable">stepSize</span>: 2 <span class="qml-comment">// Valor de los incrementos</span> <br>
-                                        <span class="indent-3 qml-variable">orientation</span>: Qt.Vertical <span class="qml-comment">// El valor por omisión es Qt.Horizontal. Los valores posibles son Qt.Vertical y Qt.Horizontal</span> <br>
-                                        <span class="indent-3 qml-variable">onValueChanged</span>: { <br>
-                                            <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el valor del Slider cambia</span> <br>
-                                            <span class="indent-4 qml-comment">// Esta funcion recibe el argumento value</span> <br>
-                                            <span class="indent-4">console.</span><span class="qml-function">log</span> ( <span class="qml-arg">value</span> ); <span class="qml-comment">// Mostrar el valor del Slider en la consola del navegador</span> <br>
-                                        <span class="indent-3">}</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                <span class="indent-1">}</span> <br>
-                            }
+                            <span class="lineNumber-3">1</span><span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
+                            <span class="lineNumber-3">2</span><span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
+                            <span class="lineNumber-3">3</span><br>
+                            <span class="lineNumber-3">4</span><span class="qml-p-keyword">Item</span> { <br>
+                            <span class="lineNumber-3">5</span>    <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
+                            <span class="lineNumber-3">6</span>    <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
+                            <span class="lineNumber-3">7</span>        <span class="indent-2"><span class="qml-variable">anchors.centerIn</span>: parent</span> <span class="qml-comment">// Colocar la columna en el centro del elemento padre</span> <br>
+                            <span class="lineNumber-3">8</span>        <span class="indent-2"><span class="qml-variable">spacing</span>: 50</span> <br>
+                            <span class="lineNumber-3">9</span>        <span class="indent-2"><span class="qml-p-keyword">Label</span> {</span> <br>
+                            <span class="lineNumber-2">10</span>            <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Hello world</span>&quot; <br>
+                            <span class="lineNumber-2">11</span>            <span class="indent-3 qml-variable">font.pointSize</span>: 25 <span class="qml-comment">// Cambiar el tamaño de la fuente a 25pt</span><br>
+                            <span class="lineNumber-2">12</span>        <br>
+                            <span class="lineNumber-2">13</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">14</span>        <span class="indent-2"><span class="qml-p-keyword">Button</span> {</span> <br>
+                            <span class="lineNumber-2">15</span>            <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Click me!</span>&quot; <br>
+                            <span class="lineNumber-2">16</span>            <span class="indent-3 qml-variable">onClicked</span>: { <br>
+                            <span class="lineNumber-2">17</span>                <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el botón es clickeado</span> <br>
+                            <span class="lineNumber-2">18</span>                <span class="indent-4 qml-comment">// En esta función no se reciben argumentos. Sin embargo, es posible manipular otros elementos mediante el id</span> <br>
+                            <span class="lineNumber-2">19</span>            <span class="indent-3">} <br>
+                            <span class="lineNumber-2">20</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">21</span>        <span class="indent-2"><span class="qml-p-keyword">Switch</span> {</span> <br>
+                            <span class="lineNumber-2">22</span>            <span class="indent-3 qml-variable">text</span>: &quot;<span class="qml-string">Switch me!</span>&quot; <br>
+                            <span class="lineNumber-2">23</span>            <span class="indent-3 qml-variable">onCheckedChanged</span>: { <br>
+                            <span class="lineNumber-2">24</span>                <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el switch cambia de estado</span> <br>
+                            <span class="lineNumber-2">25</span>                <span class="indent-4 qml-comment">// En esta función se recibe el argumento checked. También es posible manipular otros elementos mediante el id</span> <br>
+                            <span class="lineNumber-2">26</span>                <span class="indent-4 qml-p-keyword">if</span> (<span class="qml-arg">checked</span>) { <br>
+                            <span class="lineNumber-2">27</span>                    <span class="indent-5 qml-comment">// El switch esta encendido</span> <br>
+                            <span class="lineNumber-2">28</span>                <span class="indent-4">}</span> <span class="qml-p-keyword">else </span> {<br>
+                            <span class="lineNumber-2">29</span>                        <span class="indent-5 qml-comment">// El switch esta apagado</span> <br>
+                            <span class="lineNumber-2">30</span>                <span class="indent-4">}</span> <br>
+                            <span class="lineNumber-2">31</span>            <span class="indent-3">} <br>
+                            <span class="lineNumber-2">32</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">33</span>        <span class="indent-2"><span class="qml-p-keyword">Slider</span> {</span> <br>
+                            <span class="lineNumber-2">34</span>            <span class="indent-3 qml-variable">from</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
+                            <span class="lineNumber-2">35</span>            <span class="indent-3 qml-variable">to</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 1</span> <br>
+                            <span class="lineNumber-2">36</span>            <span class="indent-3 qml-variable">stepSize</span>: 2 <span class="qml-comment">// Valor de los incrementos</span> <br>
+                            <span class="lineNumber-2">37</span>            <span class="indent-3 qml-variable">orientation</span>: Qt.Vertical <span class="qml-comment">// El valor por omisión es Qt.Horizontal. Los valores posibles son Qt.Vertical y Qt.Horizontal</span> <br>
+                            <span class="lineNumber-2">38</span>            <span class="indent-3 qml-variable">onValueChanged</span>: { <br>
+                            <span class="lineNumber-2">39</span>                <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el valor del Slider cambia</span> <br>
+                            <span class="lineNumber-2">40</span>                <span class="indent-4 qml-comment">// Esta funcion recibe el argumento value</span> <br>
+                            <span class="lineNumber-2">41</span>                <span class="indent-4">console.</span><span class="qml-function">log</span> ( <span class="qml-arg">value</span> ); <span class="qml-comment">// Mostrar el valor del Slider en la consola del navegador</span> <br>
+                            <span class="lineNumber-2">42</span>            <span class="indent-3">}</span> <br>
+                            <span class="lineNumber-2">43</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">44</span>    <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">45</span>}
                             <hr class="my-1">
                             Controles básicos disponibles
                             <hr class="my-1">
@@ -300,43 +299,43 @@
                     <div class="row mx-2">
                         <div>
                             <hr class="my-1">
-                            <span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
-                            <span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
-                            <span class="qml-p-keyword">import</span> Controls 1.0 <span class="qml-comment">// Importar controles avanzados</span> <br>
-                            <br>
-                            <span class="qml-p-keyword">Item</span> { <br>
-                                <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
-                                <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">anchors.centerIn</span>: parent</span> <span class="qml-comment">// Colocar la columna en el centro del elemento padre</span> <br>
-                                    <span class="indent-2"><span class="qml-variable">spacing</span>: 50</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Dial</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">id</span>: dial <span class="qml-comment">// Asignar el id dial</span> <br>
-                                        <span class="indent-3 qml-variable">from</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
-                                        <span class="indent-3 qml-variable">to</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 1</span> <br>
-                                        <span class="indent-3 qml-variable">stepSize</span>: 2 <span class="qml-comment">// Valor de los incrementos</span> <br>
-                                        <span class="indent-3 qml-variable">onValueChanged</span>: { <br>
-                                            <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el valor del Dial cambia</span> <br>
-                                            <span class="indent-4 qml-comment">// Esta funcion recibe el argumento value</span> <br>
-                                            <span class="indent-4">console.</span><span class="qml-function">log</span> ( <span class="qml-arg">value</span> ); <span class="qml-comment">// Mostrar el valor del Dial en la consola del navegador</span> <br>
-                                            <span class="indent-4">gauge.</span><span class="qml-variable">value</span> = <span class="qml-arg">value</span>; <span class="qml-comment">// Cambiar el valor de gauge con el valor del Dial</span> <br>
-                                        <span class="indent-3">}</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Gauge</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">id</span>: gauge <span class="qml-comment">// Asignar el id gauge</span> <br>
-                                        <span class="indent-3 qml-variable">width</span>: 200 <span class="qml-comment">// Determinar el ancho del gauge</span> <br>
-                                        <span class="indent-3 qml-variable">height</span>: 200 <span class="qml-comment">// Determinar el alto del gauge</span> <br>
-                                        <span class="indent-3 qml-variable">min</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
-                                        <span class="indent-3 qml-variable">max</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 100</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                    <span class="indent-2"><span class="qml-p-keyword">Gauge</span> {</span> <br>
-                                        <span class="indent-3 qml-variable">width</span>: 200 <span class="qml-comment">// Determinar el ancho del gauge</span> <br>
-                                        <span class="indent-3 qml-variable">height</span>: 200 <span class="qml-comment">// Determinar el alto del gauge</span> <br>
-                                        <span class="indent-3 qml-variable">min</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
-                                        <span class="indent-3 qml-variable">max</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 100</span> <br>
-                                        <span class="indent-3 qml-variable">value</span>: dial.value <span class="qml-comment">// Utilizar propery binding para asociar el valor del gauge con el de dial</span> <br>
-                                    <span class="indent-2">}</span> <br>
-                                <span class="indent-1">}</span> <br>
-                            }
+                            <span class="lineNumber-3">1</span><span class="qml-p-keyword">import</span> QtQuick 2.12 <br>
+                            <span class="lineNumber-3">2</span><span class="qml-p-keyword">import</span> QtQuick.Controls 2.12 <br>
+                            <span class="lineNumber-3">3</span><span class="qml-p-keyword">import</span> Controls 1.0 <span class="qml-comment">// Importar controles avanzados</span> <br>
+                            <span class="lineNumber-3">4</span><br>
+                            <span class="lineNumber-3">5</span><span class="qml-p-keyword">Item</span> { <br>
+                            <span class="lineNumber-3">6</span>    <span class="indent-1"><span class="qml-variable">id</span>: root</span> <br>
+                            <span class="lineNumber-3">7</span>    <span class="indent-1"><span class="qml-p-keyword">Column</span> {</span> <br>
+                            <span class="lineNumber-3">8</span>        <span class="indent-2"><span class="qml-variable">anchors.centerIn</span>: parent</span> <span class="qml-comment">// Colocar la columna en el centro del elemento padre</span> <br>
+                            <span class="lineNumber-3">9</span>        <span class="indent-2"><span class="qml-variable">spacing</span>: 50</span> <br>
+                            <span class="lineNumber-2">10</span>        <span class="indent-2"><span class="qml-p-keyword">Dial</span> {</span> <br>
+                            <span class="lineNumber-2">11</span>            <span class="indent-3 qml-variable">id</span>: dial <span class="qml-comment">// Asignar el id dial</span> <br>
+                            <span class="lineNumber-2">12</span>            <span class="indent-3 qml-variable">from</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
+                            <span class="lineNumber-2">13</span>            <span class="indent-3 qml-variable">to</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 1</span> <br>
+                            <span class="lineNumber-2">14</span>            <span class="indent-3 qml-variable">stepSize</span>: 2 <span class="qml-comment">// Valor de los incrementos</span> <br>
+                            <span class="lineNumber-2">15</span>            <span class="indent-3 qml-variable">onValueChanged</span>: { <br>
+                            <span class="lineNumber-2">16</span>                <span class="indent-4 qml-comment">// Función de JavaScript que se ejecuta cuando el valor del Dial cambia</span> <br>
+                            <span class="lineNumber-2">17</span>                <span class="indent-4 qml-comment">// Esta funcion recibe el argumento value</span> <br>
+                            <span class="lineNumber-2">18</span>                <span class="indent-4">console.</span><span class="qml-function">log</span> ( <span class="qml-arg">value</span> ); <span class="qml-comment">// Mostrar el valor del Dial en la consola del navegador</span> <br>
+                            <span class="lineNumber-2">19</span>                <span class="indent-4">gauge.</span><span class="qml-variable">value</span> = <span class="qml-arg">value</span>; <span class="qml-comment">// Cambiar el valor de gauge con el valor del Dial</span> <br>
+                            <span class="lineNumber-2">20</span>            <span class="indent-3">}</span> <br>
+                            <span class="lineNumber-2">21</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">22</span>        <span class="indent-2"><span class="qml-p-keyword">Gauge</span> {</span> <br>
+                            <span class="lineNumber-2">23</span>            <span class="indent-3 qml-variable">id</span>: gauge <span class="qml-comment">// Asignar el id gauge</span> <br>
+                            <span class="lineNumber-2">24</span>            <span class="indent-3 qml-variable">width</span>: 200 <span class="qml-comment">// Determinar el ancho del gauge</span> <br>
+                            <span class="lineNumber-2">25</span>            <span class="indent-3 qml-variable">height</span>: 200 <span class="qml-comment">// Determinar el alto del gauge</span> <br>
+                            <span class="lineNumber-2">26</span>            <span class="indent-3 qml-variable">min</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
+                            <span class="lineNumber-2">27</span>            <span class="indent-3 qml-variable">max</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 100</span> <br>
+                            <span class="lineNumber-2">28</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">29</span>        <span class="indent-2"><span class="qml-p-keyword">Gauge</span> {</span> <br>
+                            <span class="lineNumber-2">30</span>            <span class="indent-3 qml-variable">width</span>: 200 <span class="qml-comment">// Determinar el ancho del gauge</span> <br>
+                            <span class="lineNumber-2">31</span>            <span class="indent-3 qml-variable">height</span>: 200 <span class="qml-comment">// Determinar el alto del gauge</span> <br>
+                            <span class="lineNumber-2">32</span>            <span class="indent-3 qml-variable">min</span>: 0 <span class="qml-comment">// Valor minimo. El valor por omisión es 0</span> <br>
+                            <span class="lineNumber-2">33</span>            <span class="indent-3 qml-variable">max</span>: 100 <span class="qml-comment">// Valor máximo. El valor por omisión es 100</span> <br>
+                            <span class="lineNumber-2">34</span>            <span class="indent-3 qml-variable">value</span>: dial.value <span class="qml-comment">// Utilizar propery binding para asociar el valor del gauge con el de dial</span> <br>
+                            <span class="lineNumber-2">35</span>        <span class="indent-2">}</span> <br>
+                            <span class="lineNumber-2">36</span>    <span class="indent-1">}</span> <br>
+                            <span class="lineNumber-2">37</span>}
                             <hr class="my-1">
                             Controles avanzados disponibles
                             <hr class="my-1">

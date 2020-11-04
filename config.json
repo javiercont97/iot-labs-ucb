@@ -29,6 +29,7 @@
     },
     "debugging": {
         "DEBUG_LEVEL": [
+            "verbose",
             "info",
             "warning",
             "error"

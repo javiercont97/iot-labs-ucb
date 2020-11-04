@@ -34,3 +34,18 @@
 .indent-5 {
     padding-left: 5rem;
 }
+
+.lineNumber-3 {
+    margin-right: 1.5rem;
+    color: #56565c;
+}
+
+.lineNumber-2 {
+    margin-right: 1rem;
+    color: #56565c;
+}
+
+.lineNumber-1 {
+    margin-right: 0.5rem;
+    color: #56565c;
+}

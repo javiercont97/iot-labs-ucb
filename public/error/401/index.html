@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Labs</title>
+    <link rel="stylesheet" href="../css/errorStyling.css">
+</head>
+<body>
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h1>4<span>0</span>1</h1>
+            </div>
+            <h2>Sin autorización</h2>
+            <h2 id="message"></h2>
+        </div>
+    </div>
+
+    <script>
+        let params = new URLSearchParams(window.location.search);
+
+        let msg = document.getElementById('message');
+
+        if(params.get('msg')) {
+            msg.innerHTML = String(params.get('msg')).replace('%20', ' ');
+        } else {
+            msg.innerHTML = 'No tiene autorización para ingresar a la página que busca';
+        }
+    </script>
+</body>
+</html>

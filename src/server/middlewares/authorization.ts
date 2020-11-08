@@ -134,11 +134,12 @@ class Authorization {
             if (ownerUser == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
                 if (req.params.action == 'render') {
-                    return res.json({
-                        err: {
-                            message: 'Sin autorización'
-                        }
-                    });
+                    return res.redirect(401, '/error/401/?Usuario%20no%20encontrado');
+                    // return res.json({
+                    //     err: {
+                    //         message: 'Sin autorización'
+                    //     }
+                    // });
                 } else {
                     return res.status(404).json({
                         err: {
@@ -183,11 +184,12 @@ class Authorization {
                 if (index < 0) {
                     appLogger.warning('Middleware(Authorization)', 'App not found');
                     if (req.params.action == 'render') {
-                        return res.json({
-                            err: {
-                                message: 'Sin autorización'
-                            }
-                        });
+                        return res.redirect(403, `/error/403/?msg=No%20tiene%20acceso%a%20la%20aplicación`);
+                        // return res.json({
+                        //     err: {
+                        //         message: 'Sin autorización'
+                        //     }
+                        // });
                     } else {
                         return res.status(404).json({
                             err: {

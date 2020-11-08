@@ -10,7 +10,8 @@ import WSTelemtryServer from '../services/wstt/wstt';
 import Broker from '../services/mqtt/Broker';
 
 import {resolve as resolvePath} from 'path';
-import { createServer as HTTPCreateServer } from 'http';
+import { readFileSync } from 'fs';
+import { createServer as HTTPSCreateServer } from 'https';
 import { MessageQueue } from '../services/message_queue/message_queue';
 import { CompilationQueue } from '../middlewares/build/compilationQueue';
 
@@ -39,12 +40,15 @@ app.use('/api', router);
 
 appLogger.verbose('Server', 'API router has been set up');
 
-// allow react app handle everything else
+// make every other request end with a 404 response
 app.get('*', (req ,res) =>{
-    res.sendFile(resolvePath(__dirname, '../../public/index.html'));
+    res.sendFile(resolvePath(__dirname, '../../public/error/404/'));
 });
 
-let server = HTTPCreateServer(app);
+let server = HTTPSCreateServer({
+    key: readFileSync(resolvePath(__dirname, '../../certs/private.key')),
+    cert: readFileSync(resolvePath(__dirname, '../../certs/certificate.crt'))
+}, app);
 
 let wstt = new WSTelemtryServer({server});
 wstt.setupWSTT_Server();

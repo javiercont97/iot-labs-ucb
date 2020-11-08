@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
-import { appLogger, HOST_URL } from '../../config/constants';
+import { appLogger } from '../../config/constants';
 import { PrivacyLevelEnum } from '../../models/App';
 import Authentication from './authentication';
 
@@ -20,11 +20,12 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
 
         if (appDB == null) {
             appLogger.warning('Middleware (App Privacy Level)', 'App not found');
-            return res.json({
-                err: {
-                    message: 'Aplicación no encontrada'
-                }
-            });
+            return res.redirect(404, `/error/404/?msg=Aplicación%20no%20nncontrada`);
+            // return res.json({
+            //     err: {
+            //         message: 'Aplicación no encontrada'
+            //     }
+            // });
         }
 
         if (appDB.privacyLevel == PrivacyLevelEnum.PUBLIC) {
@@ -44,19 +45,21 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
                         next();
                     } else {
                         appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                        return res.json({
-                            err: {
-                                message: 'Sin autorización'
-                            }
-                        });
+                        return res.redirect(401, `/error/401/?msg=Sin%20Autorización%20para%20ver%20la%20aplicación%20${appDB.name}`);
+                        // return res.json({
+                        //     err: {
+                        //         message: 'Sin autorización'
+                        //     }
+                        // });
                     }
                 } else {
                     appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                    return res.json({
-                        err: {
-                            message: 'Sin autorización'
-                        }
-                    });
+                    return res.redirect(401, `/error/401/?msg=Sin%20Autorización%20para%20ver%20la%20aplicación%20${appDB.name}`);
+                    // return res.json({
+                    //     err: {
+                    //         message: 'Sin autorización'
+                    //     }
+                    // });
                 }
             }
         }

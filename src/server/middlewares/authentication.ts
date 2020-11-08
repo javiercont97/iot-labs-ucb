@@ -1,9 +1,9 @@
 import { randomBytes as CryptoRandomBytes, createCipheriv as CryptoCipher, createDecipheriv as CryptoDecipher } from 'crypto';
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
-import { appLogger, SESSION_IV, HOST_URL } from '../../config/constants';
+import { appLogger, SESSION_IV } from '../../config/constants';
 import Authorization from './authorization';
-
+import { resolve as resolvePath } from 'path';
 
 class Authentication {
     /**
@@ -94,7 +94,7 @@ class Authentication {
             if (userDB === null) {
                 appLogger.warning('Middleware(Authentication)', 'No such user');
                 if (req.params.action == 'render') {
-                    return res.redirect(401, `/error/401/?msg=Usuario%20no%encontrado`);
+                    return res.sendFile(resolvePath(__dirname, '../../../public/error/401/index.html'));
                     // return res.json({
                     //     err: {
                     //         message: 'Sin autorización'
@@ -118,7 +118,7 @@ class Authentication {
             if (index < 0 || !Authentication.verifySession(openSessions[index].session, session, openSessions[index].key)) {
                 appLogger.warning('Middleware(Authentication)', 'Session rejected');
                 if (req.params.action == 'render') {
-                    return res.redirect(401, `/error/401/?msg=Usuario%20no%20autenticado`);
+                    return res.sendFile(resolvePath(__dirname, '../../../public/error/401/index.html'));
                     // return res.json({
                     //     err: {
                     //         message: 'Sin autorización'

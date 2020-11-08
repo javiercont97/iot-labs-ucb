@@ -3,6 +3,7 @@ import { DB } from '../../interfaces/dbManager';
 import { appLogger } from '../../config/constants';
 import { PrivacyLevelEnum } from '../../models/App';
 import Authentication from './authentication';
+import { resolve as resolvePath } from 'path';
 
 
 export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function) => {
@@ -20,7 +21,7 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
 
         if (appDB == null) {
             appLogger.warning('Middleware (App Privacy Level)', 'App not found');
-            return res.redirect(404, `/error/404/?msg=Aplicación%20no%20nncontrada`);
+            return res.sendFile(resolvePath(__dirname, '../../../public/error/404/index.html'));
             // return res.json({
             //     err: {
             //         message: 'Aplicación no encontrada'
@@ -45,7 +46,7 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
                         next();
                     } else {
                         appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                        return res.redirect(401, `/error/401/?msg=Sin%20Autorización%20para%20ver%20la%20aplicación%20${appDB.name}`);
+                        return res.sendFile(resolvePath(__dirname, '../../../public/error/401/index.html'));
                         // return res.json({
                         //     err: {
                         //         message: 'Sin autorización'
@@ -54,7 +55,7 @@ export const checkAppPrivacyLevel = (req: Request, res: Response, next: Function
                     }
                 } else {
                     appLogger.error('Middleware (App Privacy Level)', 'Unauthorized');
-                    return res.redirect(401, `/error/401/?msg=Sin%20Autorización%20para%20ver%20la%20aplicación%20${appDB.name}`);
+                    return res.sendFile(resolvePath(__dirname, '../../../public/error/401/index.html'));
                     // return res.json({
                     //     err: {
                     //         message: 'Sin autorización'

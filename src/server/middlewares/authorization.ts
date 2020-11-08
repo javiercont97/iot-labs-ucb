@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { DB } from '../../interfaces/dbManager';
 import { Types } from 'mongoose';
-import { appLogger, HOST_URL } from '../../config/constants';
-
+import { appLogger } from '../../config/constants';
+import { resolve as resolvePath } from 'path';
 
 class Authorization {
     public static verifyAccountOwnership(req: Request, res: Response, next: Function): void {
@@ -134,7 +134,7 @@ class Authorization {
             if (ownerUser == null) {
                 appLogger.warning('Middleware(Authorization)', 'User not found');
                 if (req.params.action == 'render') {
-                    return res.redirect(401, '/error/401/?Usuario%20no%20encontrado');
+                    return res.sendFile(resolvePath(__dirname, '../../../public/error/401/index.html'));
                     // return res.json({
                     //     err: {
                     //         message: 'Sin autorización'
@@ -184,7 +184,7 @@ class Authorization {
                 if (index < 0) {
                     appLogger.warning('Middleware(Authorization)', 'App not found');
                     if (req.params.action == 'render') {
-                        return res.redirect(403, `/error/403/?msg=No%20tiene%20acceso%a%20la%20aplicación`);
+                        return res.sendFile(resolvePath(__dirname, '../../../public/error/403/index.html'));
                         // return res.json({
                         //     err: {
                         //         message: 'Sin autorización'

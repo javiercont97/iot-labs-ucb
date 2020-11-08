@@ -475,7 +475,7 @@ let openApp = (id, privacy) => {
  */
 let shareApp = (id) => {
     if(navigator.clipboard) {
-        navigator.clipboard.writeText(`http://${window.location.host}/api/render/${id}`);
+        navigator.clipboard.writeText(`${window.location.origin}/api/render/${id}`);
         let successMessage = '';
         successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
         successMessage += `    Enlace a la aplicación copiado`;
@@ -490,7 +490,7 @@ let shareApp = (id) => {
     } else {
         let successMessage = '';
         successMessage += `<div id="shareMessage" class="alert alert-info alert-dismissible fade show" role="alert">`;
-        successMessage += `    Enlace a la aplicación: http://${window.location.host}/api/render/${id}`;
+        successMessage += `    Enlace a la aplicación: ${window.location.origin}/api/render/${id}`;
         successMessage += `    <button type="button" class="close" data-dismiss="alert" aria-label="Close">`;
         successMessage += `    <span aria-hidden="true">&times;</span>`;
         successMessage += `    </button>`;

@@ -42,7 +42,7 @@ appLogger.verbose('Server', 'API router has been set up');
 
 // make every other request end with a 404 response
 app.get('*', (req ,res) =>{
-    res.sendFile(resolvePath(__dirname, '../../public/error/404/'));
+    res.sendFile(resolvePath(__dirname, '../../public/error/404/index.html'));
 });
 
 let server = HTTPSCreateServer({

@@ -17,12 +17,13 @@ export class AppRenderer {
 
             if (appDB == null) {
                 appLogger.warning('App renderer', 'App not found');
+                
                 // return res.status(404).json({
                 //     err: {
                 //         message: 'Aplicación no encontrada'
                 //     }
-                // })
-                return res.status(404).redirect(`${HOST_URL}/appnotfound`);
+                // });
+                return res.sendFile(resolvePath(__dirname, '../../../public/error/404/index.html'));
             }
 
             let resources = appDB.resourceFiles;
@@ -34,11 +35,12 @@ export class AppRenderer {
             });
 
             if (index < 0) {
-                return res.status(404).json({
-                    err: {
-                        message: 'Resource not found'
-                    }
-                })
+                return res.sendFile(resolvePath(__dirname, '../../../public/error/404/index.html'));
+                // return res.status(404).json({
+                //     err: {
+                //         message: 'Resource not found'
+                //     }
+                // });
             }
 
 
@@ -79,7 +81,8 @@ export class AppRenderer {
 
             if (appDB == null) {
                 appLogger.info('App renderer', 'App not found');
-                return res.status(308).redirect(`${HOST_URL}/appnotfound`);
+                return res.sendFile(resolvePath(__dirname, '../../../public/error/403/index.html'));
+                // return res.status(308).redirect(`${HOST_URL}/appnotfound`);
             }
 
             // if (appDB.resourceFiles.indexOf(fileName) < 0) {

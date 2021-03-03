@@ -161,7 +161,7 @@ export class AuthController {
             }
 
             appLogger.verbose('Authentication', 'User has been activated');
-            res.status(301).redirect(`${HOST_URL}/signin`);
+            res.status(301).redirect(`${HOST_URL}`);
         });
     }
 }

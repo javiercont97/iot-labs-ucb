@@ -1,7 +1,7 @@
 {
     "server": {
-        "HOST_URL": "https://imt-iotlabs.net",
-        "PORT": 443,
+        "HOST_URL": "http://imt-iotlabs.net",
+        "PORT": 80,
         "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
     },
     "services": {

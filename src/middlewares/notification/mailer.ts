@@ -45,7 +45,13 @@ class Mailer {
         });
     }
 
-    
+    /**
+     * 
+     * @param mail User's e-mail address
+     * @param name User's name
+     * @param app Laboratory name
+     * @param appID Laboratory ID
+     */
     public static sendNotificationEmail(mail: string, name: string, app: string, appID: string): void {
         appLogger.verbose('Mailer', 'Sending application ready e-mail notification');
         let request = this.mailjet.post('send', { 'version': 'v3.1' })

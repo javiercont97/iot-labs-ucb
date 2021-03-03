@@ -11,7 +11,8 @@ import Broker from '../services/mqtt/Broker';
 
 import {resolve as resolvePath} from 'path';
 import { readFileSync } from 'fs';
-import { createServer as HTTPSCreateServer } from 'https';
+import { createServer as HTTPSCreateServer, Server } from 'https';
+import { createServer as HTTPCreateServer, Server } from 'http';
 import { MessageQueue } from '../services/message_queue/message_queue';
 import { CompilationQueue } from '../middlewares/build/compilationQueue';
 
@@ -45,10 +46,18 @@ app.get('*', (req ,res) =>{
     res.sendFile(resolvePath(__dirname, '../../public/error/404/index.html'));
 });
 
-let server = HTTPSCreateServer({
-    key: readFileSync(resolvePath(__dirname, '../../certs/private.key')),
-    cert: readFileSync(resolvePath(__dirname, '../../certs/certificate.crt'))
-}, app);
+let server;
+
+if(PORT == 80) {
+    // if PORT is 80 HTTP protocol is taken
+    server = HTTPCreateServer(app);
+} else {
+    // otherwise, if PORT is 443 HTTPS protocol is taken
+    server = HTTPSCreateServer({
+        key: readFileSync(resolvePath(__dirname, '../../certs/private.key')),
+        cert: readFileSync(resolvePath(__dirname, '../../certs/certificate.crt'))
+    }, app);
+}
 
 let wstt = new WSTelemtryServer({server});
 wstt.setupWSTT_Server();

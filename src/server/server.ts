@@ -11,8 +11,8 @@ import Broker from '../services/mqtt/Broker';
 
 import {resolve as resolvePath} from 'path';
 import { readFileSync } from 'fs';
-import { createServer as HTTPSCreateServer, Server } from 'https';
-import { createServer as HTTPCreateServer, Server } from 'http';
+import { createServer as HTTPSCreateServer } from 'https';
+import { createServer as HTTPCreateServer } from 'http';
 import { MessageQueue } from '../services/message_queue/message_queue';
 import { CompilationQueue } from '../middlewares/build/compilationQueue';
 

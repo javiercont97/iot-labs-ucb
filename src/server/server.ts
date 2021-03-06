@@ -11,8 +11,8 @@ import Broker from '../services/mqtt/Broker';
 
 import {resolve as resolvePath} from 'path';
 import { readFileSync } from 'fs';
-import { createServer as HTTPSCreateServer } from 'https';
-import { createServer as HTTPCreateServer } from 'http';
+import { createServer as HTTPSCreateServer, Server as HttpsServer } from 'https';
+import { createServer as HTTPCreateServer, Server as HttpServer } from 'http';
 import { MessageQueue } from '../services/message_queue/message_queue';
 import { CompilationQueue } from '../middlewares/build/compilationQueue';
 
@@ -46,7 +46,7 @@ app.get('*', (req ,res) =>{
     res.sendFile(resolvePath(__dirname, '../../public/error/404/index.html'));
 });
 
-let server;
+let server: HttpServer | HttpsServer;
 
 if(PORT == 80) {
     // if PORT is 80 HTTP protocol is taken

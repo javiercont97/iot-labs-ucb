@@ -20,6 +20,7 @@ import Authorization from '../middlewares/authorization';
 import { FileValidator } from '../middlewares/fileValidator';
 import { AppRenderer } from '../controllers/AppRenderer';
 import { checkAppPrivacyLevel } from '../middlewares/rendererUtils';
+import { PublicAppController } from '../controllers/PublicAppController';
 
 export class AppRouter implements RouterController {
     public router: Router;
@@ -66,6 +67,11 @@ export class AppRouter implements RouterController {
         appLogger.verbose('App router', `GET /render/:appID/:file`);
         this.router.get(`/render/:appID/:file`, [checkAppPrivacyLevel], (req: Request, res: Response) => {
             AppRenderer.getAppResource(req, res);
+        });
+
+        appLogger.verbose('App router', `GET /public/${this.baseUrl}`);
+        this.router.get(`/public/${this.baseUrl}`, [Authentication.verifySessionActive], (req: Request, res: Response) => {
+            PublicAppController.listPublicApps(req, res);
         });
     }
 }

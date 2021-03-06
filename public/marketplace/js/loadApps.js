@@ -7,7 +7,7 @@ if (credentials == null) {
 } else {
     credentials = JSON.parse(credentials);
 
-    fetch(`/api/user-applications?user=${credentials.userID}&session=${credentials.session}`, {
+    fetch(`/api/public/user-applications?user=${credentials.userID}&session=${credentials.session}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -25,17 +25,6 @@ if (credentials == null) {
                     apps = res.apps;
                     let appCards = [];
                     let addAppCard = '';
-                    addAppCard += '<div class="col-md-4 col-12 mt-2">'
-                    addAppCard += `    <div class="card" style="width: 20rem;">`;
-                    addAppCard += `        <div class="card-body">`;
-                    addAppCard += `            <div class="row d-flex justify-content-center">`;
-                    addAppCard += `                <button id="createAppButton" class="btn" data-toggle="modal" data-target="#createAppModal">`;
-                    addAppCard += `                    <img height="200px" src="../../assets/img/icons/plus.black.svg" title="Crear Applicación"/>`;
-                    addAppCard += `                </button>`;
-                    addAppCard += `            </div>`;
-                    addAppCard += `        </div>`;
-                    addAppCard += `    </div>`;
-                    addAppCard += `</div>`;
 
                     appCards.push(addAppCard);
                     apps.forEach(app => {
@@ -54,33 +43,13 @@ if (credentials == null) {
                         currentAppCard += `            </p>`;
                         currentAppCard += `            <div class="">`;
                         currentAppCard += `                <h6 class="card-title">`;
-                        currentAppCard += `                    Acceso`;
+                        currentAppCard += `                    Autor`;
                         currentAppCard += `                </h6>`;
                         currentAppCard += `                <p>`;
-                        currentAppCard += `                    ${app.privacyLevel == 1 ? 'Pública' : 'Privada'}`;
+                        currentAppCard += `                    ${app.owner}`;
                         currentAppCard += `                </p>`;
                         currentAppCard += `            </div>`;
                         currentAppCard += `            <div class="row d-flex justify-content-center">`;
-                        currentAppCard += `                <button class="btn btn-primary" data-toggle="modal" data-target="#updateAppModal-${app._id}">`;
-                        currentAppCard += `                    <span>`;
-                        currentAppCard += `                        <img src="../../assets/img/icons/pencil.white.svg" title="Editar"/>`;
-                        currentAppCard += `                    </span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `                <button class="btn btn-danger ml-1" data-toggle="modal" data-target="#deleteAppConfirmModal-${app._id}">`;
-                        currentAppCard += `                    <span>`;
-                        currentAppCard += `                        <img src="../../assets/img/icons/trash.white.svg" title="Eliminar"/>`;
-                        currentAppCard += `                    </span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `                <button class="btn btn-primary ml-1" data-toggle="modal" data-target="#uploadAppModal-${app._id}">`;
-                        currentAppCard += `                    <span>`;
-                        currentAppCard += `                        <img src="../../assets/img/icons/appUpload.white.svg" title="Cargar Aplicacion"/>`;
-                        currentAppCard += `                    </span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `                <button class="btn btn-primary ml-1" onclick="copyApiKey('${app._id}','${app.apiKey}')">`;
-                        currentAppCard += `                    <span>`;
-                        currentAppCard += `                        <img src="../../assets/img/icons/copyApiKey.white.svg" title="Copiar API Key"/>`;
-                        currentAppCard += `                    </span>`;
-                        currentAppCard += `                </button>`;
                         currentAppCard += `                <button class="btn btn-primary ml-1" onclick="openApp('${app._id}', ${app.privacyLevel})">`;
                         currentAppCard += `                    <span>`;
                         currentAppCard += `                        <img src="../../assets/img/icons/openApp.white.svg" title="Abrir aplicación"/>`;
@@ -93,84 +62,6 @@ if (credentials == null) {
                             currentAppCard += `                    </span>`;
                             currentAppCard += `                </button>`;
                         }
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `        </div>`;
-                        currentAppCard += `    </div>`;
-                        currentAppCard += `</div>`;
-
-                        // ============= edit modal ===============
-                        currentAppCard += `<div id="updateAppModal-${app._id}" class="modal fade" tabindex="-1">`;
-                        currentAppCard += `    <div class="modal-dialog">`;
-                        currentAppCard += `        <div class="modal-content">`;
-                        currentAppCard += `            <div class="modal-header">`;
-                        currentAppCard += `                <h5 class="modal-title">Editar aplicación</h5>`;
-                        currentAppCard += `                <button type="button" class="close" data-dismiss="modal" aria-label="Close">`;
-                        currentAppCard += `                    <span aria-hidden="true">&times;</span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `            <div class="modal-body">`;
-                        currentAppCard += `                <div class="form-group">`;
-                        currentAppCard += `                    <label for="appName-${app._id}">Nombre</label>`;
-                        currentAppCard += `                    <input type="text" class="form-control" id="appName-${app._id}" aria-describedby="appName-${app._id}" value="${app.name}">`;
-                        currentAppCard += `                </div>`;
-                        currentAppCard += `                <div class="form-group">`;
-                        currentAppCard += `                    <label for="appDescription-${app._id}">Descripción</label>`;
-                        currentAppCard += `                    <input type="text" class="form-control" id="appDescription-${app._id}" value="${app.description}">`;
-                        currentAppCard += `                </div>`;
-                        currentAppCard += `                <div class="form-group">`;
-                        currentAppCard += `                    <label for="appPrivacy-${app._id}">Acceso</label>`;
-                        currentAppCard += `                    <select id="appPrivacy-${app._id}" class="form-control">`;
-                        currentAppCard += `                        <option value=1 ${app.privacyLevel == 1? 'selected': ''}>Pública</option>`;
-                        currentAppCard += `                        <option value=2 ${app.privacyLevel == 1? '': 'selected'}>Privada</option>`;
-                        currentAppCard += `                    </select>`;
-                        currentAppCard += `                </div>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `            <div class="modal-footer">`;
-                        currentAppCard += `                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>`;
-                        currentAppCard += `                <button type="button" class="btn btn-primary" onclick="editApp('${app._id}')">Actualizar</button>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `        </div>`;
-                        currentAppCard += `    </div>`;
-                        currentAppCard += `</div>`;
-
-                        // ============= upload app files modal ===============
-                        currentAppCard += `<div id="uploadAppModal-${app._id}" class="modal fade" tabindex="-1">`;
-                        currentAppCard += `    <div class="modal-dialog">`;
-                        currentAppCard += `        <div class="modal-content">`;
-                        currentAppCard += `            <div class="modal-header">`;
-                        currentAppCard += `                <h5 class="modal-title">Cargar archivos</h5>`;
-                        currentAppCard += `                <button type="button" class="close" data-dismiss="modal" aria-label="Close">`;
-                        currentAppCard += `                    <span aria-hidden="true">&times;</span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `            <div class="modal-body">`;
-                        currentAppCard += `                <div class="custom-file">`;
-                        currentAppCard += `                    <input type="file" class="custom-file-input" id="file-${app._id}" onchange="showFileNameToBeUploaded('file-${app._id}')">`;
-                        currentAppCard += `                    <label class="custom-file-label" for="file-${app._id}" data-browse="Seleccionar">Seleccionar archivo</label>`;
-                        currentAppCard += `                </div>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `            <div class="modal-footer">`;
-                        currentAppCard += `                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>`;
-                        currentAppCard += `                <button type="button" class="btn btn-primary" onclick="uploadCode('${app._id}')">Cargar</button>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `        </div>`;
-                        currentAppCard += `    </div>`;
-                        currentAppCard += `</div>`;
-
-                        // ============= delete confirmation modal ===============
-                        currentAppCard += `<div id="deleteAppConfirmModal-${app._id}" class="modal fade" tabindex="-1">`;
-                        currentAppCard += `    <div class="modal-dialog">`;
-                        currentAppCard += `        <div class="modal-content">`;
-                        currentAppCard += `            <div class="modal-header">`;
-                        currentAppCard += `                <h5 class="modal-title">Eliminar aplicación</h5>`;
-                        currentAppCard += `                <button type="button" class="close" data-dismiss="modal" aria-label="Close">`;
-                        currentAppCard += `                    <span aria-hidden="true">&times;</span>`;
-                        currentAppCard += `                </button>`;
-                        currentAppCard += `            </div>`;
-                        currentAppCard += `            ¿Esta seguro de que desea eliminar la aplicación con ID "${app._id}"?`;
-                        currentAppCard += `            <div class="modal-footer">`;
-                        currentAppCard += `                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>`;
-                        currentAppCard += `                <button type="button" class="btn btn-danger" onclick="deleteApp('${app._id}')">Eliminar</button>`;
                         currentAppCard += `            </div>`;
                         currentAppCard += `        </div>`;
                         currentAppCard += `    </div>`;

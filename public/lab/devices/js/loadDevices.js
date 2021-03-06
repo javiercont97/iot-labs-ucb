@@ -43,8 +43,8 @@ if (credentials == null) {
                     devices.forEach(device => {
                         let currentDeviceCard = '';
                         currentDeviceCard += '<div class="col-md-4 col-12 mt-2">';
-                        currentDeviceCard += `    <div class="card" style="width: 20rem;">`;
-                        currentDeviceCard += `        <h3 class="card-header">`;
+                        currentDeviceCard += `    <div class="card border-dark" style="width: 20rem;">`;
+                        currentDeviceCard += `        <h3 class="card-header bg-dark text-white">`;
                         currentDeviceCard += `            ${device.name}`;
                         currentDeviceCard += `        </h3>`;
                         currentDeviceCard += `        <div class="card-body">`;

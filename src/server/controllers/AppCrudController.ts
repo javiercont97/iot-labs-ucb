@@ -11,7 +11,6 @@ import { generateApiKey } from '../../middlewares/security/apiKeyGenerator';
 import { PrivacyLevelEnum } from '../../models/App';
 import { Extract as extractZIP } from 'unzipper';
 import { createReadStream as zipReadStream, unlink, rmdir, readdirSync as listItems, mkdirSync } from 'fs';
-import DockerCompiler from '../../middlewares/build/wasmCompiler';
 import { CompilationQueue } from '../../middlewares/build/compilationQueue';
 
 

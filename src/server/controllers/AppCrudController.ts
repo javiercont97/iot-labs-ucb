@@ -260,79 +260,91 @@ export class AppCrudController extends CRUD_Controller {
                     };
                     appLogger.verbose('CRUD App (Update)', 'Previous app removed');
                     let filePath = resolvePath(__dirname, `../../../app/${appDB._id}.zip`);
-                    appFile.mv(filePath, (err) => {
-                        if (err) {
-                            appLogger.error('CRUD App (Update)', JSON.stringify(err));
-                            return res.status(500).json({
-                                err: {
-                                    message: err
+                    zipReadStream(resolvePath(__dirname, `../../../assets/resourcefile.zip`))
+                        .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
+                        .promise()
+                        .then(() => {
+                            appFile.mv(filePath, (err) => {
+                                if (err) {
+                                    appLogger.error('CRUD App (Update)', JSON.stringify(err));
+                                    return res.status(500).json({
+                                        err: {
+                                            message: err
+                                        }
+                                    });
                                 }
-                            });
-                        }
-                        zipReadStream(filePath)
-                            .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
-                            .promise()
-                            .then(() => {
-                                appLogger.verbose('CRUD App (Update)', 'ZIP file extracted');
-                                unlink(filePath, (err) => {
-                                    if (err) {
+                                zipReadStream(filePath)
+                                    .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
+                                    .promise()
+                                    .then(() => {
+                                        appLogger.verbose('CRUD App (Update)', 'ZIP file extracted');
+                                        unlink(filePath, (err) => {
+                                            if (err) {
+                                                appLogger.error('CRUD App (Update)', JSON.stringify(err));
+                                                return res.status(500).json({
+                                                    err: {
+                                                        message: err
+                                                    }
+                                                });
+                                            }
+                                            appLogger.verbose('CRUD App (Update)', 'ZIP file removed');
+
+                                            zipReadStream(resolvePath(__dirname, `../../../assets/AppLoader.zip`))
+                                                .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
+                                                .promise()
+                                                .then(() => {
+                                                    DB.Models.User.findOne({ apps: Types.ObjectId(appID) }, (err, userDB) => {
+                                                        if (err) {
+                                                            appLogger.error('CRUD App (Update)', JSON.stringify(err));
+                                                            return res.status(500).json({
+                                                                err: {
+                                                                    message: err
+                                                                }
+                                                            });
+                                                        }
+
+                                                        CompilationQueue.enqueueJob(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
+                                                        // DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
+                                                        appLogger.verbose('CRUD App (Update)', 'Application compiled');
+
+                                                        let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
+                                                        listOfFiles.push("AppLoader.html");
+
+                                                        DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
+                                                            if (err) {
+                                                                appLogger.error('CRUD App (Update)', JSON.stringify(err));
+                                                                return res.status(500).json({
+                                                                    err: {
+                                                                        message: err
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            appLogger.verbose('CRUD App (Update)', 'App updated');
+                                                            res.json({
+                                                                message: 'App updated successfully'
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                        });
+                                    }).catch(err => {
                                         appLogger.error('CRUD App (Update)', JSON.stringify(err));
                                         return res.status(500).json({
                                             err: {
                                                 message: err
                                             }
                                         });
-                                    }
-                                    appLogger.verbose('CRUD App (Update)', 'ZIP file removed');
-
-                                    zipReadStream(resolvePath(__dirname, `../../../assets/AppLoader.zip`))
-                                        .pipe(extractZIP({ path: resolvePath(__dirname, `../../../app/${appDB._id}`) }))
-                                        .promise()
-                                        .then(() => {
-                                            DB.Models.User.findOne({ apps: Types.ObjectId(appID) }, (err, userDB) => {
-                                                if (err) {
-                                                    appLogger.error('CRUD App (Update)', JSON.stringify(err));
-                                                    return res.status(500).json({
-                                                        err: {
-                                                            message: err
-                                                        }
-                                                    });
-                                                }
-
-                                                CompilationQueue.enqueueJob(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
-                                                // DockerCompiler.compile(resolvePath(__dirname, `../../../app/${appDB._id}`), appDB.name, appID, userDB.email, userDB.name);
-                                                appLogger.verbose('CRUD App (Update)', 'Application compiled');
-
-                                                let listOfFiles = listItems(resolvePath(__dirname, `../../../app/${appDB._id}`));
-                                                listOfFiles.push("AppLoader.html");
-
-                                                DB.Models.App.findByIdAndUpdate(appDB._id, { resourceFiles: listOfFiles }, (err, finalAppDB) => {
-                                                    if (err) {
-                                                        appLogger.error('CRUD App (Update)', JSON.stringify(err));
-                                                        return res.status(500).json({
-                                                            err: {
-                                                                message: err
-                                                            }
-                                                        });
-                                                    }
-
-                                                    appLogger.verbose('CRUD App (Update)', 'App updated');
-                                                    res.json({
-                                                        message: 'App updated successfully'
-                                                    });
-                                                });
-                                            });
-                                        });
-                                });
-                            }).catch(err => {
-                                appLogger.error('CRUD App (Update)', JSON.stringify(err));
-                                return res.status(500).json({
-                                    err: {
-                                        message: err
-                                    }
-                                });
+                                    });
                             });
-                    });
+                        }).catch(err => {
+                            appLogger.error('CRUD App (Update)', JSON.stringify(err));
+                            return res.status(500).json({
+                                err: {
+                                    message: err
+                                }
+                            });
+                        });
                 });
             } else {
                 appLogger.verbose('CRUD App (Update)', 'App updated');

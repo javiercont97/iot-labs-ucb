@@ -32,6 +32,7 @@ class DockerCompiler extends EventEmitter {
         exec(qmake, (err, stdout, stderr) => {
             if(err) {
                 appLogger.error('COMPILER_WORKER', stderr);
+                this.emit('jobsdone', this);
                 return;
             }
             appLogger.verbose('COMPILER_WORKER', stdout);
@@ -39,6 +40,7 @@ class DockerCompiler extends EventEmitter {
             exec(make, (err, stdout, stderr) => {
                 if(err) {
                     appLogger.error('COMPILER_WORKER', stderr);
+                    this.emit('jobsdone', this);
                     return;
                 }
                 appLogger.verbose('COMPILER_WORKER', stdout);

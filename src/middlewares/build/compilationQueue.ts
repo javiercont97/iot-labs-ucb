@@ -14,8 +14,10 @@ export class CompilationQueue {
             this.tasks = [];
 
             worker.on('jobsdone', (worker: DockerCompiler) => {
+                appLogger.verbose('WASK_COMPILER_QUEUE', 'Job\'s finished');
                 if(!worker.busy) {
                     if(this.tasks.length > 0) {
+                        appLogger.verbose('WASK_COMPILER_QUEUE', 'Asign job');
                         let work = this.tasks.pop();
                         worker.compile(work.path, work.app, work.appID, work.userMail, work.userName);
                     }
@@ -25,11 +27,12 @@ export class CompilationQueue {
     }
 
     private static checkIfJobsAvailable(): void {
-        appLogger.verbose('WASK_COMPILER_QUEUE', 'Asign job');
+        appLogger.verbose('WASK_COMPILER_QUEUE', 'Checking if any job is available');
 
         this.workers.forEach(currentWorker => {
             if(!currentWorker.busy) {
                 if(this.tasks.length > 0) {
+                    appLogger.verbose('WASK_COMPILER_QUEUE', 'Asign job');
                     let work = this.tasks.pop();
                     currentWorker.compile(work.path, work.app, work.appID, work.userMail, work.userName);
                 }

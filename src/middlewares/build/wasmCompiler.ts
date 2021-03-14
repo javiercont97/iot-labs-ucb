@@ -25,8 +25,10 @@ class DockerCompiler extends EventEmitter {
     public compile(path: string, app: string, appID: string, userMail: string, userName: string) {
         this.busy = true;
 
-        let qmake: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15 qmake`;
-        let make: string = `docker run --rm --cpus="${this.cpus}" -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15 make`;
+        let qmake: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache madmanfred/qt-webassembly:qt5.15 qmake`;
+        let make: string = `docker run --rm --cpus="${this.cpus}" -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache madmanfred/qt-webassembly:qt5.15 make -j ${Math.round(this.cpus)}`;
+        // let qmake: string = `docker run --rm -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15 qmake`;
+        // let make: string = `docker run --rm --cpus="${this.cpus}" -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15 make -j ${Math.round(this.cpus)}`;
 
         appLogger.verbose('COMPILER_WORKER', 'Running qmake');
         exec(qmake, (err, stdout, stderr) => {

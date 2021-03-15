@@ -89,6 +89,49 @@ class Mailer {
     }
 
     /**
+     * 
+     * @param mail User's e-mail address
+     * @param name User's name
+     * @param app Laboratory name
+     * @param appID Laboratory ID
+     */
+     public static sendErrorsEmail(mail: string, name: string, app: string, errorLog: string): void {
+        appLogger.verbose('Mailer', 'Sending compilation error notification');
+        let request = this.mailjet.post('send', { 'version': 'v3.1' })
+            .request({
+                "Messages": [
+                    {
+                        "From": {
+                            "Email": "kelmorian.labs@gmail.com",
+                            "Name": "IoT Labs"
+                        },
+                        "To": [
+                            {
+                                "Email": mail,
+                                "Name": name
+                            }
+                        ],
+                        "TemplateID": 2633336,
+                        "TemplateLanguage": true,
+                        "Subject": `Error al compilar el laboratorio ${app}`,
+                        "Variables": {
+                            "user_name": `${name}`,
+                            "app_name": `${app}`,
+                            "errorLog": errorLog
+                        }
+                    }
+                ]
+            });
+
+        request.then((res) => {
+            // appLogger.verbose('Mailer', JSON.stringify(res.body));
+            appLogger.verbose('Mailer', 'Compilation error mail send');
+        }).catch(err => {
+            appLogger.error('Mailer', JSON.stringify(err));
+        });
+    }
+
+    /**
      * Sends a recovery e-mail to user's specified mail
      * @param id User ID
      * @param mail User's mail

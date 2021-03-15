@@ -34,6 +34,7 @@ class DockerCompiler extends EventEmitter {
         exec(qmake, (err, stdout, stderr) => {
             if(err) {
                 appLogger.error('COMPILER_WORKER', stderr);
+                Mailer.sendErrorsEmail(userMail, userName, app, stderr);
                 this.emit('jobsdone', this);
                 return;
             }
@@ -42,6 +43,7 @@ class DockerCompiler extends EventEmitter {
             exec(make, (err, stdout, stderr) => {
                 if(err) {
                     appLogger.error('COMPILER_WORKER', stderr);
+                    Mailer.sendErrorsEmail(userMail, userName, app, stderr);
                     this.emit('jobsdone', this);
                     return;
                 }

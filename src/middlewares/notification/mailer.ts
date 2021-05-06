@@ -1,8 +1,8 @@
 import mailjet = require('node-mailjet');
-import { appLogger, HOST_URL } from '../../config/constants';
+import { ACTIVATION_MAIL_TEMPLATE, appLogger, ERROR_MAIL_TEMPLATE, HOST_URL, MAILJET_APIKEY_PRIVATE, MAILJET_APIKEY_PUBLIC, READY_MAIL_TEMPLATE, SENDER_EMAIL } from '../../config/constants';
 
 class Mailer {
-    private static mailjet = mailjet.connect('a4c82f01ae8c4af028920c52363065fa', '1544ce6fff38e5aff2888f9c12444e3b');
+    private static mailjet = mailjet.connect(MAILJET_APIKEY_PUBLIC, MAILJET_APIKEY_PRIVATE);
 
     /**
      * Sends an activation e-mail to user's specified mail
@@ -17,7 +17,7 @@ class Mailer {
                 "Messages": [
                     {
                         "From": {
-                            "Email": "kelmorian.labs@gmail.com",
+                            "Email": SENDER_EMAIL,
                             "Name": "IoT Labs"
                         },
                         "To": [
@@ -26,7 +26,7 @@ class Mailer {
                                 "Name": name
                             }
                         ],
-                        "TemplateID": 1504472,
+                        "TemplateID": ACTIVATION_MAIL_TEMPLATE,
                         "TemplateLanguage": true,
                         "Subject": "Activar cuenta",
                         "Variables": {
@@ -59,7 +59,7 @@ class Mailer {
                 "Messages": [
                     {
                         "From": {
-                            "Email": "kelmorian.labs@gmail.com",
+                            "Email": SENDER_EMAIL,
                             "Name": "IoT Labs"
                         },
                         "To": [
@@ -68,7 +68,7 @@ class Mailer {
                                 "Name": name
                             }
                         ],
-                        "TemplateID": 1810027,
+                        "TemplateID": READY_MAIL_TEMPLATE,
                         "TemplateLanguage": true,
                         "Subject": `${app} lista para usar`,
                         "Variables": {
@@ -102,7 +102,7 @@ class Mailer {
                 "Messages": [
                     {
                         "From": {
-                            "Email": "kelmorian.labs@gmail.com",
+                            "Email": SENDER_EMAIL,
                             "Name": "IoT Labs"
                         },
                         "To": [
@@ -111,7 +111,7 @@ class Mailer {
                                 "Name": name
                             }
                         ],
-                        "TemplateID": 2633336,
+                        "TemplateID": ERROR_MAIL_TEMPLATE,
                         "TemplateLanguage": true,
                         "Subject": `Error al compilar el laboratorio ${app}`,
                         "Variables": {

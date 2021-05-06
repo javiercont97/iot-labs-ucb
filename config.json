@@ -1,8 +1,18 @@
 {
     "server": {
-        "HOST_URL": "http://192.168.0.9",
+        "HOST_URL": "http://192.168.0.7",
         "PORT": 80,
         "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
+    },
+    "mailer": {
+        "PUBLIC_API_KEY": "a4c82f01ae8c4af028920c52363065fa",
+        "PRIVATE_API_KEY": "1544ce6fff38e5aff2888f9c12444e3b",
+        "SOURCE_EMAIL": "kelmorian.labs@gmail.com",
+        "TEMPLATES": {
+            "ACCOUNT_CONFIRMATION": 1504472,
+            "APPLICATION_READY": 1810027,
+            "COMPILATION_ERROR": 2633336
+        }
     },
     "services": {
         "WSTT": {

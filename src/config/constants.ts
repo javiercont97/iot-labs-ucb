@@ -52,3 +52,15 @@ function loggerCreator(): Logger {
 
 // Utils
 export const appLogger = loggerCreator();
+
+
+// Mailer
+export const MAILJET_APIKEY_PUBLIC = SETTINGS.mailer.PUBLIC_API_KEY || "Public API key";
+export const MAILJET_APIKEY_PRIVATE = SETTINGS.mailer.PRIVATE_API_KEY || "Private API key";
+export const SENDER_EMAIL = SETTINGS.mailer.SOURCE_EMAIL || "test@gmail.com";
+
+
+// Mail templates
+export const ACTIVATION_MAIL_TEMPLATE = SETTINGS.mailer.TEMPLATES.ACCOUNT_CONFIRMATION || 12345;
+export const READY_MAIL_TEMPLATE = SETTINGS.mailer.TEMPLATES.APPLICATION_READY || 12345;
+export const ERROR_MAIL_TEMPLATE = SETTINGS.mailer.TEMPLATES.COMPILATION_ERROR || 12345;

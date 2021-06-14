@@ -15,7 +15,7 @@ class DockerCompiler extends EventEmitter {
         super();
         this.cpus = cpus;
         this.busy = false;
-        appLogger.verbose('COMPILER_WORKER', `Worker for compilation setup with ${cpus} cores`);
+        appLogger.info('COMPILER_WORKER', `Worker for compilation setup with ${cpus} cores`);
     }
 
     /**
@@ -31,6 +31,9 @@ class DockerCompiler extends EventEmitter {
         // let make: string = `docker run --rm --cpus="${this.cpus}" -v ${path}:/src/ -v ~/.emscripten_cache:/emsdk_portable/.data/cache -u $(id -u):$(id -g) madmanfred/qt-webassembly:qt5.15 make -j ${Math.round(this.cpus)}`;
 
         appLogger.verbose('COMPILER_WORKER', 'Running qmake');
+
+        console.log(`Start compiling \"${app}\"`);
+
         exec(qmake, (err, stdout, stderr) => {
             if(err) {
                 appLogger.error('COMPILER_WORKER', stderr);
@@ -38,7 +41,7 @@ class DockerCompiler extends EventEmitter {
                 this.emit('jobsdone', this);
                 return;
             }
-            appLogger.verbose('COMPILER_WORKER', stdout);
+            // appLogger.verbose('COMPILER_WORKER', stdout);
             appLogger.verbose('COMPILER_WORKER', 'Running make');
             exec(make, (err, stdout, stderr) => {
                 if(err) {
@@ -47,7 +50,8 @@ class DockerCompiler extends EventEmitter {
                     this.emit('jobsdone', this);
                     return;
                 }
-                appLogger.verbose('COMPILER_WORKER', stdout);
+
+                // appLogger.verbose('COMPILER_WORKER', stdout);
                 appLogger.verbose('COMPILER_WORKER', 'App finished building');
                 Mailer.sendNotificationEmail(userMail, userName, app, appID);
 

@@ -1,4 +1,4 @@
-import { appLogger } from '../../config/constants';
+import { appLogger, PORT } from '../../config/constants';
 import WebSocket = require('ws');
 import WSTT_Client from './controllers/peerController';
 import { KQueue } from './controllers/channelController';
@@ -12,7 +12,7 @@ class WSTelemtryServer extends WebSocket.Server implements QueueClient{
 
     constructor (config: WebSocket.ServerOptions) {
         super(config);
-        appLogger.verbose('WSTT', 'WSTT Server initialization');
+        appLogger.info('WSTT', `WebSocket Server started and attached to HTTP server`);
     }
 
     public setupWSTT_Server(): void {

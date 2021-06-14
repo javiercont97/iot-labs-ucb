@@ -1,6 +1,6 @@
 {
     "server": {
-        "HOST_URL": "http://192.168.0.7",
+        "HOST_URL": "http://192.168.0.8",
         "PORT": 80,
         "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
     },
@@ -20,7 +20,7 @@
         },
         "GUEST_APPS": {
             "AMMOUNT_OF_COMPILATION_WORKERS": 2,
-            "CPUS_PER_WORKER": 2
+            "CPUS_PER_WORKER": 1
         },
         "MQTT": {
             "MQTT_PORT": 1883
@@ -39,10 +39,7 @@
     },
     "debugging": {
         "DEBUG_LEVEL": [
-            "verbose",
-            "info",
-            "warning",
-            "error"
+            "info"
         ],
         "DEBUGGING_METHOD": "Console"
     }

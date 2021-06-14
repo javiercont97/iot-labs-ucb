@@ -8,7 +8,7 @@ export class KQueue {
     private channels = new Map<string, Array<WSTT_Client>>();
 
     private constructor() {
-        appLogger.verbose('WSTT Queue', 'WS message queue created');
+        appLogger.info('WSTT Queue', 'WS message queue created');
     }
 
     public static get Instance(): KQueue {

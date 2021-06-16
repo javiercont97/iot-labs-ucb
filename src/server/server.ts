@@ -73,5 +73,4 @@ MessageQueue.wstt = wstt;
 
 server.listen( PORT, () => {
     appLogger.info('Server', `Server listening on PORT ${PORT}`);
-    CompilationQueue.test();
 });

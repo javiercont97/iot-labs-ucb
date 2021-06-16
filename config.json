@@ -39,7 +39,10 @@
     },
     "debugging": {
         "DEBUG_LEVEL": [
-            "info"
+            "info",
+            "verbose",
+            "warning",
+            "error"
         ],
         "DEBUGGING_METHOD": "Console"
     }

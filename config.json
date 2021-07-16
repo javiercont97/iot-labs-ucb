@@ -1,17 +1,17 @@
 {
     "server": {
-        "HOST_URL": "http://192.168.0.8",
+        "HOST_URL": "http://192.168.0.15",
         "PORT": 80,
-        "MONGO_URI": "mongodb+srv://mainframe-db-user:ZHqusYryST8UNDBI@mainframe-db-3iycr.gcp.mongodb.net/mainframe"
+        "MONGO_URI": "connection string"
     },
     "mailer": {
-        "PUBLIC_API_KEY": "a4c82f01ae8c4af028920c52363065fa",
-        "PRIVATE_API_KEY": "1544ce6fff38e5aff2888f9c12444e3b",
-        "SOURCE_EMAIL": "kelmorian.labs@gmail.com",
+        "PUBLIC_API_KEY": "mailet public api key",
+        "PRIVATE_API_KEY": "mailjet private api key",
+        "SOURCE_EMAIL": "sender email",
         "TEMPLATES": {
-            "ACCOUNT_CONFIRMATION": 1504472,
-            "APPLICATION_READY": 1810027,
-            "COMPILATION_ERROR": 2633336
+            "ACCOUNT_CONFIRMATION": <template id>,
+            "APPLICATION_READY": <template id>,
+            "COMPILATION_ERROR": <template id>
         }
     },
     "services": {
@@ -20,7 +20,7 @@
         },
         "GUEST_APPS": {
             "AMMOUNT_OF_COMPILATION_WORKERS": 2,
-            "CPUS_PER_WORKER": 1
+            "CPUS_PER_WORKER": 3
         },
         "MQTT": {
             "MQTT_PORT": 1883
@@ -35,7 +35,7 @@
     "security": {
         "SALT_SIZE": 25,
         "API_KEY_SIZE": 64,
-        "SESSION_IV": "7919cefe87098511"
+        "SESSION_IV": "initialization vector"
     },
     "debugging": {
         "DEBUG_LEVEL": [
